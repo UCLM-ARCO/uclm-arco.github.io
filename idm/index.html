@@ -14,106 +14,116 @@
     <div class="container" style="padding-top: 15px">
 
       <div class="btn-group btn-group-justified" role="group">
-	<a href="#" class="btn btn-default">Overview</a>
-	<a href="#" class="btn btn-default">Specification</a>
-	<a href="#" class="btn btn-default">Examples</a>
-	<a href="#" class="btn btn-default">Latest News</a>
+	<a href="/idm/"
+	   class="btn btn-default
+		   active ">Overview</a>
+	<a href="/idm/spec/"
+	   class="btn btn-default
+		  ">Specification</a>
+	<a href="/idm/examples/"
+	   class="btn btn-default
+                  ">Examples</a>
+	<a href="/idm/news/"
+	   class="btn btn-default
+		  ">Latest News</a>
       </div>
 
-      <div class="jumbotron text-center"
-	   style="background-color: inherit; padding-left: 0px; padding-right: 0px">
-	<h1 style="font-size: 6em"><b>IDM</b></h1>
-	<h2><b>Inter Domain Messaging</b></h2>
 
-	<h3>“IDM is a virtual-network protocol that supports
-	  peer-to-peer communication between devices connected to
-	  <b>any type of network</b>. IDM integrates addressing for
-	  node, process and resource in a single identifier.  The
-	  transport and native network protcols can be avoided in many
-	  situations”</h3>
+
+
+<div class="jumbotron text-center"
+     style="background-color: inherit; padding-left: 0px; padding-right: 0px">
+  <h1 style="font-size: 6em"><b>IDM</b></h1>
+  <h2><b>Inter Domain Messaging</b></h2>
+
+  <h3>“IDM is a virtual-network protocol that supports
+    peer-to-peer communication between devices connected to
+    <b>any type of network</b>. IDM integrates addressing for
+    node, process and resource in a single identifier.  The
+    transport and native network protcols can be avoided in many
+    situations”</h3>
+</div>
+<hr class="frontpage">
+
+<div class="row">
+  <div class="col-xs-4 col-sm-4 col-md-4">
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h2><b>Over many protocols</b></h2>
+        <p>Despite attempts to use IP everywhere, many vendors
+	  and technologies are still using other
+	  domain-dependent protocols. IDM can use these
+	  underlying protocols to reach the destination
+	  node. Over ZigBee, nRF24, RS485, RS232, BlueTooth... or any
+	  other protocol that can carry a message between two
+	  remote or neighbor peers.</p>
       </div>
-      <hr class="frontpage">
+    </div>
 
-      <div class="row">
-	<div class="col-xs-4 col-sm-4 col-md-4">
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h2><b>Over many protocols</b></h2>
-              <p>Despite attempts to use IP everywhere, many vendors
-		and technologies are still using other
-		domain-dependent protocols. IDM can use these
-		underlying protocols to reach the destination
-		node. Over ZigBee, nRF24, RS485, RS232, BlueTooth... or any
-		other protocol that can carry a message between two
-		remote or neighbor peers.</p>
-	    </div>
-	  </div>
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h3><b>Made to connect your devices</b></h3>
-              <p>IDM is built upon <a href="https://zeroc.com/">ZeroC Ice</a>. With
-              implementations for C++, C#, Java, JS, Objective-C, PHP,
-              Python and Ruby, its easy to fit in almost every
-              platform. And what about <b>constrained</b> devices? You can use our
-		<a href="https://arcogroup.bitbucket.io/icec/">IceC</a>
-	      (Ice for Constrained devices), available for Arduino,
-	      ESP8266 and other platforms.</p>
-	    </div>
-	  </div>
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h3><b>Drop complexity</b></h3>
-              
-	    </div>
-	  </div>
-
-	</div>
-	<div class="col-xs-4 col-sm-4 col-md-4">
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h2><b>Talk to everything</b></h2>
-              <p>Thanks to its flexible addressing scheme, you can add
-		as many objects, devices or nodes as you need. IDM
-		defines a variable-lenght address, from 16 to
-		<span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128
-		bits</span>, you choose what suits your needs. </p>
-	    </div>
-	  </div>
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h3><b>Ready for constrained devices</b></h3>
-              <p>IDM requires a very low footprint. Both services and
-		clients may be implemented in highly
-		resource-constrained devices, as low as Class 0
-		hardware (like Arduino UNO, 32 KiB code, 2 KiB RAM,
-		see <a href="https://tools.ietf.org/html/rfc7228">RFC 7228</a>).</p>
-	    </div>
-	  </div>
-
-	</div>
-	<div class="col-xs-4 col-sm-4 col-md-4">
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h2><b>Virtual networks</b></h2>
-              
-	    </div>
-	  </div>
-
-	  <div class="thumbnail">
-	    <div class="caption">
-              <h3><b>Everything is an object</b></h3>
-              
-	    </div>
-	  </div>
-
-	</div>
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Made to connect your devices</b></h3>
+        <p>IDM is built upon <a href="https://zeroc.com/">ZeroC Ice</a>. With
+          implementations for C++, C#, Java, JS, Objective-C, PHP,
+          Python and Ruby, its easy to fit in almost every
+          platform. And what about <b>constrained</b> devices? You can use our
+	  <a href="https://arcogroup.bitbucket.io/icec/">IceC</a>
+	  (Ice for Constrained devices), available for Arduino,
+	  ESP8266 and other platforms.</p>
       </div>
+    </div>
 
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Drop complexity</b></h3>
+        
+      </div>
+    </div>
+
+  </div>
+  <div class="col-xs-4 col-sm-4 col-md-4">
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h2><b>Talk to everything</b></h2>
+        <p>Thanks to its flexible addressing scheme, you can add
+	  as many objects, devices or nodes as you need. IDM
+	  defines a variable-lenght address, from 16 to
+	  <span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128
+	    bits</span>, you choose what suits your needs. </p>
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Ready for constrained devices</b></h3>
+        <p>IDM requires a very low footprint. Both services and
+	  clients may be implemented in highly
+	  resource-constrained devices, as low as Class 0
+	  hardware (like Arduino UNO, 32 KiB code, 2 KiB RAM,
+	  see <a href="https://tools.ietf.org/html/rfc7228">RFC 7228</a>).</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-xs-4 col-sm-4 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h2><b>Virtual networks</b></h2>
+        
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Everything is an object</b></h3>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
 
     </div>
 
@@ -121,6 +131,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
+
+
+
 
 
 
