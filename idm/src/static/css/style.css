@@ -4,3 +4,8 @@
     border: 0px;
     box-shadow: none;
 }
+
+.dotted-tooltip {
+    border-bottom: 2px dotted gray;
+    cursor: help;
+}

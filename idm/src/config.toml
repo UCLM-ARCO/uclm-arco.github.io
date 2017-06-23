@@ -2,3 +2,6 @@ languageCode = "en-us"
 title = "Inter Domain Messagging"
 baseurl = "https://arcogroup.bitbucket.io/idm/"
 publishDir = ".."
+
+[params]
+baseDocURL = "https://arcogroup.bitbucket.io"
