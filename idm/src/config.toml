@@ -5,3 +5,4 @@ publishDir = ".."
 
 [params]
 baseDocURL = "https://arcogroup.bitbucket.io"
+path = "/idm"
