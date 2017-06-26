@@ -1,0 +1,41 @@
+body {
+    background-color: #fafafa;
+}
+
+.panel-project {
+    box-shadow: 5px 2px 25px #ccc;
+}
+
+.panel-project .panel-heading {
+    height: 150px;
+    background-size: cover;
+}
+
+.panel-project .panel-title {
+    font-weight: bold;
+    font-size: 2em;
+    background-color: white;
+
+    margin-top: -45px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    border: 2px solid #294B76;
+
+    padding: 10px;
+    /* padding-top: 35px; */
+    width: 150px;
+    /* height: 100px; */
+    color: #294B76;
+}
+
+.panel-project p {
+    padding-bottom: 10px;
+}
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-top: 2px solid #294B76;
+}

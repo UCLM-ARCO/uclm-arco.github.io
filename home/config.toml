@@ -1,0 +1,8 @@
+languageCode = "en-us"
+title = "Arco Research Group | Docs"
+baseurl = "https://arcogroup.bitbucket.io/"
+publishDir = ".."
+
+[params]
+baseDocURL = "https://arcogroup.bitbucket.io"
+path = ""
