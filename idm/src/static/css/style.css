@@ -25,6 +25,11 @@
     cursor: help;
 }
 
+acronym {
+    border-bottom: 2px dotted gray;
+    cursor: help;
+}
+
 hr.frontpage {
     margin-top: 0px;
     border-top: 2px solid #294B76;
