@@ -10,3 +10,12 @@ run-preview-server:
 
 install-deps:
 	sudo apt-get install hugo
+
+
+.PHONY: clean
+clean:
+	for f in ../*; do \
+	  if [ "$$f" != "../src" -a "$$f" != "../README" ]; then \
+	    rm -rvf "$$f"; \
+	  fi; \
+	done
