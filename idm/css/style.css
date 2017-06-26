@@ -1,5 +1,14 @@
 /* -*- mode: css; coding: utf-8 -*- */
 
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 .jumbotron {
     padding-bottom: 15px;
     padding-top: 15px;
@@ -25,7 +34,27 @@
     cursor: help;
 }
 
+acronym {
+    border-bottom: 2px dotted gray;
+    cursor: help;
+}
+
 hr.frontpage {
     margin-top: 0px;
     border-top: 2px solid #294B76;
+}
+
+.thumbnail .caption h2, .thumbnail .caption h3{
+    text-align: center;
+}
+
+/* keep footer on its place */
+#content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    font-size: 0.9em;
+    color: gray;
+    margin-bottom: 20px;
 }

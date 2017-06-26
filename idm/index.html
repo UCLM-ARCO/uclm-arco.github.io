@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/highlight-default.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/idm/css/highlight-default.css">
+    <link rel="stylesheet" href="/idm/css/style.css">
   </head>
 
   <body>
-    <div class="container" style="padding-top: 15px">
+    <div id="content" class="container" style="padding-top: 15px">
 
       <div class="btn-group btn-group-justified" role="group">
 	<a href="/idm/"
@@ -22,8 +22,8 @@
 	   class="btn btn-default
 		  ">Specification</a>
 	<a href="/idm/examples/"
-	   class="btn btn-default
-                  ">Examples</a>
+	   class="btn btn-success
+                  ">Getting Started</a>
 	<a href="/idm/news/"
 	   class="btn btn-default
 		  ">Latest News</a>
@@ -124,15 +124,27 @@
   <div class="col-xs-12 col-sm-6 col-md-4">
     <div class="thumbnail">
       <div class="caption">
-        <h2><b>Virtual networks</b></h2>
-        Each incompatible technology or isolated
-	network is a <em>domain</em>. Domains are interconnected by
-	means of stateless virtual routers. The <b>router</b> is a
-	service able to forward IDM messages between domains despite
-	of their encapsulation. IDM routers behavior depends
-	on <em>flow</em> specs, that are managed by a Controller,
-	taken the ideas of OpenFlow and <span title="Software Defined
-	Networking">SDN</span>.
+        <h2><b>Just domains</b></h2>
+        <p>Each incompatible technology or isolated network is
+	  a <em>domain</em>. Domains are interconnected by means of
+	  stateless virtual routers (sometimes called <em>edge
+	  routers</em>). For example, the whole public Internet is
+	  seen as a single domain.
+	</p>
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+	<h3><b>Make it virtual</b></h3>
+	<p>
+	  The IDM <b>routers</b> are services able to forward IDM
+	  messages between domains despite of their encapsulation. The
+	  router behavior depends on <em>flow</em> specs, that are
+	  managed by a Controller. This takes some ideas from OpenFlow
+	  and <acronym title="Software Defined
+	  Networking">SDN</acronym>.
+	</p>
       </div>
     </div>
 
@@ -149,7 +161,14 @@
 <br>
 <hr class="frontpage">
 
-    </div>
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+	<a href="http://www.arcoresearch.com">Arco Research Group</a> - made with
+	<a href="https://gohugo.io">Hugo</a>
+      </div>
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
