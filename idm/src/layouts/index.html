@@ -56,11 +56,36 @@
     <div class="thumbnail">
       <div class="caption">
         <h2><b>Talk to everything</b></h2>
-        <p>Thanks to its flexible addressing scheme, you can add
-	  as many objects, devices or nodes as you need. IDM
-	  defines a variable-lenght address, from 16 to
-	  <span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128
-	    bits</span>, you choose what suits your needs. </p>
+	<p>IDM is a true <acronym title="Internet of Things">IoT</acronym>.
+
+	  The messages may travel from <b>any to any</b>, at any
+	  place, network or device (like Internet does). Without a
+	  cloud-centric data repository, without complex stateful
+	  bridges.
+	</p>
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Flexible addressing</b></h3>
+	
+        <p>The variable-length address scheme, from 16 to
+	  <span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128 bits</span> suits your needs.
+
+	  You can create network of any scale, from hundreds to
+	  trillions, but when you have a small deployment you may save
+	  valuable bytes in headers and parameters.</p>
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Made to connect your world</b></h3>
+        <p>IDM is built upon <a href="https://zeroc.com/">ZeroC Ice</a>. With
+          implementations for C++, C#, Java, JS, Objective-C, PHP,
+          Python and Ruby, its easy to fit in almost every
+          platform.</p>
       </div>
     </div>
 
@@ -72,22 +97,16 @@
 	  resource-constrained devices, as low as Class 0
 	  hardware (like Arduino UNO, 32 KiB code, 2 KiB RAM,
 	  see <a href="https://tools.ietf.org/html/rfc7228">RFC 7228</a>).</p>
-      </div>
-    </div>
 
-    <div class="thumbnail">
-      <div class="caption">
-        <h3><b>Made to connect your world</b></h3>
-        <p>IDM is built upon <a href="https://zeroc.com/">ZeroC Ice</a>. With
-          implementations for C++, C#, Java, JS, Objective-C, PHP,
-          Python and Ruby, its easy to fit in almost every
-          platform. And what about <b>constrained</b> devices? You can use our
+	<p>
+	You can use our
 	  <a href="{{ .Site.Params.baseDocURL }}/icec/">IceC</a>
 	  (Ice for Constrained devices), available for Arduino,
-	  ESP8266 and other platforms.</p>
+	  ESP8266 and other platforms.
+	</p>
       </div>
     </div>
-
+    
   </div>
   <div class="col-xs-12 col-sm-6 col-md-4">
     <div class="thumbnail">
@@ -104,14 +123,13 @@
 
     <div class="thumbnail">
       <div class="caption">
-	<h3><b>Make it virtual</b></h3>
+	<h3><b>Virtual infrastructure</b></h3>
 	<p>
 	  The IDM <b>routers</b> are services able to forward IDM
 	  messages between domains despite of their encapsulation. The
 	  router behavior depends on <em>flow</em> specs, that are
 	  managed by a Controller. This takes some ideas from OpenFlow
-	  and <acronym title="Software Defined
-	  Networking">SDN</acronym>.
+	  and <acronym title="Software Defined Networking">SDN</acronym>.
 	</p>
       </div>
     </div>
@@ -119,7 +137,10 @@
     <div class="thumbnail">
       <div class="caption">
         <h3><b>Everything is an object</b></h3>
-        <!-- <p>Description</p> -->
+        <p>We see the IoT as a OO infrastructure. Any sensor,
+        actuator, filter is an object, that is, it has an well known
+        interface. IDM is a protocol that directly encapsulates
+        invocations to those objects.</p>
       </div>
     </div>
 
