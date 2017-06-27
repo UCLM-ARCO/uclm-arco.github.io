@@ -18,7 +18,7 @@
       <div class="btn-group btn-group-justified" role="group">
 	<a href="{{ $base }}/" class="btn btn-default
 		  {{ if .IsHome }} active {{ end }}">Overview</a>
-	<a href="{{ $base }}/spec/" class="btn btn-default
+	<a href="{{ $base }}/spec/" class="btn btn-default disabled
 		  {{ if eq .Section "spec" }} active {{ end }}">Specification</a>
 	<a href="{{ $base }}/examples/" class="btn btn-success disabled
                   {{ if eq .Section "examples" }} active {{ end }}">Getting Started</a>
