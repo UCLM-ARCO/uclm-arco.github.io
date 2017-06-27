@@ -1,0 +1,8 @@
+languageCode = "en-us"
+title = "Ice for Constrained devices"
+baseurl = "https://arcogroup.bitbucket.io/icec/"
+publishDir = ".."
+
+[params]
+baseDocURL = "https://arcogroup.bitbucket.io"
+path = "/icec"
