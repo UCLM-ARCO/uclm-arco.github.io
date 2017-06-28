@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Arco Research Group | Docs</title>
+    <title>ARCO Research Group | Docs</title>
     <link>https://arcogroup.bitbucket.io/index.xml</link>
-    <description>Recent content on Arco Research Group | Docs</description>
+    <description>Recent content on ARCO Research Group | Docs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <atom:link href="https://arcogroup.bitbucket.io/index.xml" rel="self" type="application/rss+xml" />

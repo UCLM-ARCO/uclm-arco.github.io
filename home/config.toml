@@ -1,5 +1,5 @@
 languageCode = "en-us"
-title = "Arco Research Group | Docs"
+title = "ARCO Research Group | Docs"
 baseurl = "https://arcogroup.bitbucket.io/"
 publishDir = ".."
 
