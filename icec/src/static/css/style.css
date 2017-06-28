@@ -48,6 +48,14 @@ hr.frontpage {
     text-align: center;
 }
 
+a.highligh-section {
+    background-color: #205823;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 4px;
+    white-space: nowrap;
+}
+
 /* keep footer on its place */
 #content {
     flex: 1 0 auto;

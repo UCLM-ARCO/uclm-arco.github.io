@@ -20,7 +20,7 @@
     <div class="thumbnail">
       <div class="caption">
         <h2><b>Over many protocols</b></h2>
-        <p>Despite attempts to use IP everywhere, many vendors and
+        <p>Despite some attempts to use IP everywhere, many vendors and
 	  technologies will still create and use other
 	  domain-dependent protocols. <b>IDM can use</b> these
 	  underlying protocols to reach the destination service. Over
@@ -39,14 +39,21 @@
           communications part! Also, using ZeroC Ice's intuitive IDL (called
 	  <a href="https://doc.zeroc.com/display/Ice36/The+Slice+Language">Slice</a>),
           it's easy to define the contract between clients and
-          servers: </p>
+          servers. </p>
+      </div>
+    </div>
 
-	<p><pre><code class="language-cpp">module IoT {
-    interface WaterPump {
-        void on();
-        void off();
-    };
-};</code></pre></p>
+    <div class="thumbnail">
+      <div class="caption">
+        <h3><b>Flexible addressing</b></h3>
+
+        <p>The variable-length address scheme, from 16 to
+	  <span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128 bits</span> suits
+	  your needs.
+
+	  You can create networks of any scale, from a few tens to
+	  trillions, but when you have a small deployment you may save
+	  valuable bytes in headers and parameters.</p>
       </div>
     </div>
 
@@ -63,20 +70,6 @@
 	  does). Without a cloud-centric data repository, without
 	  complex stateful bridges... Just messages through the
 	  inter-network.</p>
-      </div>
-    </div>
-
-    <div class="thumbnail">
-      <div class="caption">
-        <h3><b>Flexible addressing</b></h3>
-
-        <p>The variable-length address scheme, from 16 to
-	  <span class="dotted-tooltip" title="This is up to 340 trillion trillion trillion unique addresses!">128 bits</span> suits
-	  your needs.
-
-	  You can create networks of any scale, from a few tens to
-	  trillions, but when you have a small deployment you may save
-	  valuable bytes in headers and parameters.</p>
       </div>
     </div>
 
