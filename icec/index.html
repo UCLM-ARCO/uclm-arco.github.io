@@ -53,11 +53,10 @@
     <div class="thumbnail">
       <div class="caption">
         <h2><b>Portable</b></h2>
-        <p>Written in Ansi C (with some endpoints in C++), you can use
-	  IceC wherever you have a compliant Ansi C
+        <p>Written in ANSI C (with some endpoints in C++), you can use
+	  IceC wherever you have a compliant C
 	  compiler. Moreover, the core units are <b>decoupled</b> from
 	  non-standard libraries, which makes porting very easy.</p>
-
       </div>
     </div>
 
@@ -66,7 +65,7 @@
         <h3><b>Extendable</b></h3>
         <p>IceC uses a plug-in system to implement the <b>communication
           endpoints</b>. With a very straightforward interface, it is
-          easy to add support for new network protocols or hardware
+          easy to add support for additional network protocols or hardware
           adapters.</p>
 
       </div>
@@ -77,8 +76,8 @@
         <h3><b>For many protocols</b></h3>
         <p>Currently, IceC has endpoints for <b>TCP</b>/IP or <b>UDP</b>/IP, but
           also for Serial, RS-485 (using a custom protocol called
-	  <acronym title="Round Robin Protocol">RRP</acronym>),
-          FIFO buffers, <b>ZigBee</b>, nRF24... and growing! </p>
+	  <acronym title="Round Robin Protocol">RRP</acronym>), FIFO
+          buffers, <b>ZigBee</b>, nRF24... and growing! Need more? Tell us!</p>
 
       </div>
     </div>
@@ -93,7 +92,7 @@
         <p>You can use IceC to send the value of your <b>sensors</b> or
           change the state of your <b>actuators</b> from anywhere (even more
           seamlessly with <a href="/idm/">IDM</a>).
-	  IceC is compatible with cloud and cloud-less aplications.
+	  IceC is compatible with cloud and cloud-less applications.
 	</p>
 
       </div>
@@ -102,7 +101,7 @@
     <div class="thumbnail">
       <div class="caption">
         <h3><b>Small hardware needs</b></h3>
-        <p>IceC is designed for highly resource constrained hardware
+        <p>It is designed for highly resource constrained hardware
 	  (like Class 0 devices, as specified in <a href="https://tools.ietf.org/html/rfc7228">RFC
 	  7228</a>). Thus, it works perfectly on <b>AVR</b> based devices (like
 	  many <a href="https://www.arduino.cc/">Arduinos</a>), with
@@ -118,8 +117,8 @@
         <h3><b>Full of features</b></h3>
         <p>IceC is a minimal implementation of IceP, the protocol used by
 	  <a href="https://zeroc.com/">ZeroC Ice</a>. It supports the
-	  <b>core</b> features of IceP v1.0, along some "extra"
-	  features, like Dynamic Ice or Default Servants.</p>
+	  <b>core</b> features of IceP v1.0, along some "extra" features, like Dynamic Ice
+	  or Default Servants, and Ice core services, like the IceStorm event service.</p>
 
       </div>
     </div>
@@ -135,7 +134,7 @@
 	  you will use your <b>network bandwith</b> wisely. Given that IceC
 	  does not need to parse complex plain-text headers or markup,
 	  also is very efficient in computational resources, like <b>CPU</b>
-	  time and <b>memory</b>.</p>
+	  time and <b>memory</b>, reducing <b>latency</b> too.</p>
 
       </div>
     </div>
@@ -146,7 +145,7 @@
         <p>Define you API (the contract between clients and servers)
 	  using Ice's <acronym title="Interface Definition Language">IDL</acronym>,
 	  called <a href="https://doc.zeroc.com/display/Ice36/The+Slice+Language">Slice</a>.
-	  IceC, again, supports the <b>most common</b> feature set:
+	  IceC, again, supports <b>all basic features</b>:
 	  modules, interfaces, methods, basic types, custom structs,
 	  dictionaries, sequences...</p>
       </div>
