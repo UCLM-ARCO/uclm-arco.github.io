@@ -1,4 +1,4 @@
-/* -*- mode: css; coding: utf-8 -*- */
+/* -*- mode: web; coding: utf-8 -*- */
 
 html, body {
     height: 100%;
@@ -34,8 +34,12 @@ body {
     cursor: help;
 }
 
-acronym {
-    border-bottom: 2px dotted gray;
+abbr[title] {
+    text-decoration: none;
+}
+
+abbr {
+    border-bottom: 2px dotted gray !important;
     cursor: help;
 }
 
@@ -56,5 +60,64 @@ hr.frontpage {
 .footer {
     font-size: 0.9em;
     color: gray;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+/* big example steps */
+.tab-content {
+    margin-top: 25px;
+}
+
+a.tab-link {
+    font-size: 1.8em;
+    color: transparent;
+    text-decoration: none;
+    text-shadow: 0 0 3px #7394BC;
+    transition: color .5s ease,
+                text-shadow .5s ease;
+}
+
+a.tab-link:hover {
+    text-shadow: none;
+    color: #294B76;
+}
+
+a.tab-link.active {
+    text-shadow: none;
+    color: #294B76;
+    font-weight: bold !important;
+}
+
+/* application code skin */
+.app-skin {
+    box-shadow: 0 3px 4px rgba(0,0,0,.24);
+    overflow-x: hidden;
+
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.app-skin .filename {
+    background-image: url('/idm/images/three-dots.png');
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+    background-color: white;
+    padding: 7px 15px;
+    border-bottom: 1px solid gray;
+}
+
+.app-skin .filename {
+    color: #294B76;
+}
+
+.app-skin.shell pre,
+code.language-sh {
+    background: #D0D0D0;
+}
+
+pre {
+    border: 0px;
+    border-radius: 0px;
+    margin-bottom: 0px;
 }

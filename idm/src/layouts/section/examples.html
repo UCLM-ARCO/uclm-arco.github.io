@@ -1,27 +1,122 @@
 {{ partial "header.html" . }}
+{{ $static := .Site.Params.path }}
 
-<br><br>
+<br>
 <h3>Let's start with the classic <b>"Hello World!"</b> example:</h3>
 
 <hr>
 <div class="row">
-  <div class="col-md-3">
-    Step 1:
+  <div class="col-xs-3">
+    <a class="tab-link active" onClick="setActive(this)" href="#step1" data-toggle="tab">
+      Step 1: The Interface</a>
   </div>
 
-  <div class="col-md-3">
-    Step 2:
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step2" data-toggle="tab">
+      Step 2: TCP Server</a>
   </div>
 
-  <div class="col-md-3">
-    Step 3:
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step3" data-toggle="tab">
+      Step 3: UDP Client</a>
   </div>
 
-  <div class="col-md-3">
-    Step 4:
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step4" data-toggle="tab">
+      Step 4: Running!</a>
   </div>
 </div>
 
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade" id="step1">
+
+    <div class="row">
+      <div class="col-sm-6">
+	<p>
+	  The interface is very simple, just <b>a method</b> to say
+	  hello! On this example, we will use Python, so there is no
+	  need to compile it...</p>
+      </div>
+
+      <div class="col-sm-6">
+	<p>But if you prefer <b>another language</b>, just select the
+	  apropiate <em>translator</em>:
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/interface.ice"
+	       title="Click to download this code!">interface.ice</a>
+	  </div>
+	  <pre><code class="language-cpp">{{readFile "/static/code/hello-world/interface.ice"}}</code></pre>
+	</div>
+      </div>
+
+      <div class="col-sm-6">
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ slice2cpp interface.ice
+$ slice2java interface.ice
+$ slice2js interface.ice
+$ slice2cs interface.ice
+$ slice2php interface.ice
+[...]
+
+	  </code></pre>
+	</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade" id="step2">
+    <p>This server listens on a <b>TCP</b> port, waiting for incoming
+      invocations. Its like any other
+      <a href="https://doc.zeroc.com/display/Ice36/Writing+an+Ice+Application+with+Python">ZeroC Ice</a> server,
+      you only need to also: <b>1)</b> load IDM slice, and <b>2)</b> using a valid
+      IDM slice, <b>3)</b> register your proxy on IDM router.
+    </p>
+
+    <div class="app-skin">
+      <div class="filename">
+	<a download href="{{ $static }}/code/hello-world/server.py"
+	   title="Click to download this code!">server.py</a>
+      </div>
+      <pre style="height: 300px"><code class="language-py">{{readFile "/static/code/hello-world/server.py"}}</code></pre>
+    </div>
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade in active" id="step3">
+    <p>Create a regular <b>UDP</b> client. But wait... UDP? <b>Yes!</b> Thats the point
+      with IDM, you can have <em>different</em> protocols on each
+      side, like TCP, UDP, RS-485, ZigBee... No problem, IDM will make
+      the message arrive to its correct destination.</p>
+
+    <div class="app-skin">
+      <div class="filename">
+	<a download href="{{ $static }}/code/hello-world/client.py"
+	   title="Click to download this code!">client.py</a>
+      </div>
+      <pre style="height: 300px"><code class="language-py">{{readFile "/static/code/hello-world/client.py"}}</code></pre>
+    </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade" id="step4">
+    WIP: running router, server and client!
+  </div>
+
+</div>
+
+<script>
+ function setActive(elem) {
+     $('.tab-link.active').removeClass('active');
+     $(elem).addClass('active');
+ }
+</script>
 
 {{ partial "footer.html" . }}
 
