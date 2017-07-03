@@ -28,7 +28,7 @@
 </div>
 
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade in active" id="step1">
+  <div role="tabpanel" class="tab-pane fade" id="step1">
 
     <div class="row">
       <div class="col-sm-6">
@@ -105,8 +105,48 @@ $ slice2php interface.ice
     </div>
   </div>
 
-  <div role="tabpanel" class="tab-pane fade" id="step4">
-    WIP: running router, server and client!
+  <div role="tabpanel" class="tab-pane fade in active" id="step4">
+    <p>You will need to launch <b>1)</b> the IDM router, <b>2)</b> your server and
+      <b>3)</b> a client (in that order):</p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/router.config"
+	       title="Click to download this code!">router.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/router.config"}}</code></pre>
+	</div>
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ idm-router --Ice.Config=router.config
+[...]
+INFO:root: waiting events...</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/server.config"
+	       title="Click to download this code!">server.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/server.config"}}</code></pre>
+	</div>
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./server.py --Ice.Config=server.config
+Ready, waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
   </div>
 
 </div>
