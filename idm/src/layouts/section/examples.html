@@ -200,6 +200,17 @@ Ready, waiting events...</code></pre>
 
 </div>
 
+<br>
+<hr>
+<h3>More examples and documentation</h3>
+<br>
+
+<ul>
+  {{ range .Data.Pages }}
+  <li>{{ .Render "link" }}</li>
+  {{ end }}
+</ul>
+
 <script>
  function setActive(elem) {
      $('.tab-link.active').removeClass('active');

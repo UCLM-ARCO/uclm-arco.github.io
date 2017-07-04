@@ -6,7 +6,7 @@ all:
 	hugo --theme=$(THEME)
 
 run-preview-server:
-	hugo server --bind "0.0.0.0" --theme=$(THEME)
+	hugo server --bind "0.0.0.0" --theme=$(THEME) --buildDrafts
 
 install-deps:
 	sudo apt-get install hugo
