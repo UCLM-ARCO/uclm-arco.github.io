@@ -28,12 +28,11 @@
 </div>
 
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane fade" id="step1">
+  <div role="tabpanel" class="tab-pane fade in active" id="step1">
 
     <div class="row">
       <div class="col-sm-6">
-	<p>
-	  The interface is very simple, just <b>a method</b> to say
+	<p>The interface is very simple, just <b>a method</b> to say
 	  hello! On this example, we will use Python, so there is no
 	  need to compile it...</p>
       </div>
@@ -105,9 +104,11 @@ $ slice2php interface.ice
     </div>
   </div>
 
-  <div role="tabpanel" class="tab-pane fade in active" id="step4">
-    <p>You will need to launch <b>1)</b> the IDM router, <b>2)</b> your server and
-      <b>3)</b> a client (in that order):</p>
+  <div role="tabpanel" class="tab-pane fade" id="step4">
+    <p>To make everything work, you need to run an <b>IDM router</b>
+    first. Its very easy, just copy (or download) the following <i>configuration</i> file,
+      <code>router.config</code>. Then, launch it as follows:
+    </p>
 
     <div class="row">
       <div class="col-sm-6">
@@ -120,6 +121,9 @@ $ slice2php interface.ice
 	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/router.config"}}</code></pre>
 	</div>
 
+      </div>
+      <div class="col-sm-6">
+
 	<div class="app-skin shell">
 	  <div class="filename">console</div>
 	  <pre><code class="language-sh">$ idm-router --Ice.Config=router.config
@@ -128,6 +132,16 @@ INFO:root: waiting events...</code></pre>
 	</div>
 
       </div>
+    </div>
+
+    <br>
+    <p>Then, the second step is launching your <b>TCP server</b>. Again, copy
+      or download the configuration file, <code>server.config</code>,
+      and run the following command (you will see how it is registered
+      on router):
+    </p>
+
+    <div class="row">
       <div class="col-sm-6">
 
 	<div class="app-skin">
@@ -135,13 +149,48 @@ INFO:root: waiting events...</code></pre>
 	    <a download href="{{ $static }}/code/hello-world/server.config"
 	       title="Click to download this code!">server.config</a>
 	  </div>
-	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/server.config"}}</code></pre>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/server.config"}}
+</code></pre>
 	</div>
+
+      </div>
+      <div class="col-sm-6">
 
 	<div class="app-skin shell">
 	  <div class="filename">console</div>
 	  <pre><code class="language-sh">$ python3 ./server.py --Ice.Config=server.config
 Ready, waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+    <br>
+    <p>Last, run the <b>UDP Client</b>: copy or download the config file,
+      <code>client.config</code>, and run as indicated. If everything
+      is as expected, you will see a "Hello World!" message on the
+      server console, indicating that the method invocation arrived
+      correctly. <b>Good job!</b>
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/client.config"
+	       title="Click to download this code!">client.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/client.config"}}
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./client.py --Ice.Config=client.config</code></pre>
 	</div>
 
       </div>

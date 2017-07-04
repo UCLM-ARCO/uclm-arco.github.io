@@ -65,8 +65,7 @@
 
     <div class="row">
       <div class="col-sm-6">
-	<p>
-	  The interface is very simple, just <b>a method</b> to say
+	<p>The interface is very simple, just <b>a method</b> to say
 	  hello! On this example, we will use Python, so there is no
 	  need to compile it...</p>
       </div>
@@ -205,7 +204,103 @@ if __name__ == &#34;__main__&#34;:
   </div>
 
   <div role="tabpanel" class="tab-pane fade" id="step4">
-    WIP: running router, server and client!
+    <p>To make everything work, you need to run an <b>IDM router</b>
+    first. Its very easy, just copy (or download) the following <i>configuration</i> file,
+      <code>router.config</code>. Then, launch it as follows:
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="/idm/code/hello-world/router.config"
+	       title="Click to download this code!">router.config</a>
+	  </div>
+	  <pre><code class="language-conf">Router.Table.Path = /tmp/router.table
+Router.Adapter.Endpoints = tcp -h 127.0.0.1 -p 6140
+Router.Ids = 10AA01
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ idm-router --Ice.Config=router.config
+[...]
+INFO:root: waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+    <br>
+    <p>Then, the second step is launching your <b>TCP server</b>. Again, copy
+      or download the configuration file, <code>server.config</code>,
+      and run the following command (you will see how it is registered
+      on router):
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="/idm/code/hello-world/server.config"
+	       title="Click to download this code!">server.config</a>
+	  </div>
+	  <pre><code class="language-conf">IDM.Router.Proxy = 10AA01 -t:tcp -h 127.0.0.1 -p 6140
+Adapter.Endpoints = tcp
+
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./server.py --Ice.Config=server.config
+Ready, waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+    <br>
+    <p>Last, run the <b>UDP Client</b>: copy or download the config file,
+      <code>client.config</code>, and run as indicated. If everything
+      is as expected, you will see a "Hello World!" message on the
+      server console, indicating that the method invocation arrived
+      correctly. <b>Good job!</b>
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="/idm/code/hello-world/client.config"
+	       title="Click to download this code!">client.config</a>
+	  </div>
+	  <pre><code class="language-conf">IDM.Router.Proxy = 10AA01 -t:tcp -h 127.0.0.1 -p 6140
+
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./client.py --Ice.Config=client.config</code></pre>
+	</div>
+
+      </div>
+    </div>
+
   </div>
 
 </div>
