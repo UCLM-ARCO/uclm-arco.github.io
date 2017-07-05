@@ -112,7 +112,7 @@ a.tab-link.active {
 }
 
 .app-skin.shell pre,
-code.language-sh {
+.app-skin.shell pre code.language-sh {
     background: #D0D0D0;
 }
 
@@ -120,4 +120,8 @@ pre {
     border: 0px;
     border-radius: 0px;
     margin-bottom: 0px;
+}
+
+.md-content > h2 {
+    padding-top: 15px;
 }

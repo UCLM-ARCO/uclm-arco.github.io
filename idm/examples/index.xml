@@ -6,7 +6,112 @@
     <description>Recent content on Inter Domain Messagging</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Wed, 05 Jul 2017 14:48:22 +0200</lastBuildDate>
     <atom:link href="https://arcogroup.bitbucket.io/idm/examples/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>install</title>
+      <link>https://arcogroup.bitbucket.io/idm/examples/install/</link>
+      <pubDate>Wed, 05 Jul 2017 14:48:22 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/idm/examples/install/</guid>
+      <description>
+
+&lt;h2 id=&#34;idm-installation&#34;&gt;IDM installation&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; this post will show you how to install IDM on a &lt;strong&gt;Debian&lt;/strong&gt;
+based machine (like Ubuntu). The following instructions were tested on
+Debian 9.0 (stretch) y Ubuntu 17.04 (zesty). If you use
+&lt;a href=&#34;https://www.vagrantup.com/&#34;&gt;Vagrant&lt;/a&gt;, you can download our
+&lt;a download href=&#34;https://arcogroup.bitbucket.io/idm/idm/code/install/Vagrantfile&#34;&gt;VagrantFile&lt;/a&gt;
+ for both
+setups.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-up-debian-repositories&#34;&gt;Setting up Debian repositories&lt;/h2&gt;
+
+&lt;p&gt;IDM is located on &lt;a href=&#34;http://pike.esi.uclm.es&#34;&gt;ARCO&amp;rsquo;s pike&lt;/a&gt;
+repository. To install it, run the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ wget -qO- &#39;http://pike.esi.uclm.es/add-pike-repo.sh&#39; | sudo sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;installing-zeroc-ice-for-python3&#34;&gt;Installing ZeroC Ice for Python3&lt;/h2&gt;
+
+&lt;p&gt;With a &lt;strong&gt;fresh&lt;/strong&gt; installation of Debian 9.0 or Ubuntu 17.04, you can
+install ZeroC Ice for Python 3 directly:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ sudo apt-get install python3-zeroc-ice
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For older versions or another systems, you can follow the official
+installation instructions: &lt;a href=&#34;https://zeroc.com/distributions/ice&#34;&gt;Ice
+Distributions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-idm&#34;&gt;Installing IDM&lt;/h2&gt;
+
+&lt;p&gt;Also, very straightforward:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ sudo apt-get install idm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;check-that-it-works&#34;&gt;Check that it works&lt;/h2&gt;
+
+&lt;p&gt;To check if your setup is working, download the following
+&lt;a download href=&#34;https://arcogroup.bitbucket.io/idm/idm/code/install/router.config&#34;&gt;configuration file:&lt;/a&gt;
+&lt;/p&gt;
+
+
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;Router.Table.Path = router.table
+Router.Adapter.Endpoints = tcp -h 127.0.0.1 -p 6140
+Router.Ids = 10AA01
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;p&gt;And launch the IDM router using:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ idm-router --Ice.Config=router.config
+WARNING:root: router controller not defined
+WARNING:root: DUO advertisements disabled
+INFO:root: queue Size: 10
+INFO:root: router at &#39;10AA01 -t -e 1.1:tcp -h 127.0.0.1 -p 6140 -t 60000&#39;
+INFO:root: waiting events...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you see the same (or similar) result, then &lt;strong&gt;it works!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;using-vagrant&#34;&gt;Using Vagrant&lt;/h2&gt;
+
+&lt;p&gt;The provided &lt;a download href=&#34;https://arcogroup.bitbucket.io/idm/idm/code/install/Vagrantfile&#34;&gt;VagrantFile&lt;/a&gt;
+
+has two configured boxes, and comes bundled with a &lt;em&gt;bootstrap&lt;/em&gt; script
+to install the required packages. Download it, and launch one of the
+included configurations (&lt;code&gt;debian&lt;/code&gt; or &lt;code&gt;ubuntu&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ vagrant up debian
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When finished, you can &lt;strong&gt;enter&lt;/strong&gt; the box and check if IDM is correctly
+installed (using the above instructions):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ vagrant ssh debian
+[...]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;!--
+Local Variables:
+  truncate-lines: true
+  ispell-local-dictionary: &#34;american&#34;
+End:
+--&gt;
+
+&lt;!--
+  LocalWords:  staticLink ARCO&#39;s
+--&gt;
+</description>
+    </item>
     
   </channel>
 </rss>
