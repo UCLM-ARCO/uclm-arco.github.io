@@ -1,0 +1,24 @@
+<!-- -*- mode: html; coding: utf-8 -*- -->
+{{ $static := .Site.Params.path }}
+
+<div class="news-card">
+  <div class="row">
+
+    <div class="col-xs-2" style="overflow-x: hidden">
+      <img height="100%" src="{{ $static }}/images/{{ .Params.image }}" />
+    </div>
+
+    <div class="col-xs-10 col-sm-8">
+      <h3>{{ if .Draft }}[DRAFT]{{end}}	{{ .Title }}</h3>
+      <p>{{ .Description }}</p>
+    </div>
+
+    <div class="hidden-xs col-sm-2">
+      <p class="date">{{ .Date.Format "2006/01/02" }}</p>
+      <hr>
+      <div class="tags">
+	{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}
+      </div>
+    </div>
+  </div>
+</div>

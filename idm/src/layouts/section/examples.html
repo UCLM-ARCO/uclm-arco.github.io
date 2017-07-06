@@ -208,7 +208,10 @@ Ready, waiting events...</code></pre>
 
 <ul>
   {{ range .Data.Pages }}
-  <li>{{ .Render "link" }}</li>
+  <li>
+    {{ if .Draft }} [draft] {{ end}}
+    {{ .Render "link" }}
+  </li>
   {{ end }}
 </ul>
 
