@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Inter Domain Messagging</title>
-    <link>https://arcogroup.bitbucket.io/idm/news/index.xml</link>
-    <description>Recent content on Inter Domain Messagging</description>
+    <title>Event on Inter Domain Messagging</title>
+    <link>https://arcogroup.bitbucket.io/idm/tags/event/index.xml</link>
+    <description>Recent content in Event on Inter Domain Messagging</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Jul 2017 10:50:27 +0200</lastBuildDate>
-    <atom:link href="https://arcogroup.bitbucket.io/idm/news/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://arcogroup.bitbucket.io/idm/tags/event/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>New IDM documentation site!</title>

@@ -58,6 +58,7 @@ hr.frontpage {
 }
 
 .footer {
+    padding-top: 10px;
     font-size: 0.9em;
     color: gray;
     padding-bottom: 20px;
@@ -124,4 +125,30 @@ pre {
 
 .md-content > h2 {
     padding-top: 15px;
+}
+
+.news-card h3 {
+    color: #294B76;
+}
+
+.news-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .20);
+}
+
+.news-card .date {
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.news-card hr {
+    border-bottom: 1px solid #294B76;
+    margin-top: 5px;
+    margin-bottom: 8px;
+}
+
+.news-card .tags {
+    font-size: 0.9em;
+    color: gray;
 }

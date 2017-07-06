@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://arcogroup.bitbucket.io/idm/news/new-documentation-site/</loc>
+    <lastmod>2017-07-06T10:50:27+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://arcogroup.bitbucket.io/idm/examples/install/</loc>
     <lastmod>2017-07-05T14:48:22+02:00</lastmod>
   </url>
@@ -18,11 +23,23 @@
   
   <url>
     <loc>https://arcogroup.bitbucket.io/idm/news/</loc>
+    <lastmod>2017-07-06T10:50:27+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://arcogroup.bitbucket.io/idm/tags/event/</loc>
+    <lastmod>2017-07-06T10:50:27+02:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://arcogroup.bitbucket.io/idm/</loc>
-    <lastmod>2017-07-05T14:48:22+02:00</lastmod>
+    <lastmod>2017-07-06T10:50:27+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://arcogroup.bitbucket.io/idm/tags/</loc>
     <priority>0</priority>
   </url>
   
