@@ -1,9 +1,7 @@
 +++
 title = "New IDM documentation site!"
 
-description = "At last, we have joined efforts and made a new site for \
-maintaining the IDM documentation. Of course, feel free \
-to contact us if you have any questions. Hope you enjoy it!"
+description = "At last, we have joined efforts and made a new site for \n maintaining the IDM documentation. Of course, feel free \n to contact us if you have any questions. Hope you enjoy it!"
 
 draft = false
 tags = ["event"]
