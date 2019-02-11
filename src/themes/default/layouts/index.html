@@ -1,0 +1,35 @@
+{{ partial "header.html" . }}
+{{ $base := .Site.Params.path }}
+
+<div class="box">
+  <img src="{{ $base }}/images/arco-logo-128.png"
+       style="padding: 0 25px"/>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    Research & Documentation</h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Text to search...">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</div>
+
+<br>
+<h2 class="listing"># Projects</h2>
+<h2 class="listing"># Internal Research</h2>
+<h2 class="listing"># Recipes & Other Docs</h2>
+
+{{ range $sec := .Site.Sections }}
+  {{ .Type }}
+  {{ .Title }}
+  {{ .Description }}
+  {{ .Params.icon }}
+{{ end }}
+
+
+{{ partial "footer.html" . }}

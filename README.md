@@ -1,3 +1,15 @@
-Repositorio general de documentación del grupo. Se debe hacer un directorio por cada proyecto o temática. Se utilizará hugo para todos ellos.
+## Overview
 
-Visita https://arcogroup.bitbucket.io.
+Arco Research group documentation project. Use a directory for each project (on
+`src` dir). Compile the documentation using hugo.
+
+Visit https://arcogroup.bitbucket.io.
+
+## WARNING!
+
+Don't change any file on this folder, as are automatically generated
+and all your changes will be DISCARDED. Make modifications on 'src'
+folder only.
+
+Thanks.
+

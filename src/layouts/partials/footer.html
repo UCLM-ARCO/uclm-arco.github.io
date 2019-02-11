@@ -1,0 +1,20 @@
+{{ $base := .Site.Params.path }}
+
+    </div> <!-- container -->
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="{{ .Params.baseDocURL }}/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="{{ $base }}/js/jquery.min.js"></script>
+    <script src="{{ $base }}/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ $base }}/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
