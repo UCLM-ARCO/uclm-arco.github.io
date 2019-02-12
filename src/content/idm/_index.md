@@ -1,6 +1,6 @@
 ---
 type: "internal-project"
 title: "IDM"
-description: "idm sample description"
-icon: "idm-logo.png"
+description: "Inter Domain Messaging system, a protocol for communicating devices across different technologies."
+icon: "idm/images/idm-logo.png"
 ---

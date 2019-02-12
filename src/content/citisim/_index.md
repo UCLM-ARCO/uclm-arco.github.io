@@ -1,6 +1,7 @@
 ---
 type: "project"
 title: "Citisim"
-description: "citisim sample description"
-icon: "citisim-logo.png"
+date: 2016-02-11T14:05:21+01:00
+description: "Design and implementation of a new generation platform for the Smart City ecosystem."
+icon: "citisim/images/citisim-logo.png"
 ---

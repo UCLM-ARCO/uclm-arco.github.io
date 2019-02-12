@@ -1,1 +1,19 @@
-Project card: {{ .Title }}
+
+<div class="card project-card">
+
+  <div class="row align-items-center">
+    <div class="col project-card-icon">
+      <img src="{{ .Params.icon }}">
+    </div>
+    <div class="col-2 project-card-title">
+      <h4>{{ .Title }}</h4>
+    </div>
+    <div class="col project-card-text">
+      <p class="card-text">{{ .Description }}</p>
+    </div>
+    <div class="col-2 project-card-button text-right">
+      <a href="{{ .Permalink }}" class="btn btn-sm btn-outline-success">View</a>
+    </div>
+  </div>
+
+</div>

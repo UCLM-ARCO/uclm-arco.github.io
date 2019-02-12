@@ -20,18 +20,26 @@
 </div>
 
 <h2 class="listing"># Projects</h2>
-{{ range where .Site.Sections "Type" "project" }}
-  {{ partial "project-card.html" . }}
-{{ end }}
+<div style="margin-left: 50px">
+  {{ range where .Site.Sections "Type" "project" }}
+    {{ partial "project-card.html" . }}
+  {{ end }}
+</div>
 
+<br>
 <h2 class="listing"># Internal Research</h2>
-{{ range $sec := where .Site.Sections "Type" "internal-project" }}
-  {{ partial "project-card.html" . }}
-{{ end }}
+<div style="margin-left: 50px">
+  {{ range where .Site.Sections "Type" "internal-project" }}
+    {{ partial "project-card.html" . }}
+  {{ end }}
+</div>
 
+<br>
 <h2 class="listing"># Recipes & Other Docs</h2>
-{{ range $sec := where .Site.Sections "Type" "recipes" }}
-  {{ partial "project-card.html" . }}
-{{ end }}
+<div style="margin-left: 50px">
+  {{ range where .Site.Sections "Type" "recipes" }}
+    {{ partial "project-card.html" . }}
+  {{ end }}
+</div>
 
 {{ partial "footer.html" . }}
