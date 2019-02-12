@@ -17,4 +17,7 @@ install-deps:
 .PHONY: clean
 clean:
 	$(RM) -frv \
-	../css ../images ../index.html ../index.xml ../sitemap.xml
+	../css ../images ../webfonts ../js \
+	../index.html ../index.xml ../sitemap.xml \
+	../categories ../tags \
+	../citisim ../arco101 ../hesperia ../idm ../icec ../symbiot
