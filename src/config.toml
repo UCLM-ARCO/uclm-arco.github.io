@@ -2,4 +2,4 @@ baseURL = "https://arcogroup.bitbucket.io/"
 languageCode = "en-us"
 title = "Arco Research & Documentation"
 theme = "default"
-
+publishDir = ".."
