@@ -10,7 +10,7 @@
 
 <hr style="border: 1px solid #333333">
 
-<div class="input-group mb-3">
+<div class="input-group mb-3" style="padding-bottom: 10px">
   <input type="text" class="form-control" placeholder="Text to search...">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" id="button-addon2">
@@ -19,17 +19,19 @@
   </div>
 </div>
 
-<br>
 <h2 class="listing"># Projects</h2>
-<h2 class="listing"># Internal Research</h2>
-<h2 class="listing"># Recipes & Other Docs</h2>
-
-{{ range $sec := .Site.Sections }}
-  {{ .Type }}
-  {{ .Title }}
-  {{ .Description }}
-  {{ .Params.icon }}
+{{ range where .Site.Sections "Type" "project" }}
+  {{ partial "project-card.html" . }}
 {{ end }}
 
+<h2 class="listing"># Internal Research</h2>
+{{ range $sec := where .Site.Sections "Type" "internal-project" }}
+  {{ partial "project-card.html" . }}
+{{ end }}
+
+<h2 class="listing"># Recipes & Other Docs</h2>
+{{ range $sec := where .Site.Sections "Type" "recipes" }}
+  {{ partial "project-card.html" . }}
+{{ end }}
 
 {{ partial "footer.html" . }}
