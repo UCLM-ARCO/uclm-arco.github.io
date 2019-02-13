@@ -1,0 +1,232 @@
+{{ partial "header.html" . }}
+{{ $static := .Site.Params.path }}
+
+<br>
+<h3>Let's start with the classic <b>"Hello World!"</b> example:</h3>
+
+<hr>
+<div class="row">
+  <div class="col-xs-3">
+    <a class="tab-link active" onClick="setActive(this)" href="#step1" data-toggle="tab">
+      Step 1: The Interface</a>
+  </div>
+
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step2" data-toggle="tab">
+      Step 2: TCP Server</a>
+  </div>
+
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step3" data-toggle="tab">
+      Step 3: UDP Client</a>
+  </div>
+
+  <div class="col-xs-3">
+    <a class="tab-link" onClick="setActive(this)" href="#step4" data-toggle="tab">
+      Step 4: Running!</a>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="step1">
+
+    <div class="row">
+      <div class="col-sm-6">
+	<p>The interface is very simple, just <b>a method</b> to say
+	  hello! On this example, we will use Python, so there is no
+	  need to compile it...</p>
+      </div>
+
+      <div class="col-sm-6">
+	<p>But if you prefer <b>another language</b>, just select the
+	  apropiate <em>translator</em>:
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/interface.ice"
+	       title="Click to download this code!">interface.ice</a>
+	  </div>
+	  <pre><code class="language-cpp">{{readFile "/static/code/hello-world/interface.ice"}}</code></pre>
+	</div>
+      </div>
+
+      <div class="col-sm-6">
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ slice2cpp interface.ice
+$ slice2java interface.ice
+$ slice2js interface.ice
+$ slice2cs interface.ice
+$ slice2php interface.ice
+[...]
+
+	  </code></pre>
+	</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade" id="step2">
+    <p>This server listens on a <b>TCP</b> port, waiting for incoming
+      invocations. Its like any other
+      <a href="https://doc.zeroc.com/display/Ice36/Writing+an+Ice+Application+with+Python">ZeroC Ice</a> server,
+      you only need to also: <b>1)</b> load IDM slice, and <b>2)</b> using a valid
+      IDM slice, <b>3)</b> register your proxy on IDM router.
+    </p>
+
+    <div class="app-skin">
+      <div class="filename">
+	<a download href="{{ $static }}/code/hello-world/server.py"
+	   title="Click to download this code!">server.py</a>
+      </div>
+      <pre style="height: 300px"><code class="language-py">{{readFile "/static/code/hello-world/server.py"}}</code></pre>
+    </div>
+
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade" id="step3">
+    <p>Create a regular <b>UDP</b> client. But wait... UDP? <b>Yes!</b> Thats the point
+      with IDM, you can have <em>different</em> protocols on each
+      side, like TCP, UDP, RS-485, ZigBee... No problem, IDM will make
+      the message arrive to its correct destination.</p>
+
+    <div class="app-skin">
+      <div class="filename">
+	<a download href="{{ $static }}/code/hello-world/client.py"
+	   title="Click to download this code!">client.py</a>
+      </div>
+      <pre style="height: 300px"><code class="language-py">{{readFile "/static/code/hello-world/client.py"}}</code></pre>
+    </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane fade" id="step4">
+    <p>To make everything work, you need to run an <b>IDM router</b>
+    first. Its very easy, just copy (or download) the following <i>configuration</i> file,
+      <code>router.config</code>. Then, launch it as follows:
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/router.config"
+	       title="Click to download this code!">router.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/router.config"}}</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ idm-router --Ice.Config=router.config
+[...]
+INFO:root: waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+    <br>
+    <p>Then, the second step is launching your <b>TCP server</b>. Again, copy
+      or download the configuration file, <code>server.config</code>,
+      and run the following command (you will see how it is registered
+      on router):
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/server.config"
+	       title="Click to download this code!">server.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/server.config"}}
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./server.py --Ice.Config=server.config
+Ready, waiting events...</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+    <br>
+    <p>Last, run the <b>UDP Client</b>: copy or download the config file,
+      <code>client.config</code>, and run as indicated. If everything
+      is as expected, you will see a "Hello World!" message on the
+      server console, indicating that the method invocation arrived
+      correctly. <b>Good job!</b>
+    </p>
+
+    <div class="row">
+      <div class="col-sm-6">
+
+	<div class="app-skin">
+	  <div class="filename">
+	    <a download href="{{ $static }}/code/hello-world/client.config"
+	       title="Click to download this code!">client.config</a>
+	  </div>
+	  <pre><code class="language-conf">{{readFile "/static/code/hello-world/client.config"}}
+</code></pre>
+	</div>
+
+      </div>
+      <div class="col-sm-6">
+
+	<div class="app-skin shell">
+	  <div class="filename">console</div>
+	  <pre><code class="language-sh">$ python3 ./client.py --Ice.Config=client.config</code></pre>
+	</div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<br>
+<hr>
+
+<h3>More examples and documentation:</h3>
+<br>
+
+<ul>
+  {{ range .Data.Pages }}
+  <li>
+    {{ if .Draft }} [draft] {{ end}}
+    {{ .Render "link" }}
+  </li>
+  {{ end }}
+</ul>
+
+<script>
+ function setActive(elem) {
+     $('.tab-link.active').removeClass('active');
+     $(elem).addClass('active');
+ }
+</script>
+
+{{ partial "footer.html" . }}
+
+<!--
+Local Variables:
+  truncate-lines: true
+  ispell-local-dictionary: "american"
+End:
+-->
