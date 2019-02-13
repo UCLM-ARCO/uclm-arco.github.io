@@ -1,7 +1,7 @@
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 
 HUGO_SITE = hugo-site
-PROJECTS  = arco101 citisim hesperia icec idm symbiot
+PROJECTS  = arco101 citisim hesperia idm icec symbiot
 
 all:
 

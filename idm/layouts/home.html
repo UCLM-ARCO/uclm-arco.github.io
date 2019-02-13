@@ -1,5 +1,22 @@
----
----
+{{ $base := .Site.Params.path }}
+{{ partial "header.html" . }}
+
+<link rel="stylesheet" href="css/style.css">
+
+<div class="btn-group w-100" role="group">
+	<a href="/idm/"
+	   class="btn btn-outline-secondary {{ if .IsHome }} active {{ end }}">
+	  Overview</a>
+	<a href="/idm/examples/"
+	   class="btn btn-outline-success {{ if eq .Section "examples" }} active {{ end }}">
+	  Getting Started</a>
+	<a href="/idm/spec/"
+	   class="btn btn-outline-secondary disabled {{ if eq .Section "spec" }} active {{ end }}">
+	  Specification</a>
+	<a href="/idm/news/"
+	   class="btn btn-outline-secondary {{ if eq .Section "news" }} active {{ end }}">
+	  Latest News</a>
+</div>
 
 <div class="jumbotron text-center"
      style="background-color: inherit; padding-left: 0px; padding-right: 0px">
@@ -146,3 +163,5 @@
 
 <br>
 <hr class="frontpage">
+
+{{ partial "footer.html" . }}

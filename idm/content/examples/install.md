@@ -53,9 +53,9 @@ Check that it works
 -------------------
 
 To check if your setup is working, download the following
-{{< staticLink "code/install/router.config" "configuration file:" >}}
+{{< staticLink "idm/code/install/router.config" "configuration file:" >}}
 
-{{< staticCode "idm/static/code/install/router.config" sh >}}
+{{< staticCode "idm/code/install/router.config" sh >}}
 
 And launch the IDM router using:
 
