@@ -11,5 +11,14 @@
 	<atom:link href="https://arcogroup.bitbucket.io/icec/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title></title>
+      <link>https://arcogroup.bitbucket.io/icec/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/icec/</guid>
+      <description>Overview Getting Started Reference Latest News  IceC Ice for Constrained devices “IceC is an object oriented communication middleware, specifically designed for highly constrained devices. Written in C/C++, and with a binary protocol, it uses a minimal footprint, not only on processor and memory resources, but also in network bandwith usage.”  Portable Written in ANSI C (with some endpoints in C++), you can use IceC wherever you have a compliant C compiler.</description>
+    </item>
+    
   </channel>
 </rss>

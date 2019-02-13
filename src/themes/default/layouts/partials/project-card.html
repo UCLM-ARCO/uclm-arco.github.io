@@ -12,7 +12,14 @@
       <p class="card-text">{{ .Description }}</p>
     </div>
     <div class="col-2 project-card-button text-right">
-      <a href="{{ .Permalink }}" class="btn btn-sm btn-outline-success">View</a>
+      <a
+      {{ if isset .Params "redirect" }}
+          href="{{ .Params.redirect }}"
+      {{ else }}
+          href="{{ .Permalink }}"
+      {{ end }}
+          class="btn btn-sm btn-outline-success">View
+      </a>
     </div>
   </div>
 

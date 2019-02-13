@@ -6,10 +6,10 @@ all:
 	hugo --theme=$(THEME)
 
 run-preview-server:
-	hugo server --bind "0.0.0.0" --theme=$(THEME)
+	hugo server -v --bind "0.0.0.0" --theme=$(THEME)
 
 run-preview-server-with-drafts:
-	hugo server -D --bind "0.0.0.0" --theme=$(THEME)
+	hugo server -v -D --bind "0.0.0.0" --theme=$(THEME)
 
 install-deps:
 	sudo apt-get install hugo
