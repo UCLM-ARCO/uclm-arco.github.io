@@ -3,18 +3,18 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<div class="btn-group w-100" role="group">
+<div class="btn-group btn-group-sm w-100" role="group">
 	<a href="/idm/"
-	   class="btn btn-outline-secondary {{ if .IsHome }} active {{ end }}">
+	   class="btn btn-outline-secondary active">
 	  Overview</a>
 	<a href="/idm/examples/"
-	   class="btn btn-outline-success {{ if eq .Section "examples" }} active {{ end }}">
+	   class="btn btn-outline-success">
 	  Getting Started</a>
 	<a href="/idm/spec/"
-	   class="btn btn-outline-secondary disabled {{ if eq .Section "spec" }} active {{ end }}">
+	   class="btn btn-outline-secondary disabled">
 	  Specification</a>
 	<a href="/idm/news/"
-	   class="btn btn-outline-secondary {{ if eq .Section "news" }} active {{ end }}">
+	   class="btn btn-outline-secondary">
 	  Latest News</a>
 </div>
 

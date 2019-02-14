@@ -112,6 +112,7 @@ a.tab-link.active {
 
 .app-skin .filename {
     color: #294B76;
+    font-size: 0.9em;
 }
 
 .app-skin.shell pre,
@@ -123,6 +124,14 @@ pre {
     border: 0px;
     border-radius: 0px;
     margin-bottom: 0px;
+    font-size: 0.8em;
+    /* padding: 0.6em; */
+}
+
+pre code {
+    word-break: break-all !important;
+    word-wrap: break-word !important;
+    white-space: pre-wrap;
 }
 
 .md-content > h2 {
