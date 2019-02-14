@@ -15,13 +15,15 @@ hugo-clean:
 		$(RM) -r $(HUGO_SITE)/$$dir; \
 		mkdir -p $(HUGO_SITE)/$$dir; \
 	done
+	mkdir -p $(HUGO_SITE)/layouts/partials
 
 sync-prj:
-	@for dir in content layouts static; do \
+	@for dir in content layouts layouts/partials static; do \
 		if [ -d "$(PRJ)/$$dir" ]; then \
 			rsync -avz "$(PRJ)/$$dir/" "$(HUGO_SITE)/$$dir/$(PRJ)"; \
 		fi; \
 	done
+	$(RM) -rf "$(HUGO_SITE)/layouts/$(PRJ)/partials"
 
 keep-sync:
 	while inotifywait -r -e modify,create,delete $(PROJECTS); do \

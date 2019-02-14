@@ -1,22 +1,5 @@
 {{ $base := .Site.Params.path }}
-{{ partial "header.html" . }}
-
-<link rel="stylesheet" href="css/style.css">
-
-<div class="btn-group btn-group-sm w-100" role="group">
-	<a href="/idm/"
-	   class="btn btn-outline-secondary active">
-	  Overview</a>
-	<a href="/idm/examples/"
-	   class="btn btn-outline-success">
-	  Getting Started</a>
-	<a href="/idm/spec/"
-	   class="btn btn-outline-secondary disabled">
-	  Specification</a>
-	<a href="/idm/news/"
-	   class="btn btn-outline-secondary">
-	  Latest News</a>
-</div>
+{{ partial "idm/header.html" . }}
 
 <div class="jumbotron text-center"
      style="background-color: inherit; padding-left: 0px; padding-right: 0px">

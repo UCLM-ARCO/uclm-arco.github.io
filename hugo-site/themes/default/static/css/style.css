@@ -140,12 +140,15 @@ pre code {
 
 .news-card h3 {
     color: #294B76;
+    font-size: 1.8em;
+    margin-top: 10px;
 }
 
 .news-card {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, .20);
+    font-size: 0.9em;
 }
 
 .news-card .date {

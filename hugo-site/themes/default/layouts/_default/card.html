@@ -4,11 +4,12 @@
 <div class="news-card">
   <div class="row">
 
-    <div class="col-xs-2" style="overflow-x: hidden">
+    <div class="col-2" style="overflow-x: hidden">
       <img height="100%" src="{{ $static }}/images/{{ .Params.image }}" />
     </div>
 
-    <div class="col-xs-10 col-sm-8">
+    <div class="col-xs-10 col-sm-8 align-items-center"
+      style="margin-top: auto; margin-bottom: auto">
       <h3>{{ if .Draft }}[DRAFT]{{end}}	{{ .Title }}</h3>
       <p>{{ .Description }}</p>
     </div>

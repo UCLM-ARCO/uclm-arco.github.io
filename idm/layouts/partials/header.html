@@ -1,0 +1,20 @@
+{{ partial "header.html" . }}
+
+<link rel="stylesheet" href="/idm/css/style.css">
+
+<div class="btn-group btn-group-sm w-100" role="group">
+	<a href="/idm/"
+	   class="btn btn-outline-secondary {{ if eq .Params.section "idm-home" }} active {{ end }}">
+	  Overview</a>
+	<a href="/idm/examples/"
+	   class="btn btn-outline-success {{ if eq .Params.section "examples" }} active {{ end }}">
+	  Getting Started</a>
+	<a href="/idm/spec/"
+	   class="btn btn-outline-secondary disabled">
+	  Specification</a>
+	<a href="/idm/news/"
+	   class="btn btn-outline-secondary {{ if eq .Params.section "news" }} active {{ end }}">
+	  Latest News</a>
+</div>
+
+
