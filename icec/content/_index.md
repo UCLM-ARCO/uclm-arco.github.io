@@ -7,4 +7,5 @@ middleware for contrainded devices (in C)."
 icon: "icec/images/icec-logo.png"
 
 layout: "home"
+search_include_template: true
 ---

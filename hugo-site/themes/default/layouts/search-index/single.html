@@ -1,0 +1,38 @@
+{{/* -*- mode: go */}}
+{{- $.Scratch.Add "index" slice -}}
+
+{{/* include all common content: markdown files */}}
+{{- range where .Site.Pages ".Params.exclude_search" "ne" true -}}
+  {{- $i := (dict "title" .Title "ref" .Permalink "body" .Plain "summary" .Description) -}}
+  {{- $.Scratch.Add "index" $i -}}
+{{- end -}}
+
+{{/* add site sections */}}
+{{- $rootScratch := .Scratch -}}
+{{- range .Site.Sections -}}
+  {{- $.Scratch.Add "info" (dict "title" .Title "ref" .Permalink "summary" .Description "body" "") -}}
+
+  {{/* add content from HTML templates, only if explicitly say so */}}
+  {{- if eq .Params.search_include_template true -}}
+    {{- $ctx := (dict "rootScratch" $rootScratch "page" . ) -}}
+    {{- partial "getcontent.html" $ctx -}}
+  {{- end -}}
+
+  {{- $.Scratch.Get "info" | $.Scratch.Add "index" -}}
+  {{- $.Scratch.Delete "info" -}}
+
+  {{/* allow nested sections (subsections) but only 1 level */}}
+  {{- range .Sections -}}
+    {{- if eq .Params.search_include_template true -}}
+
+      {{- $.Scratch.Add "info" (dict "title" .Title "ref" .Permalink "summary" .Description "body" "") -}}
+      {{- $ctx := (dict "rootScratch" $rootScratch "page" . ) -}}
+      {{- partial "getcontent.html" $ctx -}}
+      {{- $.Scratch.Get "info" | $.Scratch.Add "index" -}}
+      {{- $.Scratch.Delete "info" -}}
+
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $.Scratch.Get "index" | jsonify -}}

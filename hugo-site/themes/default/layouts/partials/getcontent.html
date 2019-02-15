@@ -1,0 +1,7 @@
+{{/* -*- mode: go */}}
+
+{{/* FIXME: remove JS and template code */}}
+{{ $file := (print "layouts/" .page.Section "/" .page.Params.layout ".html")}}
+{{- $content := readFile $file | plainify -}}
+{{- $.rootScratch.SetInMap "info" "body" $content -}}
+

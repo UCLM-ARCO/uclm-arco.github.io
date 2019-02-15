@@ -6,7 +6,8 @@ description: "Inter Domain Messaging system, a protocol for communicating device
 icon: "idm/images/idm-logo.png"
 
 # custom parameters
-layout: "home"
 section: "idm-home"
+layout: "home"
+search_include_template: true
 ---
 
