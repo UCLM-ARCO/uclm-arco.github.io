@@ -2,23 +2,28 @@
 {{ $base := .Site.Params.path }}
 
 <div class="box">
-  <img src="{{ $base }}/images/arco-logo-128.png"
-       style="padding: 0 25px"/>
+  <a href="/">
+    <img src="{{ $base }}/images/arco-logo-128.png"
+         style="padding: 0 25px"/>
+  </a>
   <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
     Research & Documentation</h1>
 </div>
 
 <hr style="border: 1px solid #333333">
 
-<div class="input-group mb-3" style="padding-bottom: 10px">
-  <input type="text" class="form-control" placeholder="Text to search..."
-         id="search-input" name="search-input">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+<form onsubmit="do_search(); return false">
+  <div class="input-group mb-3" style="padding-bottom: 10px">
+    <input type="text" class="form-control" placeholder="Text to search..."
+    id="search-input" name="search-input">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit" id="search-button"
+      onclick="do_search()">
       <i class="fas fa-search"></i>
-    </button>
+      </button>
+    </div>
   </div>
-</div>
+</form>
 
 <div id="content-body">
 

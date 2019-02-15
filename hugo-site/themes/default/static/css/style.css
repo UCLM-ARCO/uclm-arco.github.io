@@ -211,3 +211,33 @@ h2.listing {
     padding-left: 0px;
     padding-right: 0px;
 }
+
+ul.search {
+    padding-left: 0px;
+}
+
+ul.search a {
+    font-size: 18px;
+    margin-bottom: 0px;
+    line-height: 21.6px;
+}
+
+ul.search cite {
+    color: #006621;
+    font-style: normal;
+    font-size: 14px;
+    margin-top: 0px;
+    line-height: 21.6px;
+}
+
+ul.search li {
+    list-style-type: none;
+    line-height: 21.6px;
+    margin-bottom: 25px;
+}
+
+ul.search p {
+    color: #545454;
+    font-size: 14px;
+    line-height: 21.6px;
+}

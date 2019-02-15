@@ -9,7 +9,7 @@
 
 {{/* add site sections */}}
 {{- $rootScratch := .Scratch -}}
-{{- range .Site.Sections -}}
+{{- range where .Site.Sections "Draft" "ne" "true" -}}
   {{- $.Scratch.Add "info" (dict "title" .Title "ref" .Permalink "summary" .Description "body" "") -}}
 
   {{/* add content from HTML templates, only if explicitly say so */}}

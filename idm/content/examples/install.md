@@ -1,6 +1,6 @@
 +++
 date = "2017-07-05T14:48:22+02:00"
-title = "install"
+title = "How-to install IDM"
 linktitle = "How-To install IDM"
 weight = 0
 draft = false

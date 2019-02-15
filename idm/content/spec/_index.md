@@ -2,7 +2,6 @@
 date = "2017-06-27T11:38:56+02:00"
 title = "Specification"
 draft = true
-
 +++
 
 
