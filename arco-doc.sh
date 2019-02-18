@@ -33,13 +33,14 @@ function ad-create-section() {
     prj_desc=$(echo "$prj_desc" | sed -e 's/[\/&]/\\&/g')
 
     echo "Creating section dirs..."
-    mkdir -p "$name"/{content,static/images}
+    mkdir -p "$name"/{content,static/images,layouts/partials}
 
     echo "Populating with initial content..."
     local idx="$name/content/_index.md"
     local prj_icon="$name/images/$name-logo.png"
     local prj_title=$(echo $name | sed 's/./\U&/')
     cp templates/section_index.md "$idx"
+    cp templates/section_header.html "$name/layouts/partials/header.html"
     sed -i "s|__TYPE__|$prj_type|g" "$idx"
     sed -i "s|__TITLE__|$prj_title|g" "$idx"
     sed -i "s|__DESC__|$prj_desc|g" "$idx"

@@ -9,6 +9,7 @@ SECTIONS += hesperia
 SECTIONS += idm
 SECTIONS += icec
 SECTIONS += symbiot
+SECTIONS += recipes
 # SECTIONS_VAR_END (do not edit or remove this comment)
 
 all run-preview-server run-preview-server-with-drafts:

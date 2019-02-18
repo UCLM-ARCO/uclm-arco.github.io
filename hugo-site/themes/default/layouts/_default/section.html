@@ -1,6 +1,9 @@
-{{ partial "header.html" . }}
+{{ partial (print .Section "/header.html") . }}
 
-[Default section template]
 {{ .Content }}
+
+{{ range .Data.Pages }}
+  {{ .Render "card" }}
+{{ end }}
 
 {{ partial "footer.html" . }}
