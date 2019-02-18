@@ -25,11 +25,11 @@ function ad-create-section() {
     echo "Please, provide the type of section."
     echo "Choose from [project, internal-project, recipes, ...]"
     echo -n "- "
-    read $prj_type
+    read prj_type
 
     echo "And a brief description? (intro when finish)"
     echo -n "- "
-    read $prj_desc
+    read prj_desc
     prj_desc=$(echo "$prj_desc" | sed -e 's/[\/&]/\\&/g')
 
     echo "Creating section dirs..."
@@ -38,11 +38,16 @@ function ad-create-section() {
     echo "Populating with initial content..."
     local idx="$name/content/_index.md"
     local prj_icon="$name/images/$name-logo.png"
+    local prj_title=$(echo $name | sed 's/./\U&/')
     cp templates/section_index.md "$idx"
     sed -i "s|__TYPE__|$prj_type|g" "$idx"
-    sed -i "s|__TITLE__|$name|g" "$idx"
+    sed -i "s|__TITLE__|$prj_title|g" "$idx"
     sed -i "s|__DESC__|$prj_desc|g" "$idx"
     sed -i "s|__ICON__|$prj_icon|g" "$idx"
+
+    echo "Adding section to automated tools..."
+    local mk_section="SECTIONS += $name"
+    sed -i '/^# SECTIONS_VAR_END.*/ i '"$mk_section" Makefile
 
     echo -e "Done. \n"
     _info "- You can modify the given parameters in '$idx'"

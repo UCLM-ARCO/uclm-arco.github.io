@@ -1,7 +1,15 @@
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 
 HUGO_SITE = hugo-site
-PROJECTS  = arco101 citisim hesperia idm icec symbiot
+
+# keep this pattern for automatic tools
+SECTIONS := arco101
+SECTIONS += citisim
+SECTIONS += hesperia
+SECTIONS += idm
+SECTIONS += icec
+SECTIONS += symbiot
+# SECTIONS_VAR_END (do not edit or remove this comment)
 
 all run-preview-server run-preview-server-with-drafts:
 	$(MAKE) -C $(HUGO_SITE) $@
@@ -9,8 +17,8 @@ all run-preview-server run-preview-server-with-drafts:
 sync: hugo-clean hugo-sync keep-sync
 
 hugo-sync:
-	-@for prj in $(PROJECTS); do \
-		make sync-prj PRJ=$$prj; \
+	-@for sect in $(SECTIONS); do \
+		make sync-sect sect=$$sect; \
 	done
 
 hugo-clean:
@@ -21,16 +29,16 @@ hugo-clean:
 	mkdir -p $(HUGO_SITE)/layouts/partials
 	cp search/search-index.md $(HUGO_SITE)/content
 
-sync-prj:
+sync-sect:
 	@for dir in content layouts layouts/partials static; do \
-		if [ -d "$(PRJ)/$$dir" ]; then \
-			rsync -avz "$(PRJ)/$$dir/" "$(HUGO_SITE)/$$dir/$(PRJ)"; \
+		if [ -d "$(sect)/$$dir" ]; then \
+			rsync -avz "$(sect)/$$dir/" "$(HUGO_SITE)/$$dir/$(sect)"; \
 		fi; \
 	done
-	$(RM) -rf "$(HUGO_SITE)/layouts/$(PRJ)/partials"
+	$(RM) -rf "$(HUGO_SITE)/layouts/$(sect)/partials"
 
 keep-sync:
-	while inotifywait -r -e modify,create,delete $(PROJECTS); do \
+	while inotifywait -r -e modify,create,delete $(SECTIONS); do \
 		make hugo-sync; \
 	done
 
