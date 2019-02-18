@@ -1,10 +1,12 @@
-+++
-date = "2017-07-05T14:48:22+02:00"
-title = "How-to install IDM"
-linktitle = "How-To install IDM"
-weight = 0
-draft = false
-+++
+---
+date: "2017-07-05T14:48:22+02:00"
+title: "How-to install IDM"
+linktitle: "How-To install IDM"
+weight: 0
+draft: false
+
+section: "examples"
+---
 
 IDM installation
 ----------------
@@ -13,7 +15,7 @@ IDM installation
 based machine (like Ubuntu). The following instructions were tested on
 Debian 9.0 (stretch) y Ubuntu 17.04 (zesty). If you use
 [Vagrant](https://www.vagrantup.com/), you can download our
-{{< staticLink "code/install/Vagrantfile" VagrantFile >}} for both
+{{< staticLink "idm/code/install/Vagrantfile" VagrantFile >}} for both
 setups.
 
 Setting up Debian repositories
@@ -73,7 +75,7 @@ If you see the same (or similar) result, then **it works!**
 Using Vagrant
 -------------
 
-The provided {{< staticLink "code/install/Vagrantfile" VagrantFile >}}
+The provided {{< staticLink "idm/code/install/Vagrantfile" VagrantFile >}}
 has two configured boxes, and comes bundled with a _bootstrap_ script
 to install the required packages. Download it, and launch one of the
 included configurations (```debian``` or ```ubuntu```):
@@ -91,14 +93,3 @@ $ vagrant ssh debian
 ```
 
 <br>
-
-<!--
-Local Variables:
-  truncate-lines: true
-  ispell-local-dictionary: "american"
-End:
--->
-
-<!--
-  LocalWords:  staticLink ARCO's
--->

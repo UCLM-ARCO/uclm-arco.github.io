@@ -1,6 +1,6 @@
-{{ partial "header.html" . }}
+{{ partial (print .Section "/header.html") . }}
 
-[Default single template]
+<br><br>
 {{ .Content }}
 
 {{ partial "footer.html" . }}
