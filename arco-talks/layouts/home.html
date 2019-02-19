@@ -1,0 +1,9 @@
+{{ partial (print .Section "/header.html") . }}
+
+{{ .Content }}
+
+{{ range .Data.Pages }}
+  {{ .Render "card" }}
+{{ end }}
+
+{{ partial "footer.html" . }}

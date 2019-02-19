@@ -10,9 +10,12 @@ SECTIONS += idm
 SECTIONS += icec
 SECTIONS += symbiot
 SECTIONS += recipes
+SECTIONS += arco-talks
+SECTIONS += arco-talks
+SECTIONS += arco-talks
 # SECTIONS_VAR_END (do not edit or remove this comment)
 
-all run-preview-server run-preview-server-with-drafts:
+all run-preview-server run-preview-server-with-drafts run-server:
 	$(MAKE) -C $(HUGO_SITE) $@
 
 sync: hugo-clean hugo-sync keep-sync
@@ -36,7 +39,6 @@ sync-sect:
 			rsync -avz "$(sect)/$$dir/" "$(HUGO_SITE)/$$dir/$(sect)"; \
 		fi; \
 	done
-	$(RM) -rf "$(HUGO_SITE)/layouts/$(sect)/partials"
 
 keep-sync:
 	while inotifywait -r -e modify,create,delete $(SECTIONS); do \

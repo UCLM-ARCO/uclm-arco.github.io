@@ -97,12 +97,13 @@ a.tab-link.active {
     overflow-x: hidden;
 
     margin-top: 20px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .app-skin .filename {
-    background-image: url('/idm/images/three-dots.png');
+    background-image: url('/images/three-dots.png');
     background-repeat: no-repeat;
     background-position: 98% 50%;
     background-color: white;
@@ -166,9 +167,6 @@ pre code {
     font-size: 0.9em;
     color: gray;
 }
-
-
-/* New added style */
 
 .box {
     display: flex;
@@ -240,4 +238,18 @@ ul.search p {
     color: #545454;
     font-size: 14px;
     line-height: 21.6px;
+}
+
+pre.shell {
+    padding: 7px;
+}
+
+.shell-session {
+    white-space: pre;
+    background: #D0D0D0;
+    color: #444 !important;
+    font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    font-size: 0.9em;
+    padding: 7px;
+    overflow-x: auto;
 }

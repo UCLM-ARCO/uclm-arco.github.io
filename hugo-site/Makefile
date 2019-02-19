@@ -8,5 +8,5 @@ all:
 run-preview-server:
 	hugo server -v --bind "0.0.0.0" --theme=$(THEME)
 
-run-preview-server-with-drafts:
+run-server run-preview-server-with-drafts:
 	hugo server -v -D --bind "0.0.0.0" --theme=$(THEME)

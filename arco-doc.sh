@@ -41,6 +41,7 @@ function ad-create-section() {
     local prj_title=$(echo $name | sed 's/./\U&/')
     cp templates/section_index.md "$idx"
     cp templates/section_header.html "$name/layouts/partials/header.html"
+    cp templates/default-logo.png "$name/static/images/$name-logo.png"
     sed -i "s|__TYPE__|$prj_type|g" "$idx"
     sed -i "s|__TITLE__|$prj_title|g" "$idx"
     sed -i "s|__DESC__|$prj_desc|g" "$idx"
