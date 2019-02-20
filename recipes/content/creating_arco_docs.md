@@ -3,6 +3,8 @@ title: "Cómo crear documentación"
 date: 2019-02-18T14:25:28+01:00
 tags:
 - recipe
+- docs
+- hugo
 draft: false
 
 image: "creating_arco_docs/create-document.png"
