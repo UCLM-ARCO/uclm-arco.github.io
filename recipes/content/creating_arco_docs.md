@@ -3,9 +3,9 @@ title: "Cómo crear documentación"
 date: 2019-02-18T14:25:28+01:00
 tags:
 - recipe
-draft: true
+draft: false
 
-image: "create-document.png"
+image: "creating_arco_docs/create-document.png"
 description: "En esta receta se describen los pasos necesarios para usar el <b>repositorio de documentación</b> de Arco."
 ---
 
@@ -274,5 +274,32 @@ Ahora, simplemente **abre ese archivo** con tu editor favorito, y añade el cont
 
 # Cómo publicar los cambios
 
+Para publicar (o desplegar) los cambios que hagas, simplemente haz **commit** en el repositorio y sube los cambios al servidor. No debes preocuparte de nada más, un servicio **automático** se encargará de compilar y actualizar la página de documentación.
 
+Es **muy recomendable**, sin embargo, que **sólo** subas versiones estables, que se puedan compilar con una versión reciente de Hugo. Para **verificar** si hay o no errores, ejecuta `make` en la raíz del repositorio y comprueba los mensajes de log. Deberías obtener una salida similar a esta:
 
+{{< shell >}}
+$ make
+make -C hugo-site all
+make[1]: se entra en el directorio '/home/oscar/repos/doc/hugo-site'
+hugo -v --theme=default
+INFO 2019/02/20 11:49:11 Using config file: /home/oscar/repos/doc/hugo-site/config.toml
+Building sites … INFO 2019/02/20 11:49:11 syncing static files to /home/oscar/repos/doc/hugo-site/public/
+INFO 2019/02/20 11:49:11 found taxonomies: map[string]string{"tag":"tags", "category":"categories"}
+
+                   | EN
++------------------+----+
+  Pages            | 31
+  Paginator pages  |  0
+  Non-page files   |  0
+  Static files     | 65
+  Processed images |  0
+  Aliases          |  0
+  Sitemaps         |  1
+  Cleaned          |  0
+
+Total in 25 ms
+make[1]: se sale del directorio '/home/oscar/repos/doc/hugo-site'
+{{< /shell >}}
+
+Si no hay errores, es una **versión candidata** para ser publicada. Por último, ten en cuenta que en la versión pública no se incluyen los borradores, por lo que asegúrate de cambiar el parámetro `draft` a `false` en el [Front Matter](https://gohugo.io/content-management/front-matter/) de tus páginas.
