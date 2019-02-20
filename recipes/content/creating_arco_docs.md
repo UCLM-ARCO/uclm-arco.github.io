@@ -69,15 +69,51 @@ Igualmente, cada **sección** (o subsección) del sitio se renderiza con una pla
 
 Y si lo que quieres es editar **contenido específico** de una entrada (no de una sección), sólo debes buscar el fichero Markdown correspondiente. Por ejemplo, el contenido de la entrada `http://site.url/idm/examples/install/` lo proporciona el fichero `/idm/content/examples/install.md`.
 
-Si quieres añadir una **imagen**, copiala al directorio `static/images` de la sección correspondiente, y haz referencia a ella directamente. Por ejemplo:
+
+## Imágenes
+
+Si necesitas incluir **imágenes**, crea un directorio con el mismo nombre que tu entrada (pero **sin** extensión), dentro de `[SECTION]/static/images`. Por ejemplo, supongamos que estás editando el fichero `recipes/content/integrating_xiaomi_devices.md`. En este caso, el directorio a crear sería:
+
+{{< shell >}}
+$ mkdir recipes/static/images/integrating_xiaomi_devices
+{{< /shell >}}
+
+A continuación, incluye tus imágenes dentro de ese directorio, y haz **referencia** a ellas en tu contenido usando el [Shortcode](https://gohugo.io/content-management/shortcodes/) `image`, tal que así:
 
 {{< code "md" >}}
-![image](/recipes/images/create-document.png)
+{{</* image "filename.png" */>}}
 {{< /code >}}
+
+También puedes añadir una **imagen** que esté directamente en el directorio raiz, `static/images`, de la sección correspondiente. Para ellos, especifica en el shortcode el parámetro `relative="false"`. Por ejemplo:
+
+{{< code "md" >}}
+{{</* image src="filename.png" relative="false" */>}}
+{{< /code >}}
+
+
+## Código y ficheros de texto
+
+El proceso para incluir el contenido de un fichero **estático** (quizá un script en Python, o un fichero de configuración de Ice) es muy similar al de las imágenes. Antes de nada, **crea el directorio específico** de tu entrada que contendrá estos ficheros en el directorio `static/code` de tu sección. Debe llamarse de la misma forma que tu página (pero sin la extension `.md`).
+
+Por ejemplo, si quiero incluir un *snippet* en Python dentro del post `idm/content/hello_world.md`, crearé el directorio `idm/static/code/hello_world/`:
+
+{{< shell >}}
+$ mkdir idm/static/code/hello_world
+{{< /shell >}}
+
+A continuación, mete en ese directorio todo el código o ficheros estáticos que necesites. Para incluirlos en la entrada, puedes usar el [Shortcode](https://gohugo.io/content-management/shortcodes/) `staticCode`. Acepta dos parámetros: el **nombre del fichero**, y el **lenguage** (opcional, para cuestiones de marcado de sintáxis). Por ejemplo:
+
+{{< code md >}}
+{{</* staticCode "hello_world.py" */>}}
+{{< /code >}}
+
+Lo que debe producir un resultado similar a esto:
+
+{{< staticCode "hello-world.py" >}}
 
 # Cómo crear una nueva sección
 
-Para crear una nueva sección, se han creado algunas **herramientas específicas** que se encargar de copiar las plantillas y configurar el proyecto adecuadamente.
+Para crear una nueva sección, se han creado algunas **herramientas específicas** que se encargan de copiar las plantillas y configurar el proyecto adecuadamente.
 
 Antes de nada, para hacerlas disponibles, carga el fichero `arco-doc.sh` de la siguiente forma:
 
@@ -120,6 +156,7 @@ arco-talks/
 │   └── partials
 │       └── header.html
 └── static
+    ├── code
     └── images
 
 5 directories, 2 files
@@ -129,7 +166,7 @@ El directorio `content` se encargará de almacenar todo el **contenido** de la n
 
 Al crear la nueva sección, también se habrá modificado el `Makefile` para que las reglas de sincronización tengan en cuenta la nueva entrada. Si tenías el servicio de *sync* o el servidor de desarrollo de Hugo en marcha, necesitas **reiniciarlos** para aplicar los cambios. Simplemente páralos y vuelve a ejecutar `make sync` y `make run-server`. Si vuelves a abrir la página principal de la documentación, deberías poder ver tu nueva sección. Por ejemplo, algo así:
 
-![](/recipes/images/new-section.png)
+{{< image "new-section.png" >}}
 
 Como ves, es necesario hacer algunos retoques. Por ejemplo, quizá quieras cambiar el nombre que se muestra aquí (parámetro `title`), o la ruta del icono (parámetro `icon`). Para ello, edita el fichero `_index.md` de tu sección (`[SECTION]/content/_index.md`). El fichero generado para el ejemplo tiene este contenido:
 
@@ -144,7 +181,7 @@ icon: "arco-talks/images/arco-talks-logo.png"
 
 En este ejemplo, cambiaré el título, y **reemplazaré** el icono por defecto con uno específico de esta sección. Quedaría algo como esto:
 
-![](/recipes/images/new-section-changes.png)
+{{< image "new-section-changes.png" >}}
 
 Si pulsas sobre el botón "*View*" (es decir, si navegas con el *browser* a la sección que acabas de crear), verás un **documento vacío**, con un mensaje animándote a modificar la **cabecera** de tu sección. La cabecera es un fichero HTML (un *partial* de Hugo) que se incluirá al renderizar todas las páginas de esta sección. Se encuentra en `[SECTION]/layouts/partials/header.html`. El contenido será algo similar a esto:
 
@@ -204,6 +241,36 @@ Ahora deberás **crear la plantilla**, con el nombre indicado y extensión `.htm
 
 
 # Como añadir una nueva entrada
+
+Hugo tiene un comando para crear nuevo contenido, y en función del tipo, copiará una plantilla u otra. Estas plantillas se llaman [Archetypes](https://gohugo.io/content-management/archetypes/), y se encuentran en el directorio `hugo-site/archetypes`. Así, para crear una nueva entrada, desde la raíz del repositorio, ejecuta el comando:
+
+{{< shell >}}
+$ new recipes/content/integrating_xiaomi_devices.md
+{{< /shell >}}
+
+Esto creará un nuevo archivo, llamado `integrating_xiaomi_devices.md` dentro de la sección `recipes`, en el directorio de contenido (es decir en la ruta especificada). Hugo usará la **primera palabra** de la ruta para determinar el *Archetype* que empleará a modo de plantilla para la nueva entrada. Si abres el fichero recién creado, verás algo como esto:
+
+{{< code cpp "recipes/content/integrating_xiaomi_devices.md" >}}
+---
+title: "Integrating Xiaomi Devices"
+date: 2019-02-20T08:05:08+01:00
+tags:
+- recipe
+draft: true
+
+# image: "your-recipe-image.png"
+description:  "Some description, used in recipe summary"
+---
+
+** Insert your recipe here! **
+
+{{< /code >}}
+
+Como puedes ver, es **una plantilla** específica de esta sección, de la cual partir para crear tu contenido, en Markdown. Si abres la página principal de la sección `recipes`, deberás ver una entrada como esta:
+
+{{< image "new-recipe-summary.png" >}}
+
+Ahora, simplemente **abre ese archivo** con tu editor favorito, y añade el contenido que necesites. Happy editing! :D
 
 # Cómo publicar los cambios
 

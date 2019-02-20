@@ -33,7 +33,7 @@ function ad-create-section() {
     prj_desc=$(echo "$prj_desc" | sed -e 's/[\/&]/\\&/g')
 
     echo "Creating section dirs..."
-    mkdir -p "$name"/{content,static/images,layouts/partials}
+    mkdir -p "$name"/{content,static/images,static/code,layouts/partials}
 
     echo "Populating with initial content..."
     local idx="$name/content/_index.md"

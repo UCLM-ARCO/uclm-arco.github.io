@@ -1,3 +1,13 @@
 {{ $file := .Get 0 }}
 {{ $lang := .Get 1 }}
-<pre><code class="language-{{ $lang }}">{{ readFile (print "static/" $file) }}</code></pre>
+{{ $url := delimit (slice $.Page.Section "code" $.Page.File.TranslationBaseName $file) "/" }}
+{{ $path := print "static/" $url }}
+{{ $content := readFile $path }}
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/{{ $url }}"
+	     title="Click to download this code!">{{ $file }}</a>
+  </div>
+  <pre><code class="language-{{ $lang }}">{{ trim $content "\n " }}</code></pre>
+</div>

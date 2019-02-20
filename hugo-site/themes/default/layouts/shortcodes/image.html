@@ -1,0 +1,18 @@
+{{ if .IsNamedParams }}
+  {{ .Scratch.Set "src" (.Get "src") }}
+  {{ .Scratch.Set "relative" (.Get "relative") }}
+{{ else }}
+  {{ .Scratch.Set "src" (.Get 0) }}
+  {{ .Scratch.Set "relative" (.Get 1) }}
+{{ end }}
+
+{{ if (ne (.Scratch.Get "relative") "false") }}
+  {{ $path := delimit (slice $.Page.Section "images" $.Page.File.TranslationBaseName (.Scratch.Get "src")) "/" }}
+  {{ .Scratch.Set "path" $path }}
+{{ else }}
+  {{ $path := delimit (slice $.Page.Section "images" (.Scratch.Get "src")) "/" }}
+  {{ .Scratch.Set "path" $path }}
+{{ end }}
+
+<img src='/{{ .Scratch.Get "path" }}' />
+
