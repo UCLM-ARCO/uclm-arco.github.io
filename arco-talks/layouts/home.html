@@ -3,7 +3,7 @@
 {{ .Content }}
 
 {{ range .Data.Pages }}
-  {{ .Render "card" }}
+  {{ .Render "event-card" }}
 {{ end }}
 
 {{ partial "footer.html" . }}

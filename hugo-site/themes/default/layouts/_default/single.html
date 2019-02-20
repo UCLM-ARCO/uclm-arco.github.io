@@ -1,5 +1,19 @@
 {{ partial (print .Section "/header.html") . }}
 
-{{ .Content }}
+{{ if not .Content }}
+  <h1>{{ .Title }}</h1>
+  <br><br><br>
+  <div class="card" style="padding: 20px">
+
+    <h3>
+      <span style="color: red;">FIXME: </span>
+      There is no content here!
+    </h3>
+    Add the body of your page here:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; - {{ .Section }}/content/{{ .Page.File.LogicalName }}:
+  </div>
+{{ else }}
+  {{ .Content }}
+{{ end }}
 
 {{ partial "footer.html" . }}

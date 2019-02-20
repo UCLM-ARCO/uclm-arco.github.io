@@ -1,11 +1,12 @@
-+++
-tags = [
-     "endpoint",
-     "version",
-     "recipe",
-     "event"
+---
+tags:
+- endpoint
+- version
+- recipe
+- even
 ]
-draft = true
-image = "default.png"
-description = "some description, used in news heading"
-+++
+draft: true
+# image: "your-heading-news-image.png"
+description: "some description, used in news heading"
+---
+
