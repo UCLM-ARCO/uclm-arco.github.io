@@ -1,0 +1,13 @@
+{{ $type := .Get 0 }}
+<div class="alert alert-{{ $type }}" role="alert">
+  <h4 class="alert-heading">
+    {{ if or (eq $type "warning") (eq $type "danger") }}
+      Warning!
+    {{ else }}
+      Note:
+    {{ end }}
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    {{ .Inner }}
+  </div>
+</div>

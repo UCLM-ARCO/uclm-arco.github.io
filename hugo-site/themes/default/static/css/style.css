@@ -276,6 +276,8 @@ ul.search p {
     line-height: 21.6px;
 }
 
+/* ---------------------------------- */
+
 pre.shell {
     padding: 7px;
 }
@@ -289,3 +291,38 @@ pre.shell {
     padding: 7px;
     overflow-x: auto;
 }
+
+/* ---------------------------------- */
+
+.alert {
+    background-color: inherit;
+    margin: 0px;
+    margin-bottom: 15px;
+    padding: 0px;
+}
+
+.alert hr.separator {
+    margin: 0px;
+}
+
+.alert .alert-body {
+    padding: 20px;
+    padding-bottom: 0px;
+}
+
+.alert .alert-heading {
+    margin: 0px;
+    padding: .75rem 1.25rem;
+}
+
+.alert-danger .alert-heading {  background-color: #f8d7da; }
+.alert-warning .alert-heading { background-color: #fff3cd; }
+.alert-primary .alert-heading { background-color: #cce5ff; }
+.alert-success .alert-heading { background-color: #d4edda; }
+
+.alert-danger, .alert-danger hr {  border-color: #c4767e; }
+.alert-warning, .alert-warning hr { border-color: #beae7d; }
+.alert-primary, .alert-primary hr { border-color: #8ba4c0; }
+.alert-success, .alert-success hr { border-color: #5aa06b; }
+
+/* ---------------------------------- */
