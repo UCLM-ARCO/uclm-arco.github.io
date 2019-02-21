@@ -178,6 +178,32 @@ pre code {
 
 /* ---------------------------------- */
 
+div.polaroid {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 25px;
+}
+
+div.polaroid img {
+    width: 100%
+}
+
+div.polaroid-caption {
+    text-align: center;
+    padding: 8px 8px;
+    border-top: 1px solid #ccc;
+}
+
+div.polaroid-caption p {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* ---------------------------------- */
+
 .box {
     display: flex;
     align-items:center;
