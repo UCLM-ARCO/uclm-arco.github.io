@@ -119,4 +119,79 @@ WARNING:root:using not ciphered key (password not provided)
 {{< /shell >}}
 
 # Receiving events
+
+On the above listing you can see a number of defices, each one of an specific class. For instance, there are a `Switch` and a `Motion`, and both **emit events** when somenthing happens. You can configure event **listeners** to be run when one of such events arrives. There is also an `Unsupported Device`, which is a device that the Gateway sees but can not control (yet).
+
+So, let's **subscribe** to some event. To do that, each device has one method per event type, usually called `on_[event_name]()`. For example, the `Switch` object will emit `click` events when single pressed, `double_click` when double tapped, and so on. Later we will review a list of all current devices with their signals. For now, we are interested only in the `click` event, so we use the `on_click()` method to register our listener. A listener is just a **function** (or method) that will be called upon event arrival, so let's define it:
+
+{{< code py >}}
+def on_event(self, event, dev):
+    print("- event: {}, dev: {}".format(event, dev))
+{{< /code >}}
+
+As you can see, the method receives two arguments:
+
+* `event`: which is the name of the event (so you can reuse this method for multiple event types)
+* `dev`: which is the device object that produced this event
+
+These arguments are **common** to all event types. This event does not have any specific argument, but other events do (so please, review the **correct signature** for your event type!).
+
+Now, it's time to register the listener. So the first step is to get the `Switch` object. The Gateway's `get_devices()` method has an optional argument, `filter`, used to return only devices of an **specific** type. In my case there is only one `Switch`, so the code would be:
+
+{{< code py >}}
+devices = gw.get_devices(filter="switch")
+switch = list(devices.values())[0]
+{{< /code >}}
+
+And now, to **subscribe the listener** method to the `click` event, you need to use the `on_click()` method:
+
+{{< code py >}}
+switch.on_click(self.on_click_event)
+{{< /code >}}
+
+One last step: as all of the previous methods are **non-blocking**, if you run the script, it will finish before any event may arrive. To solve this, we could **wait** somehow (for instance using a sleep, or with an event loop). Also, we could use the Gateway's **waiting function**, `wait_until_break()`, which does that very thing: sleeps until a *Ctrl+C* is received, and then returns. So, the whole script would be:
+
+{{< staticCode "switch-listener.py" >}}
+
+If you run it, and then **press the button** once, you may obtain a result like this:
+
+{{< shell >}}
+$ ./switch-listener.py
+INFO:root:using 192.168.8.157 for multicast membership
+WARNING:root:using not ciphered key (password not provided)
+- event: click, dev: <Switch, sid: 158d00027b8eff, status: online, pressed: False>
+{{< /shell >}}
+
+
 # Sending actions
+
+Some devices allow you to **change its** state. For instance, you are able to switch on and off the `Plug`, or change the light status of the `LumiGateway`.
+
+In order to **gain permission** to modify the state of any device, you must provide the **password** that the Gateway is using (remember the number that you got when activating the Lan Protocol?). So, you need to change the `LumiGateway` instantiation like this:
+
+{{< code py >}}
+gw = LumiGateway(passwd="thePassword")
+{{< /code >}}
+
+Of course, **you don't want** to store the password inside the script, so it may be a variable obtained elsewhere (in our example, we will use `sys.argv[1]`, but it is not a good place either).
+
+Now, to change some parameter of your device, just **call** the appropiate method with the required arguments. For instance, to **change the light** of the Gateway, we use `set_light_color()`, which accepts the values for Red, Green and Blue components (in relative range of 0-255), and also the Intensity (from 0 to 100). If you want a bright red color, your call will be:
+
+{{< code py >}}
+gw.set_light_color(255, 0, 0, 100)
+{{< /code >}}
+
+Or, if you want to **smoothly range** from green to red:
+
+{{< code py >}}
+for i in range(0, 255):
+    gw.set_light_color(i, 255-i, 0, 100)
+    time.sleep(0.05)
+{{< /code >}}
+
+# Devices list & API
+
+[See a way of automatic generation of this section]
+
+## LumiGateway
+## Switch
