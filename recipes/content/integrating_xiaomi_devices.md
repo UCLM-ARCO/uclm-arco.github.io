@@ -122,7 +122,7 @@ WARNING:root:using not ciphered key (password not provided)
 
 On the above listing you can see a number of defices, each one of an specific class. For instance, there are a `Switch` and a `Motion`, and both **emit events** when somenthing happens. You can configure event **listeners** to be run when one of such events arrives. There is also an `Unsupported Device`, which is a device that the Gateway sees but can not control (yet).
 
-So, let's **subscribe** to some event. To do that, each device has one method per event type, usually called `on_[event_name]()`. For example, the `Switch` object will emit `click` events when single pressed, `double_click` when double tapped, and so on. Later we will review a list of all current devices with their signals. For now, we are interested only in the `click` event, so we use the `on_click()` method to register our listener. A listener is just a **function** (or method) that will be called upon event arrival, so let's define it:
+So, let's **subscribe** to some event. To do that, each device has one method per event type, usually called `on_[event_name]()`. For example, the `Switch` object will emit `click` events when single pressed, `double_click` when double tapped, and so on. If you want to know the **supported devices** and their events, please see the [Mijia Smart Home API](/api/mijia_smart_home). For now, we are interested only in the `click` event, so we use the `on_click()` method to register our listener. A listener is just a **function** (or method) that will be called upon event arrival, so let's define it:
 
 {{< code py >}}
 def on_event(self, event, dev):
@@ -189,9 +189,6 @@ for i in range(0, 255):
     time.sleep(0.05)
 {{< /code >}}
 
-# Devices list & API
+To review the **devices** that you can control, and what **methods** they have, please go to the [Mijia Smart Home API](/api/mijia_smart_home) section.
 
-[See a way of automatic generation of this section]
-
-## LumiGateway
-## Switch
+<br>
