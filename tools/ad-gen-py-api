@@ -1,0 +1,120 @@
+#!/usr/bin/python3
+# -*- mode: python; coding: utf-8 -*-
+
+import os
+import sys
+import pydoc
+import inspect
+from argparse import ArgumentParser
+
+
+
+class PythonAPIDoc:
+    module_header = "# `{}` API Documentation\n"
+    class_header = "## Class `{}`"
+    function_header = "### `{}`"
+
+    def __init__(self, args):
+        self.docs = []
+
+        self.get_front_matter(args)
+        modules = self.load_modules(args)
+        for mod in modules:
+            self.get_markdown(mod)
+
+    def __add__(self, doc):
+        self.docs.append(doc)
+        return self
+
+    def get_front_matter(self, args):
+        title = ", ".join(args.module) + " documentation"
+        if args.title is not None:
+            title = args.title
+
+        self += "---"
+        self += 'title: "{}"'.format(title)
+        self += "---\n"
+
+    def get_markdown(self, module):
+        self.get_module_md(module)
+        self.get_classes_md(module)
+
+    def get_module_md(self, module):
+        self += self.module_header.format(module.__name__)
+        if module.__doc__:
+            self += module.__doc__
+
+    def get_classes_md(self, parent):
+        for name, cls in inspect.getmembers(parent, inspect.isclass):
+            # ignore private (starting with _) members
+            if name.startswith("_"):
+                continue
+
+            # ignore undocummented members
+            cdoc = pydoc.inspect.getdoc(cls)
+            if cdoc is None:
+                continue
+
+            self += self.class_header.format(name)
+            self += "\n" + cdoc
+
+            self.get_functions_md(cls)
+            self.get_classes_md(cls)
+            self += ""
+
+    def get_functions_md(self, parent):
+        for name, func in inspect.getmembers(parent, inspect.isfunction):
+            # ignore private (starting with _) members
+            if name != '__init__' and name.startswith('_'):
+                continue
+
+            # ignore undocummented members
+            fdoc = pydoc.inspect.getdoc(func)
+            if fdoc is None:
+                continue
+
+            self += self.function_header.format(name)
+            self += "\n" + fdoc
+            self += '\n```py'
+            self += 'def {}{}'.format(
+                name, inspect.formatargspec(*inspect.getargspec(func))
+            )
+            self += '```\n'
+
+    def load_modules(self, args):
+        module_dir = os.getcwd()
+        if args.module_dir is not None:
+            module_dir = args.module_dir
+        sys.path.insert(0, module_dir)
+
+        modules = []
+        for name in args.module:
+            try:
+                m = pydoc.safeimport(name)
+                if m is None:
+                    print("ERROR: module '{}' not found".format(name))
+                    continue
+                modules.append(m)
+
+            except pydoc.ErrorDuringImport:
+                print("ERROR: trying to import '{}'".format(name))
+
+        return modules
+
+    def __repr__(self):
+        return "\n".join(str(x) for x in self.docs)
+
+
+if __name__ == '__main__':
+    parser = ArgumentParser()
+    parser.add_argument(
+        "-c", dest="module_dir", help="search module on given directory")
+    parser.add_argument(
+        "--title", help="title to use on page front matter")
+    parser.add_argument(
+        "module", nargs="*", help="module name")
+
+    args = parser.parse_args()
+    doc = PythonAPIDoc(args)
+
+    print(doc)

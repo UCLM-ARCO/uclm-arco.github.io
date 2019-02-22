@@ -1,5 +1,7 @@
 # Source this file to setup the environment
 
+export PATH=$PATH:$(pwd)/tools
+
 # Define some colors and logging functions
 GREEN="\e[32m"
 NORM="\e[0m"

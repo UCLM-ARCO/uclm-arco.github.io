@@ -6,7 +6,7 @@ tags:
 - xiaomi
 - smart home
 - python
-draft: true
+draft: false
 
 image: "integrating_xiaomi_devices/mijia-kit.jpg"
 description: "This recipe will show you how to actuate and receive events from the Mijia Smart Home kit (using <b>Python</b> and the <code>mijia-smart-home</code> library)."
