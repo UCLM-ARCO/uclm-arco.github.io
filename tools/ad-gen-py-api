@@ -12,12 +12,13 @@ from argparse import ArgumentParser
 
 class PythonAPIDoc:
     module_header = '# <span class="api-module">{}</span> API Documentation\n'
-    class_header = '## Class <span class="api-class">{}</span>'
+    class_header = '## Class <span class="api-class">{0}</span> {{#anchor-class-{0}}}'
     function_header = '### <span class="api-func">`{}`</span>'
     property_header = '### <span class="api-prop">`{}`</span>'
 
     def __init__(self, args):
         self.docs = []
+        self.marker = 0
 
         self.get_front_matter(args)
         modules = self.load_modules(args)
@@ -27,6 +28,10 @@ class PythonAPIDoc:
     def __add__(self, doc):
         self.docs.append(doc)
         return self
+
+    def toc_add_class(self, name):
+        self.docs.insert(self.marker, '* <a href="#anchor-class-{0}">{0}</a>'.format(name))
+        self.marker += 1
 
     def get_front_matter(self, args):
         title = ", ".join(args.module) + " documentation"
@@ -39,12 +44,17 @@ class PythonAPIDoc:
         self += 'date: {}'.format(datetime.now().strftime("%Y-%m-%dT%H:%M:%S+01:00"))
         self += "---\n"
 
+        self += "# {}\n".format(title)
+        self += "## class index:"
+        self.marker = len(self.docs)
+        self += ""
+
     def get_markdown(self, module):
         self.get_module_md(module)
         self.get_classes_md(module)
 
     def get_module_md(self, module):
-        self += "<hr>"
+        self += "<hr>\n"
         self += self.module_header.format(module.__name__)
         if module.__doc__:
             self += module.__doc__
@@ -62,6 +72,8 @@ class PythonAPIDoc:
 
             self += self.class_header.format(name)
             self += "\n" + cdoc
+
+            self.toc_add_class(name)
 
             self.get_properties_md(cls)
             self.get_functions_md(cls)
@@ -91,7 +103,7 @@ class PythonAPIDoc:
 
             # ignore undocummented members
             fdoc = pydoc.inspect.getdoc(func)
-            if fdoc is None:
+            if fdoc is None or fdoc == "":
                 continue
 
             self += "\n"
