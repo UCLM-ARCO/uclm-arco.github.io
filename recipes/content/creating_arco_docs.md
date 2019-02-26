@@ -125,7 +125,7 @@ $ . arco-doc.sh
 
 A continuación, ejecuta el script `ad-create-section`, indicándole el **nombre** de la nueva sección, en minúsculas. Te pedirá más información, como el **tipo** de sección que estás creando, a elegir entre las siguientes:
 
-* `project`: un proyecto oficial del grupo, como *Citisim* o *Hesperia*.
+* `project`: un proyecto oficial del grupo, como "citisim" o "hesperia".
 * `internal-project`: proyectos no financiados directamente, en los que se desarrolla algún producto software horizontal.
 * `recipes`: documentación genérica sobre procesos y otros usos.
 
@@ -343,5 +343,3 @@ Como puedes observar, la herramienta ha incluido **sólo** aquellas clases o mé
 Por otro lado, si la clase hereda de otra, y quieres evitar que se incluya el *docstring* de un método en concreto, puedes **sobreescribirlo** e incluir una cadena vacía (algo similar a lo que ocurre en el ejemplo con el método `__init__`).
 
 Por último, resaltar que la documentación generará un **índice** al principio con todas las **clases** documentadas, con enlaces a sus respectivas subsecciones.
-
-
