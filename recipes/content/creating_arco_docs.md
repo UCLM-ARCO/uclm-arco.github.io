@@ -28,7 +28,7 @@ Antes de nada, para poder llevar a cabo esta receta necesitarás:
 Para empezar, instala los paquetes necesarios:
 
 {{< shell >}}
-$ sudo apt install git hugo
+$ sudo apt install git hugo make inotify-tools
 {{< /shell >}}
 
 Recuerda que la versión de Hugo que instales ha de ser `>= 0.40`, lo que puedes comprobar con el siguiente comando:
