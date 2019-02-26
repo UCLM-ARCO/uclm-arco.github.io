@@ -42,9 +42,3 @@ Ongoing work
 
 QoS driven routing and Application driven routing
 -------------------------------------------------
-
-
-
-;; Local Variables:
-;; ispell-local-dictionary: "american"
-;; End:

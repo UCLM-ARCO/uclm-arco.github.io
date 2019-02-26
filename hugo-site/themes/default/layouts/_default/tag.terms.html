@@ -1,1 +1,13 @@
+{{ partial "header.html" . }}
+
 [Default tag terms template]
+
+{{/*
+    <ul id="all-tags">
+        {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+        {{ $name }}
+        {{ end }}
+    </ul>
+*/}}
+
+{{ partial "footer.html" . }}
