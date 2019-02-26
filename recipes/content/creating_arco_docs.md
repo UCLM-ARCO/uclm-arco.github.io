@@ -242,7 +242,7 @@ Ahora deberás **crear la plantilla**, con el nombre indicado y extensión `.htm
 {{< /code >}}
 
 
-# Como añadir una nueva entrada
+# Cómo añadir una nueva entrada
 
 Hugo tiene un comando para crear nuevo contenido, y en función del tipo, copiará una plantilla u otra. Estas plantillas se llaman [Archetypes](https://gohugo.io/content-management/archetypes/), y se encuentran en el directorio `hugo-site/archetypes`. Así, para crear una nueva entrada, desde la raíz del repositorio, ejecuta el comando:
 
@@ -305,3 +305,43 @@ make[1]: se sale del directorio '/home/oscar/repos/doc/hugo-site'
 {{< /shell >}}
 
 Si no hay errores, es una **versión candidata** para ser publicada. Por último, ten en cuenta que en la versión pública no se incluyen los borradores, por lo que asegúrate de cambiar el parámetro `draft` a `false` en el [Front Matter](https://gohugo.io/content-management/front-matter/) de tus páginas.
+
+
+# Cómo generar la referencia (API) de una librería en Python
+
+Se han creado algunas **herramientas específicas** para generar la documentación de referencia de cualquier librería en **Python**. Esto incluye la descripción de las clases, las propiedades y los métodos (públicos o privados).
+
+Para **entender mejor** como funciona, supongamos que tenemos una librería, llamada `mypylib` en el directorio `/tmp/mypylib`. El fichero `__init__.py` de ese módulo contiene lo siguiente:
+
+{{< staticCode "mypylib/__init__.py" >}}
+
+Para generar la documentación automáticamente, primero debes **cargar las herramientas** de `arco-doc`:
+
+{{< shell >}}
+$ . arco-doc.sh
+{{< /shell >}}
+
+Una vez hecho esto, tendrás disponible la utilidad `ad-gen-py-api`, que acepta como argumentos una **lista de los módulos** que quieres documentar, junto con algunas opciones más. En particular, nos interesan estas dos:
+
+* `-c MODULE_DIR`, que sirve para indicarle la **ruta** donde está el módulo que quieres documentar (útil en caso de que la librería no esté instalada en el sistema).
+* `--title TITLE`, para añadir un **título** a la documentación.
+
+También es importante notar que `ad-gen-py-api` genera la documentación por la salida estándar, por lo que es necesario que **guardes** esa salida en el fichero `.md` correspondiente.
+
+Así pues, el comando que usaríamos para documentar la librería de este **ejemplo** sería el siguiente:
+
+{{< shell >}}
+$ ad-gen-py-api -c /tmp --title "A Configurable Calculator" mypylib > api/content/mypylib.md
+{{< /shell >}}
+
+Lo que genera un documento Markdown con la referencia de la librería `mypylib`. Observa que la referencia se ha **guardado en la sección** `api` de la documentación. Si abres esa página con el navegador, deberías ver algo similar a esto:
+
+{{< polaroid "generated-api.png" >}}
+
+Como puedes observar, la herramienta ha incluido **sólo** aquellas clases o métodos que **tienen documentación**. Si una clase no incluye su *docstring* (por ejemplo, la clase `MyTools`), esa clase **se ignorará** completamente. Lo mismo sucede con los métodos, no se incluirán aquellos cuya *docstring* está **vacía** o es nula.
+
+Por otro lado, si la clase hereda de otra, y quieres evitar que se incluya el *docstring* de un método en concreto, puedes **sobreescribirlo** e incluir una cadena vacía (algo similar a lo que ocurre en el ejemplo con el método `__init__`).
+
+Por último, resaltar que la documentación generará un **índice** al principio con todas las **clases** documentadas, con enlaces a sus respectivas subsecciones.
+
+
