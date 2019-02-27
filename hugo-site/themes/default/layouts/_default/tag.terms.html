@@ -1,13 +1,18 @@
 {{ partial "header.html" . }}
 
-[Default tag terms template]
+<h1>Current list of tags</h1>
+<hr style="border: 1px solid #333">
 
-{{/*
-    <ul id="all-tags">
-        {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+<h2>
+    {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+    <a href="/tags/{{ $name }}/" class="badge badge-secondary">
         {{ $name }}
-        {{ end }}
-    </ul>
-*/}}
+        <span class="badge badge-pill badge-danger" style="margin-left: 20px">
+            {{ $taxonomy.Count }}
+        </span>
+    </a>
+    {{ end }}
+</h2>
+
 
 {{ partial "footer.html" . }}

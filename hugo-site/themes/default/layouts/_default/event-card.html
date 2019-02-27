@@ -28,7 +28,12 @@
       <p class="date">{{ dateFormat "2006/01/02" .Params.when }}</p>
       <hr>
       <div class="tags">
-	{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}
+        {{- range $i, $e := .Params.tags -}}
+        {{ if $i }}, {{ end }}
+        <a href="/tags/{{$e}}/">{{ $e }}</a>
+        {{- end -}}
+      </div>
+
       </div>
     </div>
   </div>

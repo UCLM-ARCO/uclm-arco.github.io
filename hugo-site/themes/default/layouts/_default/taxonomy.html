@@ -1,5 +1,16 @@
 {{ partial "header.html" . }}
 
-[Default taxonomy template (to render a list of values for a term)]
+<h1>Content with <a href="/tags/">tag</a> "<code>{{ .Name | lower}}</code>"</h1>
+<hr style="border: 1px solid #333">
+
+<ul class="search">
+    {{ range .Data.Pages }}
+    <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <br><cite>{{ .Permalink }}</cite>
+        <br><p>{{ .Description | safeHTML }} </p>
+    </li>
+    {{ end }}
+</ul>
 
 {{ partial "footer.html" . }}
