@@ -14,6 +14,7 @@ SECTIONS += arco-talks
 SECTIONS += arco-talks
 SECTIONS += arco-talks
 SECTIONS += api
+SECTIONS += cittavr
 # SECTIONS_VAR_END (do not edit or remove this comment)
 
 all run-preview-server run-preview-server-with-drafts run-server:
