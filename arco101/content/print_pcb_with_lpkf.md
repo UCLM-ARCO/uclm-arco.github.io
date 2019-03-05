@@ -6,7 +6,7 @@ tags:
 - hugo
 - LPKF
 - PCB
-draft: true
+draft: false
 
 image: "print_pcb_with_lpkf/lpkf.jpg"
 description: "En esta sección se verá como imprimir con una máquina LPKF un PCB previamente diseñado"
