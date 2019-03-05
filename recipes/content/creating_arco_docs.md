@@ -247,7 +247,7 @@ Ahora deberás **crear la plantilla**, con el nombre indicado y extensión `.htm
 Hugo tiene un comando para crear nuevo contenido, y en función del tipo, copiará una plantilla u otra. Estas plantillas se llaman [Archetypes](https://gohugo.io/content-management/archetypes/), y se encuentran en el directorio `hugo-site/archetypes`. Así, para crear una nueva entrada, desde la raíz del repositorio, ejecuta el comando:
 
 {{< shell >}}
-$ new recipes/content/integrating_xiaomi_devices.md
+$ hugo new recipes/content/integrating_xiaomi_devices.md
 {{< /shell >}}
 
 Esto creará un nuevo archivo, llamado `integrating_xiaomi_devices.md` dentro de la sección `recipes`, en el directorio de contenido (es decir en la ruta especificada). Hugo usará la **primera palabra** de la ruta para determinar el *Archetype* que empleará a modo de plantilla para la nueva entrada. Si abres el fichero recién creado, verás algo como esto:

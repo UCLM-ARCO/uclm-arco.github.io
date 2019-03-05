@@ -2,10 +2,10 @@
 title: "Cómo imprimir un PCB con una máquina LPKF"
 date: 2019-03-01T10:49:04+01:00
 tags:
-- docs
-- hugo
-- LPKF
-- PCB
+- lpkf
+- pcb
+- hardware
+- equipment
 draft: false
 
 image: "print_pcb_with_lpkf/lpkf.jpg"
@@ -51,7 +51,7 @@ En algunos casos es posible que a la capa de taladrado se le deba cambiar la esc
 
 ## Indicar parámetro del contorno
 
-Esta tarea está asociada al segundo icono, y su objetivo es el de señalar al software como queremos que se realice el contorno del PCB al cortarlo de la placa original. 
+Esta tarea está asociada al segundo icono, y su objetivo es el de señalar al software como queremos que se realice el contorno del PCB al cortarlo de la placa original.
 
 En este paso hay que indicar al software que a la hora realizar el corte, la máquina debe dejar cuatro pequeñas franjas sin cortar, esto es debido a que si el corte se realizase completo, cuando la placa fabricada quede totalmente libre, la broca seguiría en contacto con ella pudiendo ocasionar que el PCB salga volando. Para evitarlo se le tiene que decir al software que deje cuatro uniones en los laterales (4 edges), además se fijará la anchura de corte del contorno a 1 mm (Tab Width) aunque es recomendable ponerla a una anchura menor, para una vez finalizada la impresión, extraer el PCB con mayor facilidad.
 
@@ -61,7 +61,7 @@ Cuando terminemos de configurar los parámetros habra que pulsar sobre el botón
 
 ## Indicar cortes internos
 
-El tercer icono correspondiente al tercer paso es utilizado para seleccionar cortes internos. Lo más probable es que el diseño que se esté realizando no tenga cortes internos, por lo que es posible que incluso el icono esté desactivado. En ese caso este paso simplemente será ignorado y se pasará al siguiente. 
+El tercer icono correspondiente al tercer paso es utilizado para seleccionar cortes internos. Lo más probable es que el diseño que se esté realizando no tenga cortes internos, por lo que es posible que incluso el icono esté desactivado. En ese caso este paso simplemente será ignorado y se pasará al siguiente.
 
 ## Realizar limpieza de cobre
 
@@ -79,7 +79,7 @@ Llegamos al último paso del proceso con CircuitCam. Al igual que los últimos p
 
 BoardMaster es el software que nos permitirá comunicarnos y manejar la máquina LPKF durante todo el proceso de impresión. Antes de comenzar a explicar este proceso, es necesario explicar algunas de las funcionalidades más importantes de este software, así como familiarizar al usuario con la interfaz que presenta.
 
-Cuando BoardMaster se ejecuta presenta la interfaz que se puede ver a continuación. 
+Cuando BoardMaster se ejecuta presenta la interfaz que se puede ver a continuación.
 
 {{< polaroid src="interfazBM.png" caption="Interfaz BoardMaster" >}}
 
@@ -96,13 +96,13 @@ Como se puede observar en la imagen, en la interfaz hay algunos números señala
 9. Representación virtual de la mesa de trabajo.
 10. **Botones de adición y eliminación** de pads y pistas. Para el software BoardMaster, cuando queremos seleccionar algún componente del footprint no basta con los botones de selección, estos componentes despueś deben ser añadidos. Por ejemplo si quisiesemos imprimir un pad de la placa y simplemente lo seleccionamos el pad no será impreso dado que debe ser añadido. Los botones **+** y **-** añaden o eliminan una selección respectivamente, los botones **Alt+** y **Alt-** añaden o eliminan todos los componentes del footprint.
 
-Si el uso de algún elemento de la interfaz no se ha entendido muy bien en esta explicación, durante el proceso de impresión todo quedará más claro. 
+Si el uso de algún elemento de la interfaz no se ha entendido muy bien en esta explicación, durante el proceso de impresión todo quedará más claro.
 
 # Preparación de la impresión
 
 Una vez generado el archivo `LMD` con CircuitCam se deben preparar tanto la máquina como el software BoardMaster para realizar el proceso de impresión.
 
-Lo primero de todo es encender la máquina LPKF, muy importante, el programa **BoardMaster no debe ejecutarse hasta que la máquina esté encendida** con el objetivo de evitar cualquier problema de comunicación entre el software y la máquina. Una vez que nos aseguremos de que la máquina está encendida se procede a abrir BoardMaster. 
+Lo primero de todo es encender la máquina LPKF, muy importante, el programa **BoardMaster no debe ejecutarse hasta que la máquina esté encendida** con el objetivo de evitar cualquier problema de comunicación entre el software y la máquina. Una vez que nos aseguremos de que la máquina está encendida se procede a abrir BoardMaster.
 
 
 ## Preparación de la máquina LPKF
@@ -127,7 +127,7 @@ Por último hay que importar el proyecto que se ha generado anteriormente con Ci
 Todo el entorno, tanto la máquina LPKF como BoardMaster está preparado para iniciar la impresión, ahora debemos ejecutar, en orden, cada una de las étapas de la lista desplegable para realizar el proceso. Nosotros solo debemos preocuparnos en seleccionar la étapa de la lista, añadir los componentes del footprint, pulsar el botón Start y esperar a que finalice, el software sabrá que herramienta elegir y como operar para cada una de las tareas. Si no entiendes alguna indicación del proceso ve a [Interfaz de BoardMaster](#interfaz-de-boardmaster). El procedimiento de la impresión será el siguiente:
 
 1. **MarkingDrills**: Primer paso del proceso de impresión, su objetivo es el de marcar los taladros, para que llegada la hora de taladrar el taladro no resbale y los pads y pistas se
-desplacen. Se seleccionan todos los pads y pistas con el botón Alt+ y se pulsa el botón Start. Una vez termine el proceso, se puede observar si el proceso se ha realizado correctamente pulsando sobre el botón parking y viendo el resultado en la placa. 
+desplacen. Se seleccionan todos los pads y pistas con el botón Alt+ y se pulsa el botón Start. Una vez termine el proceso, se puede observar si el proceso se ha realizado correctamente pulsando sobre el botón parking y viendo el resultado en la placa.
 2. **DrillingPlated**: En este paso la broca atravesará la placa y creará los pads. Dado que tampoco es una tarea muy delicada podemos añadir todos los pads con el botón Alt+ e iniciar el proceso con Start.
 3. **Info! Galvanic Plating**: Esta es una etapa informativa, lo que nos está diciendo es que si vamos a hacer el galvanizado de los pads es el momento idóneo para hacerlo. Este paso puede ser omitido.
 4. **Read_Bottom**: Esta de nuevo es otra etapa informativa que nos está diciendo que preparemos la capa bottom para ser impresa.
@@ -141,7 +141,7 @@ desplacen. Se seleccionan todos los pads y pistas con el botón Alt+ y se pulsa 
 {{< polaroid src="changeHome.png" caption="Ventana de modificación del home" >}}
 
 
-Cuando los pasos hayan finalizado, pulsamos el botón parking para extraer la mesa de trabajo, y con los guantes, coger la lámina de PCB y extraer la/s placa/s impresa/s de la placa original. Una vez extraídas se las aplica una laca protectora y se liman los bordes para poder cogerla con las manos desnudas. 
+Cuando los pasos hayan finalizado, pulsamos el botón parking para extraer la mesa de trabajo, y con los guantes, coger la lámina de PCB y extraer la/s placa/s impresa/s de la placa original. Una vez extraídas se las aplica una laca protectora y se liman los bordes para poder cogerla con las manos desnudas.
 
 Para finalizar, se debe dejar el entorno lo más limpio posible por lo que es importante extraer las herramientas y apagar la máquina. El proceso de impresión ha finalizado.
 
