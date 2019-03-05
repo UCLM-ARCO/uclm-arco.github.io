@@ -28,17 +28,17 @@ A lo largo de la sección se verá paso por paso como operar con estas herramien
 
 # Preparación del diseño con CircuitCam
 
-Antes de empezar a imprimir el circuito, hay que convertir los archivos resultantes del diseño en un formato entendible al software controlará la máquina (BoardMaster) y con la información necesaria para su impresión. Este es el objetivo del software **CircuitCam**, el cual es un sistema de fabricación asistida por ordenador para PCBs y otro tipo de tecnologías. Al abrir el software se nos presentará una interfaz similar a la siguiente.
+Antes de empezar a imprimir el circuito, hay que convertir los archivos resultantes del diseño en un formato entendible por el software que controlará la máquina (BoardMaster) y con la información necesaria para su impresión. Este es el objetivo del software **CircuitCam**, el cual es un sistema de fabricación asistida por ordenador para PCBs y otro tipo de tecnologías. Al abrir el software se nos presentará una interfaz similar a la siguiente.
 
-{{< polaroid src="CCamiface.png" caption= "Interfaz del software CircuitCam" >}}
+{{< polaroid src="CCamiface.png" caption="Interfaz del software CircuitCam" >}}
 
-A la izquierda se puede observar un recuadro rojo, este recuadro es **muy importante** ya que contiene **seis iconos que se corresponde con los seis pasos ordenados** que se deben seguir para preparar los archivos y que se explican a continuación.
+A la izquierda se puede observar un recuadro rojo, este recuadro es **muy importante** ya que contiene **seis iconos que se corresponden con los seis pasos ordenados** que se deben seguir para preparar los archivos y que se explican a continuación.
 
 ## Importar Archivos
 
 El primer icono corresponde con la importación de los archivos resultado del diseño. En este paso hay que seleccionar aquellas capas que se van a usar para la impresión, como norma general serán necesarios cuatro archivos *Gerber* correspondientes a las capas top, bottom, de contorno y de taladrado, resultado del diseño previo de la placa. Estos archivos suelen ser generados como plots del diseño y tienen extensión `.gbr`, salvo la capa de taladrado que posee extensión **drl**.
 
-Una vez importados estos archivos, la aplicación nos preguntará por la correspondencia de cada uno de los archivos importados con las capas de la placa. En la ventana que aparece, en la columna Layer/Template se le tiene que que asignarl a cada archivo su capa correspondiente:
+Una vez importados estos archivos, la aplicación nos preguntará por la correspondencia de cada uno de los archivos importados con las capas de la placa. En la ventana que aparece, en la columna Layer/Template se le tiene que que asignar a cada archivo su capa correspondiente:
 
 - Archivo de la capa top - TopLayer
 - Archivo de la capa bottom - BottomLayer
