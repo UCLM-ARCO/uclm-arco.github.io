@@ -28,7 +28,7 @@
       <div class="tags">
         {{- range $i, $e := .Params.tags -}}
         {{ if $i }}, {{ end }}
-        <a href="/tags/{{$e}}/">{{ $e }}</a>
+        <a href="/tags/{{ replace $e " " "-" }}/">{{ $e }}</a>
         {{- end -}}
       </div>
     </div>
