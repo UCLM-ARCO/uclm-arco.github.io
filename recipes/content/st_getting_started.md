@@ -1,35 +1,34 @@
 ---
-title: "Lifelike: getting started using ST interfaces"
+title: "Smart Transducer: getting started"
 date: 2019-03-05T16:20:02+01:00
 tags:
 - recipe
 - smart home
-- lifelike
 - st
 - domotics
 draft: false
 
-image: "lifelike_getting_started/smart-home.jpg"
-description: "First steps of using the <code>ST</code> interfaces and Lifelike&trade; tools."
+image: "st_getting_started/smart-home.jpg"
+description: "First steps of using the <code>ST</code> interfaces and tools."
 ---
 
 # Overview
 
-Lifelike is a **platform** for building *Smart Home* solutions the easy way. It uses very simple interfaces, with a `push` model, to **acquire** sensor information and also to **change** the state of actuators. This recipe will analyze **those interfaces** and how to use them.
+Smart-Transducer is a **platform** for building *Smart Home* solutions the easy way. It uses very simple interfaces, with a `push` model, to **acquire** sensor information and also to **change** the state of actuators. This recipe will analyze **those interfaces** and how to use them.
 
 # Ingredients
 
 In order to follow this recipe, you will need to satisfy the following **requirements**:
 
-* The `lifelike` package, available at [Pike](http://pike.esi.uclm.es/)'s repository.
+* The `smart-transducer` package, available at [Pike](http://pike.esi.uclm.es/)'s repository.
 * **Python** skills (search in [python.org](https://www.python.org/) for tutorials if needed).
 * Basic understanding of the [ZeroC](https://zeroc.com/products/ice) Ice midleware.
 * Debian/Ubuntu **Linux** and a terminal.
 
-If you **already added** the Pike repository to your system, then just install `lifelike`:
+If you **already added** the Pike repository to your system, then just install `smart-transducer`:
 
 {{< shell >}}
-$ sudo apt install lifelike
+$ sudo apt install smart-transducer
 {{< /shell >}}
 
 # `ST` description
@@ -41,7 +40,7 @@ The **definition** of the module is as follows:
 {{< staticCode "st.ice" >}}
 
 {{% note primary %}}
-Please, **don't download** this interface for deployment. It is provided by the `lifelike` package (usually at `/usr/share/slice/st`). Use it instead.
+Please, **don't download** this interface for deployment. It is provided by the `smart-transducer` package (usually at `/usr/share/slice/st`). Use it instead.
 {{% /note %}}
 
 It has an interface for every **basic type** (`bool`, `byte`, `float`, `string`...), with a single method, `set`, which accepts two arguments:
