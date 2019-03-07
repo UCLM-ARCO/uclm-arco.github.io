@@ -1,0 +1,18 @@
+{{ partial "header.html" . }}
+
+<link rel="stylesheet" href="/{{ .Section }}/css/style.css">
+
+<div class="btn-group btn-group-sm w-100" role="group">
+    <a href="/{{ .Section }}/"
+       class="btn btn-outline-secondary {{ if eq .Params.section "icec-home" }} active {{ end }}">
+      Overview</a>
+    <a href="/{{ .Section }}/examples/"
+       class="btn btn-outline-success {{ if eq .Params.section "examples" }} active {{ end }}">
+      Getting Started</a>
+    <a href="#"
+       class="btn btn-outline-secondary disabled">
+      Reference</a>
+    <a href="#"
+       class="btn btn-outline-secondary disabled">
+      Latest News</a>
+</div>

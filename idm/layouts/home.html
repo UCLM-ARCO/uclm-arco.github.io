@@ -1,5 +1,5 @@
 {{ $base := .Site.Params.path }}
-{{ partial "idm/header.html" . }}
+{{ partial (print .Section "/header.html") . }}
 
 <div class="jumbotron text-center"
      style="background-color: inherit; padding-left: 0px; padding-right: 0px">
