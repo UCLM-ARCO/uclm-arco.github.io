@@ -1,4 +1,4 @@
-{{ partial "idm/header.html" . }}
+{{ partial (print .Section "/header.html") . }}
 {{ $code := print "/static/" .Section "/code/" }}
 
 <br><br><br>
