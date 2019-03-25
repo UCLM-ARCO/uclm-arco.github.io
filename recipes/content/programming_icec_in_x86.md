@@ -15,7 +15,7 @@ description:  "Description, step by step, of how to program and compile an IceC 
 
 # Overview
 
-IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middlware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
+IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middleware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
 
 # Ingredients
 
@@ -33,7 +33,7 @@ $ sudo apt install icec smart-tranducer
 
 # An IceC server in x86
 
-The server will consist in a an object that implement the `IBool` interface of the `st.ice` module, located in the path `/usr/share/slice/st/`.
+The server will consist in an object that implement the `IBool` interface of the `st.ice` module, located in the path `/usr/share/slice/st/`.
 
 The first step of the program must be implement the `set` function of the interface, in this example case, the implementation will be print a message with the new value in the `stdout`.
 
@@ -66,7 +66,7 @@ Ice_Communicator_createObjectAdapterWithEndpoints(&ic, "Adapter", endp, &adapter
 Ice_ObjectAdapter_activate(&adapter);
 {{< /code >}} 
 
-4. Initialize the servants with their respective type.
+4. Initialize the servants with their respective types.
 {{< code c >}}
 st_IBool_init(&servant);
 {{< /code >}}
@@ -77,7 +77,7 @@ char *servant_identity = "ServantIBool";
 Ice_ObjectAdapter_add(&adapter, (Ice_ObjectPtr)&servant, servant_identity);
 {{< /code >}}
 
-6. Print the apropiate proxies with the structure `"[identity] -e [ice_version] -[type_of_adapter]:[endpoints]"`.
+6. Print the apropiate proxies with the structure `"[identity] -e [ice_encoding_version] -[proxy_options]:[endpoints]"`.
 {{< code c >}}
 printf("Proxy ready: '%s -e 1.0 -o:%s'\n", servant_identity, endp);
 {{< /code >}}
@@ -88,7 +88,7 @@ Ice_Communicator_waitForShutdown(&ic);
 {{< /code >}}
 
 
-When you print the proxy is very important to consider some issues. Firstly IceC **only support** the version 1.0, if you want to communicate an Ice program with another written with IceC both have to work with the 1.0 version. Secondly, if you declare a tcp adapter you have to print a tcp adapter, the different types of adapter are **-o(oneway)** **-t(twoway)** for TCP and **-d(datagram)** for UDP.
+When you print the proxy is very important to consider some issues. Firstly IceC **only support** the version 1.0, if you want to communicate an Ice program with another written with IceC both have to work with the 1.0 version. Secondly, if you declare a tcp endpoint you have to print a proxy with a tcp invocation mode, the different invocations mode are **-o(oneway)** **-t(twoway)** for TCP and **-d(datagram)** for UDP.
 
 After organize the code, your program should look like this one:
 
@@ -96,7 +96,7 @@ After organize the code, your program should look like this one:
 
 # Compile the program with IceC
 
-To simplify the task of compiling, it's going to be used t a `Makefile` with the tool `make`.
+To simplify the task of compiling, it's going to be used a `Makefile` with the tool `make`.
 
 The first task to do is define the variables that are going to be used in the compilation process, in this case we must define the compiler, some paths and the compilation flags that we will need.
 
@@ -119,7 +119,7 @@ vpath %.c $(ICEC_SRC)
 vpath %.c $(ICEC_SRC)/platforms/x86
 {{< /code >}}
 
-Finally, we must include al the rules with their respective prerequisites to compile our program.
+Finally, we must include all the rules with their respective prerequisites to compile our program.
 
 {{< code >}}
 all: $(SLICE).h $(TARGET)
@@ -139,7 +139,7 @@ clean:
 	$(RM) $(TARGET) $(SLICE).h
 {{< /code >}}
 
-As you can see, the two main files that are produce with this Makefile are the **header file** (in this case `st.h`) with the IceC interfaces and the executable. In order to obatin the executable, we have to link our source code with some **object files of IceC**. Because of the previous `vpath`, `make` will see the .o files like a prerequisites and will search the .c files in the paths that we indicated producing the object files and compiling the program.
+As you can see, the two main files that are produce with this Makefile are the **header file** (in this case `st.h`) with the IceC interfaces and the executable. In order to obtain the executable, we have to link our source code with some **object files of IceC**. Because of the previous `vpath`, `make` will see the .o files like a prerequisites and will search the .c files in the paths that we indicated, producing the object files and compiling the program.
 
 The entire Makefile will be the following.
 
@@ -160,7 +160,7 @@ If you want to test your server you can use the `st-client` of the `smart-transd
 $ st-client -t bool -p "ServantIBool -e 1.0 -o:tcp -h 127.0.0.1 -p 10000" 1
 {{< /shell >}}
 
-If all is correct the server must show the next message.
+If all is correct the server must show the following message.
 
 {{< shell >}}
 Proxy ready: 'ServantIBool -e 1.0 -o:tcp -h 127.0.0.1 -p 10000'
