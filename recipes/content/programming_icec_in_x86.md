@@ -77,7 +77,7 @@ char *servant_identity = "ServantIBool";
 Ice_ObjectAdapter_add(&adapter, (Ice_ObjectPtr)&servant, servant_identity);
 {{< /code >}}
 
-6. Print the apropiate proxies with the structure `"[identity] -e [ice_encoding_version] -[proxy_options]:[endpoints]"`.
+6. Print the apropiate proxies with the structure `"[identity] -e [ice_encoding_version] -[invocation_mode]:[endpoints]"`.
 {{< code c >}}
 printf("Proxy ready: '%s -e 1.0 -o:%s'\n", servant_identity, endp);
 {{< /code >}}
