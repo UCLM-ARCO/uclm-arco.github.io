@@ -31,7 +31,7 @@ Prego also counts with `context`, an object whose attribute may be aytomatically
 
 In this recipe the following elements are needed:
 
-- The `python3-prego` package, both available at [Pike](http://pike.esi.uclm.es/)'s repository
+- The `python3-prego` package, available at [Pike](http://pike.esi.uclm.es/)'s repository
 - The `python3-nose`, `python3-hamcrest` packages 
 - A Debian/Ubuntu Linux distribution
 - Basic knowledge of python and shell comands
@@ -41,7 +41,7 @@ If you don't count with **Pike** in the repository list of your machine you **mu
 Following, you must install the packages previously mentioned with the next command.
 
 {{< shell >}}
-$ sudo apt install python3-prego python3-nose python3-hamcrest smart-transducer
+$ sudo apt install python3-prego python3-nose python3-hamcrest
 {{< /shell >}}
 
 # A simple example
