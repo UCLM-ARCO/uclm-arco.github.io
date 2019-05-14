@@ -5,7 +5,7 @@ tags:
 - debian
 - packages
 - ian
-draft: true
+draft: false
 
 image: "building_packages_with_ian/deb-package.png"
 description: "Recipe explaining how to build and upload a debian package to a package repository"
@@ -96,7 +96,7 @@ $ ssh-keygen -b 4096
 
 # Building the package
 
-Now, is time to build your package. The first step is create a directory with the named of your package (for example `example-package`) where you are going to save the source files of your program. In this example case, we are going to package a python program that consists a file named `example.py`.
+Now, is time to build your package. The first step is create a directory with the named of your package (for example `example-package`) where you are going to save the source files of your program. In this example case, we are going to package a python program that consists in a file named `example.py`.
 
 Once you moved your source code, you have to create a `Makefile`. This `Makefile` must contains two directives, **build** and **install**, build is an optinal directive and contains the actions needed to compile the software, in the other hand, the directive install contains the actions neede to install the executable file of your program.
 
@@ -111,7 +111,7 @@ install:
 
 {{< /code >}}
 
-The directive install performs the following tasks. Firstly if the directory `~/usr/bin` doesn't exist it is created, after that, it copies the python file to the specified directory with the properly permissions, converting the word **example** in a command that execute the `example.py` program.
+The directive install performs the following tasks. Firstly if the directory `~/usr/bin` doesn't exist it is created, after that, it copies the python file to the specified directory with the properly permissions (read and execute permissions), converting the word **example** in a command that execute the `example.py` program.
 
 After the Makefile is created, the following step is execute the `ian create` command, this command will create a folder named `debian` with a default information about the package. Some files in this debian directory, like `changelog` and `control` can be modified with the desired information.
 
