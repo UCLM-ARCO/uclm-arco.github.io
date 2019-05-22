@@ -571,7 +571,7 @@ The given parameters are:
 * **`GameObject obj`**: the actual
   [GameObject](https://docs.unity3d.com/ScriptReference/GameObject.html)
   to which this script is attached to.
-* **`ConcurrentQueue<GUITask> task_queue`**: this an queue of
+* **`ConcurrentQueue<GUITask> task_queue`**: this is a queue of
   `GUITask`, used to execute drawing functions on the GUI thread. If
   your servant wants to modify the scene on runtime, this is the way
   to achieve it.
@@ -646,10 +646,10 @@ your prefab. And, if you go to the inspector tab, you will see some
 familiar properties on this script: the **IDM Address** and the less
 used **Citisim ID**.
 
-To test the script, create an **instance** of this your prefab, set
-the IDM address, and press play. You should see the advertisement of
-this object in the router output, and also should be able to change
-its state using the `digitalsink-client` again.
+To test the script, create an **instance** of your prefab, set the IDM address,
+and press play. You should see the advertisement of this object in the router
+output, and also should be able to change its state using the
+`digitalsink-client` again.
 
 
 ## Exporting your asset
