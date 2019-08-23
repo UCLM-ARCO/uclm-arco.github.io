@@ -3,6 +3,8 @@ title: "Cómo crear snapshots de vagrant"
 date: 2019-08-23T07:52:05+02:00
 tags:
 - recipe
+- vagrant
+- devops
 draft: false
 
 image: "creating_vagrant_snapshots/vagrant-logo.png"
