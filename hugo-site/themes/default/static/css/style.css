@@ -121,6 +121,13 @@ a.tab-link.active {
     background: #D0D0D0;
 }
 
+.app-skin pre code.language-txt {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #F0F0F0;
+}
+
 pre {
     border: 0px;
     border-radius: 0px;
@@ -326,3 +333,4 @@ pre.shell {
 .alert-success, .alert-success hr { border-color: #5aa06b; }
 
 /* ---------------------------------- */
+

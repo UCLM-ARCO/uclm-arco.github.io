@@ -113,6 +113,30 @@ Lo que debe producir un resultado similar a esto:
 
 {{< staticCode "hello-world.py" >}}
 
+Si lo que necesitas es incluir in **fragmento** de código *inline* (como los que hay en esta sección), usa el Shortcode `code`, indicándole el **lenguaje** del *snippet* que estás incluyendo. Por ejemplo, para mostrar código en C#, sería:
+
+{{< code md >}}
+{{</* code cs */>}}
+class Service {
+  private static int id = 123;
+  public string name = "service-123";
+}
+{{</*/ code */>}}
+{{< /code >}}
+
+Lo que mostraría el siguiente resultado:
+
+{{< image "template-cs-code.png" >}}
+
+Y si lo que quieres es mostrar un comando por la terminal, el Shortcode a usar el `shell`:
+
+{{< code md >}}
+{{</* shell */>}}
+$ cat file.txt
+...
+{{</*/ shell */>}}
+{{< /code >}}
+
 # Cómo crear una nueva sección
 
 Para crear una nueva sección, se han creado algunas **herramientas específicas** que se encargan de copiar las plantillas y configurar el proyecto adecuadamente.
