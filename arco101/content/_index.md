@@ -20,6 +20,7 @@ más comodo nos sentimos, si no estas familiarizado con este entorno será una d
  Hay muchos recursos en la web para aprender este tipo de entornos, ponemos algunos para que te hagas una idea:
 
   * Entre las distribuciones que mas nos gustan están [Debian](https://www.debian.org/doc/index.es.html) y [Ubuntu](https://help.ubuntu.com/stable/ubuntu-help/index.html), [en este enlace](https://kali.training/topic/introduction-to-apt/) puedes
-  encontrar una buena introducción con ejercicios para que te sientas cómodo gestionando paquetes en estas distribuciones. Esa documentación
-  precisamente pertenece a otra distribución (KALI) por lo que la parte de los repositorios está centrada en esa distribución, aunque vale como
-  concepto, los repositorios de debian y ubuntu son diferentes. 
+  encontrar una buena introducción con ejercicios para que te sientas cómodo gestionando paquetes en estas distribuciones (secciones 8.1.1 y 8.1.2). Esa documentación precisamente pertenece a otra distribución (KALI) por lo que la parte de los repositorios está centrada en esa distribución, aunque vale como concepto, los repositorios de debian y ubuntu son diferentes. 
+  * Todo lo que generes con nosotros debe estar bajo un sistema de control de versiones, casi todo está en git, si quieres ver de forma simple el flujo de trabajo [aquí puedes verlo] (https://rogerdudler.github.io/git-guide/). 
+  
+  * Creamos repositorios en bitbucket y github, tienes que crearte una cuenta en esas web con tu dirección de correo @uclm.es.
