@@ -140,7 +140,7 @@ class PythonAPIDoc:
             self += self.function_header.format(name)
             self += '\n```py'
             self += 'def {}{}'.format(
-                name, inspect.formatargspec(*inspect.getargspec(func))
+                name, inspect.formatargspec(*inspect.getfullargspec(func))
             )
             self += '```\n'
             self += "<br>" + fdoc
