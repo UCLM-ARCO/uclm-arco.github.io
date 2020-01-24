@@ -126,7 +126,9 @@ class PythonAPIDoc:
             self += pdoc
 
     def get_functions_md(self, parent):
-        for name, func in inspect.getmembers(parent, inspect.isfunction):
+        for name, func in inspect.getmembers(parent,
+            lambda o: inspect.isfunction(o) or inspect.ismethod(o)):
+
             # ignore private (starting with _) members
             if name != '__init__' and name.startswith('_'):
                 continue
