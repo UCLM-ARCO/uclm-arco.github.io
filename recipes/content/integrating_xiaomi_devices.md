@@ -86,7 +86,8 @@ Remember that your host machine (where you run this script) should be connected 
 Also, note that the **protocol to discover** a new Gateway implies the use of IP multicast messages, so you need IP multicast support. If there is any **problem**, try to add the WiFi interface as a route for multicast messages:
 
 <hr>
-<code>$ sudo route add -net 224.0.0.0 netmask 224.0.0.0 wlan0</code >
+<code>$ sudo route add -net 224.0.0.0 netmask 224.0.0.0 wlan0</code>
+<br>
 {{% /note %}}
 
 The `LumiGateway`'s constructor has **some parameters** but we will review them later. When the `start()` returns, you can inspect the list of **linked devices** to the Gateway (both online and offline).

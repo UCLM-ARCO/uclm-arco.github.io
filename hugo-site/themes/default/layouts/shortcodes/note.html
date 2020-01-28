@@ -8,6 +8,6 @@
     {{ end }}
   </h4>
   <hr class="separator"><div class="alert-body">
-    {{ .Inner }}
+    {{ .Inner | markdownify }}
   </div>
 </div>
