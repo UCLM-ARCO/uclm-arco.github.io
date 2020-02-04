@@ -21,89 +21,65 @@ or an external tool, like [Blender](https://www.blender.org/).
 
 Let's begin with the installation.
 
+
 # Installation of Unity on Linux
 
-First of all, you should be aware that the Unity Editor for Linux is
-still a **beta release**, so: 1) there are very frequent releases (one
-every few days), and 2) there may be some bugs and unsteady
-releases. Please, take this into account if you get unexpected
-results.
-
 {{% note primary %}}
-**Note:** This manual was completed and tested with `Unity 2018.2.6`,
+**Note:** This manual was completed and tested with `Unity 2019.3.0f6`,
 but you should get similar results with any **newer** release.
+<br><br>
 {{% /note %}}
 
-To **download** the most recent version of the Editor (or any older one),
-you must check the forum post where they are announced:
+To **download** the most recent version of the Editor (or any older one), you
+should use the **Unity Hub**, which could be found here:
 
-* [Unity on Linux: Release Notes and Known Issues]
-  (https://forum.unity.com/threads/unity-on-linux-release-notes-and-known-issues.350256/)
+* [Download Unity](https://unity3d.com/es/get-unity/download)
 
-There, go to the last published post, and you will find the link to
-the latest installer. Download it (the following command is for the
-**2018.2.6** release):
+Mark it as **executable** and run it (you could, of course, do it from the GUI):
 
 {{< shell >}}
-$ wget https://beta.unity3d.com/download/793261fe3e9a/UnitySetup-2018.2.6f1
+chmod a+x UnityHub.AppImage
+./UnityHub.AppImage
 {{< /shell >}}
 
-Make it executable and run it:
+Once you start the Hub, you could go to the **Installs** tab and add the version
+you prefer:
 
-{{< shell >}}
-$ chmod a+x UnitySetup-2018.2.6f1
-$ ./UnitySetup-2018.2.6f1
-{{< /shell >}}
-
-Now, you should see an assistant that will guide you through the
-installation. The process is very straightforward: click 'next' and
-accept the License, **select the components** you want to install, and
-**pick a folder** where the Editor will be installed. Then, just wait
-to finish the installation (please, be patient, and dismiss any ANR
-message :).
-
-Once it finished, I recommend you to add the installation path (i.e:
-`$INSTALL_DIR/Editor/`) to your environment `PATH` variable, so you
-can launch Unity from the command line easily.
+{{< polaroid src="unity-hub-add-version.png" caption="Unity Hub: adding a Unity version"
+>}}
 
 Also, you will need an external tool for editing the source code (in
 C#). You may use whatever you want (like Emacs or Atom), but the
 recommended IDE (and what has better integration) is [Visual Studio
 Code](https://code.visualstudio.com/). You can just grab the `.deb`
-package and install it like any other Debian package. After that, open
-Unity (create a new temporary project if needed) and go to `Edit >
-Preferences`. In the tab `External Tools`, change the property
-`External Script Editor` to VS Code (click on *Browse* if needed). You
-can see this dialog in the following screenshot:
+package and install it like any other Debian package.
 
-{{< polaroid src="unity - external editor setting.png" caption="Unity: external source editor setting" >}}
-
-Once finished, you are **ready to start** a new Unity project and add
-support for CittaVR to it. Let's see how.
+Now, you are **ready to start** a new Unity project and add support for CittaVR
+to it. Let's see how.
 
 # Creating a new project
 
-First of all, **close Unity** if you have it already open. We will
-create a fresh new project for this part. Then, open Unity again; from
-the command line it would be with:
+This step is very straightforward: just open the Unity Hub (if you closed it)
+and go to the **Projects** tab. Click on the **New** button. Select the project
+type, its location and also the name:
 
-{{< shell >}}
-$ unity
-{{< /shell >}}
+{{< polaroid src="unity-hub-new-project.png" caption="Unity Hub: creating a new project"
+>}}
 
-Now, you will be requested to login with your unity account. Just
-create one if you didn't do it before, and then **login**. After that,
-Unity will show you the **Project Manager**. Click on `New` and give
-it a proper name and location.
+<!--
+{{% note primary %}}
+It may be possible that in some step, you would be requested to login with your
+unity account. Just create one if you didn't do it before, and then **login**.
+<br><br>
+{{% /note %}}
+-->
 
-{{< polaroid src="unity - new project.png"
-             caption="Unity: creating a new project" >}}
-
-Press on `Create project` and wait. It **will take some time** to
+Press on `Create` and wait. It **will take some time** to
 compile the minimum assets included by default on every new
 project. Just wait until it finishes and shows the Unity Editor with
 your newly created project.
 
+<!--
 ## Setting .NET framework
 
 First thing you should do is to **change your project settings**, because
@@ -122,11 +98,19 @@ picture:
 Set it to `.NET 4.x Equivalent` and click on *Restart* when
 requested. It will **compile again** all your assets, but now using the
 new framework version.
+-->
 
 ## Open C# project
 
-Now is a good time to **check your IDE integration**. (if you want to
-use an IDE, anyway) To open it, just right click on an empty space of
+Now is a good time to **check your IDE integration** (if you want to use an IDE,
+anyway). To configure the recommended settings, got to `Edit > -Preferences`. In
+the tab `External Tools`, change the property `External Script Editor` to Visual
+Studio Code Insiders (click on *Browse* if needed). You can see this dialog in
+the following screenshot:
+
+{{< polaroid src="unity - external editor setting.png" caption="Unity: external source editor setting" >}}
+
+And to open it the C# project, just right click on an empty space of
 your assets folder, and click on `Open C# Project`:
 
 {{< polaroid src="/unity - open cs project.png"
@@ -136,6 +120,7 @@ your assets folder, and click on `Open C# Project`:
 If you now see VS Code open, and **loaded with your Unity project**,
 well done! You are ready for rock 'n roll! ;)
 
+<!--
 ## Setup of IDM router
 
 If you are using CittaVR, you should know that **it uses IDM** as its
@@ -167,6 +152,7 @@ $ idm-router --Ice.Config=router.config
 
 {{< polaroid src="vscode - running idm router.png"
              caption="IDM: running the router with your settings" >}}
+
 
 
 ## Add CittaVR config file
@@ -739,3 +725,8 @@ When you press the button, it will create a folder called `Generated`
 with the generated code for that slice interface. For now, you don't
 have any other option, like support for including other directories,
 but I'm working on it :D
+
+-->
+
+<hr>
+**Update in progress...**
