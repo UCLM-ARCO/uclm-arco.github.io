@@ -66,52 +66,42 @@ type, its location and also the name:
 {{< polaroid src="unity-hub-new-project.png" caption="Unity Hub: creating a new project"
 >}}
 
-<!--
-{{% note primary %}}
-It may be possible that in some step, you would be requested to login with your
-unity account. Just create one if you didn't do it before, and then **login**.
-<br><br>
-{{% /note %}}
--->
-
 Press on `Create` and wait. It **will take some time** to
 compile the minimum assets included by default on every new
 project. Just wait until it finishes and shows the Unity Editor with
 your newly created project.
 
-<!--
+
 ## Setting .NET framework
 
-First thing you should do is to **change your project settings**, because
-by default, it uses an old version of the .NET framework that is not
-compatible with ZeroC Ice and other libraries.
+First thing you should do is to **change your project settings**, because by
+default, it uses *.NET Standard 2.0*, which is not yet fully compatible with
+ZeroC Ice and other libraries.
 
-So, go to `Edit > Project Settings > Player`. This will open a new
-*inspector* (by default, in the right side of your 3D scene) with some
-of your project settings. Open the section called `Other Settings` and
-find the `Scripting Runtime Version`, as seen in the following
+So, go to `Edit > Project Settings > Player`. This will open a new *inspector*
+window with some of your project settings. Open the section called `Other
+Settings` and find the `API Compatibility Level`, as seen in the following
 picture:
 
 {{< polaroid src="unity - net version.png"
              caption="Unity: change the .NET version">}}
 
-Set it to `.NET 4.x Equivalent` and click on *Restart* when
-requested. It will **compile again** all your assets, but now using the
-new framework version.
--->
+Set it to `.NET 4.x` and close the inspector. It will **compile again** all your
+assets using the new framework version, so please wait.
+
 
 ## Open C# project
 
 Now is a good time to **check your IDE integration** (if you want to use an IDE,
-anyway). To configure the recommended settings, got to `Edit > -Preferences`. In
-the tab `External Tools`, change the property `External Script Editor` to Visual
-Studio Code Insiders (click on *Browse* if needed). You can see this dialog in
-the following screenshot:
+anyway). To configure the recommended settings, got to `Edit > Preferences`. In
+the tab `External Tools`, change the property `External Script Editor` to
+"*Visual Studio Code Insiders*" (click on *Browse* if needed). You can see this
+dialog in the following screenshot:
 
 {{< polaroid src="unity - external editor setting.png" caption="Unity: external source editor setting" >}}
 
-And to open it the C# project, just right click on an empty space of
-your assets folder, and click on `Open C# Project`:
+And to open the C# project, just right click on an empty space of
+your Aassets folder, and click on `Open C# Project`:
 
 {{< polaroid src="/unity - open cs project.png"
              caption="Unity: open C# project with your IDE">}}
@@ -120,16 +110,16 @@ your assets folder, and click on `Open C# Project`:
 If you now see VS Code open, and **loaded with your Unity project**,
 well done! You are ready for rock 'n roll! ;)
 
-<!--
+
 ## Setup of IDM router
 
-If you are using CittaVR, you should know that **it uses IDM** as its
-internal middleware for communicating with external objects and to
-receive incoming invocations. So, next thing you should do is to
-**setup an IDM Router** (in case you don't have already one). Don't
-worry, its pretty easy. Just make sure you **installed** the IDM
-Debian package (or do it now!) and create a new configuration file for
-it (call it `router.config`). I usually put it on the `Assets` folder:
+CittaVR may use IDM as its internal middleware for communicating with external
+objects and to receive incoming invocations. So, if you want to enable the IDM
+support, first thing you should do is to **setup an IDM Router** (in case you
+don't have already one). Don't worry, its pretty easy. Just make sure you
+**installed** the IDM Debian package (or do it now!) and create a new
+configuration file for it (call it `router.config`). I usually put it on the
+`Assets` folder:
 
 {{< polaroid src="vscode - router config.png"
              caption="VS Code: create the IDM router config file">}}
@@ -141,7 +131,7 @@ needs):
 {{< code ini "router.config" >}}
 Router.Adapter.Endpoints = tcp -h 127.0.0.1 -p 6140
 Router.Table.Path = router.table
-Router.Ids = C1740001
+Router.Ids = 0A01C17400000001
 {{< /code >}}
 
 To **launch the router**, just use this configuration file:
@@ -154,43 +144,41 @@ $ idm-router --Ice.Config=router.config
              caption="IDM: running the router with your settings" >}}
 
 
-
 ## Add CittaVR config file
 
-You will also need to tell CittaVR **where** is your IDM router. For
-this (and other purposes), **create** a CittaVR configuration
-file. The file must be located in the `Assets/StreamingAssets` folder
-(we use this location in order to ensure that Unity will bundle them
-when building), and be called `cittavr.config`. You should specify at
-least the following properties:
+CittaVR uses a configuration file to store some of its settings (in particular,
+**where** is the IDM router you want to use, if any). So, let's **create** a
+CittaVR configuration file. The file must be located in the
+`Assets/StreamingAssets` folder (we use this location in order to ensure that
+Unity will bundle them when building), and be called `cittavr.config`. You
+may specify the following properties:
 
-* **`IDM.Router.Proxy`**, which is clearly the proxy of your IDM
-  router. If you used the previous configuration file, this value
-  would be `C1740001 -t -e 1.0:tcp -h 127.0.0.1 -p 6140`. **Note:** if
-  you are contacting with **IceC** devices, remember that you **must**
-  add `-e 1.0` here.
+* **`IDM.Router.Proxy`**, which is clearly the proxy of your IDM router. If you
+  used the previous configuration file, this value would be `0A01C17400000001 -t
+  -e 1.0:tcp -h 127.0.0.1 -p 6140`. **Note:** if you are contacting with
+  **IceC** devices, remember that you **must** add `-e 1.0` here.
 
-* **`CittaVR.Adapter.Endpoints`**, as CittaVR will expose **virtual
-  objects** to the real world, you will need to specify **the
-  endpoints** where they should be contacted. These virtual objects
-  will be **registered** on the given IDM router, so these endpoints
-  **must** be reachable by the router.
+* **`CittaVR.Adapter.Endpoints`**, as CittaVR will expose **virtual objects** to
+  the real world, you will need to specify **the endpoints** where they should
+  be contacted. These virtual objects will be **registered** on the given IDM
+  router, so these endpoints **must** be reachable by the router.
 
-* **`CittaVR.Id`**, as we will see later, CittaVR provides an object
-  to **dynamically instantiate** new objects. This is the identity of
-  this object. You should put here something in the **same domain** as
-  your router (in this example, something like `C1740002`), and make
-  sure that there are **enough free addresses** starting from this
-  one, as the new dynamic objects will be using them.
+* **`CittaVR.Id`**, as we will see later, CittaVR provides an object to
+  **dynamically instantiate** new objects. This is the identity of this object.
+  You should put here something in the **same domain** as your router (in this
+  example, something like `0A01C17400000001`), and make sure that there are
+  **enough free addresses** starting from this one, as the new dynamic objects
+  will be using them.
 
-The following is a **full configuration** file, which uses the
-previously defined router:
+The following is a **full configuration** file, which uses the previously
+defined router:
 
 {{< code ini "cittavr.config" >}}
-IDM.Router.Proxy = C1740001 -t -e 1.0:tcp -h 127.0.0.1 -p 6140
+IDM.Router.Proxy = 0A01C17400000001 -t -e 1.0:tcp -h 127.0.0.1 -p 6140
 CittaVR.Adapter.Endpoints = tcp -h 127.0.0.1 -p 9001
-CittaVR.Id = C1740002
+CittaVR.Id = 0A01C17400000002
 {{< /code >}}
+
 
 # Installing ZeroC Ice for Unity
 
@@ -200,16 +188,21 @@ tools for C# using the [NuGet repositories](https://www.nuget.org/),
 and there is a **plugin** to add support for NuGet to Unity, so this is
 what you need to install.
 
-So, open the *Asset Store* in Unity (`Window > General > Asset Store`
-or `Ctrl+9`), and search for 'NuGet'. The package we are looking for
-is like this:
+First, **download the plugin** in the following site (its an asset in the form
+of an `.unitypackage`):
 
-{{< polaroid src="unity - nuget package.png"
-             caption="Unity: NuGet package from the Asset Store">}}
+* [NuGetForUnity github releases](https://github.com/GlitchEnzo/NuGetForUnity/releases)
 
+In my case, I downloaded the 2.0 version. Then, you can **import it**: right
+click on Assets folder and select `Import Package > Custom Package...`:
 
-Click on `Download` and later on `Import` to include it into your
-project. Once finished, you should see a new **menu entry**:
+{{< polaroid src="unity-import-custom-package.png"
+    caption="Unity: import custom package"
+>}}
+
+Select the file you downloaded and click on Open. It will show you a window with
+the assets to import. Select all and press `Import`. It may take a while, so be
+patient. Once finished, you should see a new **menu entry**:
 
 {{< polaroid src="unity - nuget menu entry.png"
             caption="Unity: NuGet correctly installed and compiled" >}}
@@ -223,9 +216,8 @@ it. Now, press on `Search` and find the package called
 {{< polaroid src="nuget - zeroc ice net.png"
             caption="NuGet: installing ZeroC package" >}}
 
-Press on **install** and let if finish. When done, you are ready to
+Press on **install** and let it finish. When done, you are ready to
 include the CittaVR packages!
-
 
 # Adding CittaVR assets
 
@@ -253,17 +245,18 @@ repository](https://bitbucket.org/arco_group/cittavr-unity), under the
 * [CittaVR Assets - Unity
   package](https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-assets-latest.unitypackage)
 
-Now, to append any Unity package to your project, just **drag and
-drop** inside the Assets folder of your Unity Editor. Add first the
-**CittaVR Core** package:
+Now, you can import both packages into your project, using the same procedure as
+before, ot just **drag and drop** the package inside the Assets folder of your
+Unity Editor. Add first the **CittaVR Core** package:
 
 {{< polaroid src="unity - install core.png"
              caption="Unity: installing CittaVR Core">}}
 
-On drop, it will show a new window to select what components you want
-to include. Confirm that **all is selected** and press on
-import. Repeat the **same process** to include the package CittaVR
-Assets you downloaded earlier.
+On drop, it will show a new window to select what components you want to
+include. Confirm that **all is selected** and press on import. Repeat the **same
+process** to include the package '*CittaVR Assets*' you downloaded earlier.
+
+<!--
 
 The final step to conclude your setup is **adding** to your scene an
 instance of the **CittaVRApp prefab**, which is needed to initialize
