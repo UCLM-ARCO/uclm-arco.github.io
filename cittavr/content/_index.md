@@ -188,8 +188,8 @@ tools for C# using the [NuGet repositories](https://www.nuget.org/),
 and there is a **plugin** to add support for NuGet to Unity, so this is
 what you need to install.
 
-First, **download the plugin** in the following site (its an asset in the form
-of an `.unitypackage`):
+First, **download the plugin** in the following site (is an asset in the form
+of `.unitypackage`):
 
 * [NuGetForUnity github releases](https://github.com/GlitchEnzo/NuGetForUnity/releases)
 
@@ -256,12 +256,10 @@ On drop, it will show a new window to select what components you want to
 include. Confirm that **all is selected** and press on import. Repeat the **same
 process** to include the package '*CittaVR Assets*' you downloaded earlier.
 
-<!--
-
 The final step to conclude your setup is **adding** to your scene an
 instance of the **CittaVRApp prefab**, which is needed to initialize
 all the internal runtime of CittaVR. Go to `Assets > CittaVR` folder
-inside your project tab of the Unity Editor. There you should find a
+inside your project tab on the Unity Editor. There you should find a
 [prefab](https://docs.unity3d.com/Manual/Prefabs.html) called
 `CittaVRApp` (the blue 3D box), drag it and drop into your *Hierarchy*
 tab (and save the scene!).
@@ -290,7 +288,7 @@ course, you are not limited to use only these, later we will
 see how to create new ones, but as a starting point they will do.
 
 Depending on the version you downloaded, there will be more or less
-available assets. As of writing this document, there were: an *street
+available assets. As of writing this document, there were: a *street
 lamp*, a *traffic lights* and a *proximity sensor*. Let's **add the
 street lamp** first.
 
@@ -301,51 +299,48 @@ wherever you want. After that, you may see something like this:
 {{< polaroid src="unity - street lamp added.png"
 caption="Unity: adding a new StreetLamp asset" >}}
 
-Well, OK. Maybe I've changed some *little* things (I've added a plane
-as a floor, reduced the light intensity and switched on the Street
-Lamp), but you get the idea, **there is a street lamp** on my scene,
-as should be in yours! Now, you can press **play** again... but it
-won't work :D, you'll see the following error message:
+Well, OK. Maybe I've changed some *little* things (I've added a plane as a
+floor, reduced the light intensity and switched on the Street Lamp), but you get
+the idea, **there is a street lamp** on my scene, as should be in yours! Now,
+you can press **play** again and your street lamp will be ready for action. You
+may see a warning message like this:
 
 {{< polaroid src="unity - error no idm address.png"
 caption="Unity: running without IDM address">}}
 
-Yes, the reason is that we didn't set a valid IDM address for this
-object. In order to be reachable, or to know the source of a virtual
-event, every object in CittaVR **must have** an IDM **address**. To
-set it, go to the object inspector (right side in the above picture),
-and find the `Street Lamp (Script)` component. There, you should
-see two properties:
+The reason is that you **didn't set** a valid IDM address for this object. In
+order to be reachable, or to know the source of a virtual event, every object in
+CittaVR **should have** an IDM **address**. If you don't set it, CittaVR will
+automatically choose one from the address pool (in this case, the next free
+address: `0A01C17400000003`. If you want to set it, go to the object inspector
+(right side in the above picture), and find the `Street Lamp (Script)`
+component. There, you should see two properties:
 
 * **`IDM Address`**, which is the field we need to change, the address
   of this object for everyone else (including the outside world!)
 * **`Citisim ID`**, this is an internal identifier, used for dynamic
-  instantiating, not to worry about it now.
+  instantiating, don't to worry about it now.
 
-So, change the **IDM Address** field, and add a valid address, in the
-same domain that your router, like `C1740100` (thus, you can create
-dynamic objects from `C1740003` to `C17400FF`). Then, you can press
-**play** again, and you will get rid of that error message. Moreover,
-the object should have been **advertised** on your IDM router, like
-this:
-
+So, to change the **IDM Address** field, add a valid address, in the same domain
+that your router, like `0A01C17400101234`. Then, if you press **play** again,
+you will get rid of that warning. One way or the other, the object should have
+been **advertised** on your IDM router, like this:
 
 {{< polaroid src="idm - adv of street lamp.png"
 caption="IDM: advertisement of the new Street Lamp">}}
 
 
-Now, you can **change its status** from inside and outside Unity. From
-inside, just **click** on the street lamp head, and it should toggle
-the lamp status. To change it from outside, you must know that this
-lamp implements the *Citisim* interface `SmartObject::DigitalSink`, so
-you need a client that uses this interface. For instance, the Debian
-package `citisim-dummies` provides a **command line tool** that could
-be used for this purpose. To reach the object **directly**, use the
-proxy that you saw on the advertisement:
+Now, you can **change its status** from inside and outside Unity. From inside,
+just **click** on the street lamp head, and it should toggle the lamp status. To
+change it from outside, you must know that this lamp implements the *Smart
+Transducer* interface `st::IBool`, so you need a client that uses this
+interface. For instance, the Debian package `smart-transducer` provides a
+**command line tool** that could be used for this purpose. To reach the object
+**directly**, use the proxy that you saw on the advertisement:
 
 {{< shell >}}
-$ digitalsink-client "C1740100 -t:tcp -h 127.0.0.1 -p 9001" 1
-$ digitalsink-client "C1740100 -t:tcp -h 127.0.0.1 -p 9001" 0
+st-client -t bool -p "0A01C17400101234 -t:tcp -h 127.0.0.1 -p 9001" 1
+st-client -t bool -p "0A01C17400101234 -t:tcp -h 127.0.0.1 -p 9001" 0
 {{< /shell >}}
 
 But, if you want to **use IDM** (which is, by the way, the **proper**
@@ -353,8 +348,8 @@ method), you will use the router's endpoints and the object's address,
 like this:
 
 {{< shell >}}
-$ digitalsink-client "C1740100 -t:tcp -h 127.0.0.1 -p 6140" 1
-$ digitalsink-client "C1740100 -t:tcp -h 127.0.0.1 -p 6140" 0
+st-client -t bool -p "0A01C17400101234 -t:tcp -h 127.0.0.1 -p 6140" 1
+st-client -t bool -p "0A01C17400101234 -t:tcp -h 127.0.0.1 -p 6140" 0
 {{< /shell >}}
 
 In this case, you will also see how the **router forwards** these
@@ -363,26 +358,28 @@ messages to the proper destination:
 {{< polaroid src="idm - forwarding.png"
 caption="IDM: forwarding messages to the lamp">}}
 
-What is more, this object also implements the interface
-`SmartObject::Observable`, so you can set another object as its
-**observer**, and when the lamp changes its state, it will **notify**
-the new state to this observer. Also, this lamp could be the observer
-of some other object. **Let's do it!**
+What is more, this object also implements the interface `st::Linkable`, so you
+can set another object as its **observer** (or link), and when the lamp changes
+its state, it will **notify** the new state to this observer. Also, this lamp
+could be the observer of some other object. **Let's do it!**
 
-# Dynamic instantiating
 
-We will use one of the other prefabs that come with CittaVR Assets:
-the **proximity sensor**. The scene could be the following: it's
-nighttime and you have a street with very few people on it but very
-well illuminated. In order to reduce the costs, you want to dim (or
-directly switch off) the lights when there is no cars, and
-automatically switch them on when someone enters the street.
+# Dynamic instantation
 
-So, we need a proximity sensor that **detects** a new car, and then
-**switches on** the street lamp. This sensor implements the interface
-`SmartObject::Observable`, and sends events using
-`SmartObject::DigitalSink`, which is the same interface implemented by
-the *StreetLamp* object. We can just connect one to the other.
+We will use one of the other prefabs that come with CittaVR Assets: the
+**proximity sensor**. The scene could be the following:
+
+<pre>It's nighttime and you have a street with very few people on it but very well
+illuminated. In order to reduce the costs, you want to dim (or directly switch
+off) the lights when there is no cars, and automatically switch them on when
+someone enters the street.
+
+</pre>
+
+So, we need a proximity sensor that **detects** a new car, and then **switches
+on** the street lamp. This sensor implements the interface `st::Linkable`, and
+sends events using `st::IBool`, which is the same interface implemented by the
+*StreetLamp* object. We can just connect one to the other.
 
 If you go to the `Assets > Resources > CittaVR`, there should be a
 `ProximitySensor` prefab. You could just add it to your scene, as we
@@ -390,20 +387,20 @@ did earlier, but we want to do it **differently, in a dynamic way**
 (i.e: having the whole scene **running**).
 
 {{% note primary %}}
-Those objects added using this method will **live only** while
-the player (or the application) **is running**. When you press the
-stop button, every dynamic object will be **destroyed**.
+The objects added using this method will **live only** while the player (or the
+application) **is running**. When you press the stop button, every dynamic
+object will be **destroyed**.
+<br><br>
 {{% /note %}}
 
-For doing that, first thing you need to do is to press **play** on the
-Unity editor, as we need the *CittaVRApp* running. Then, open a
-terminal window, and use the `cittavr` companion **tool** to add the
-asset. You need to specify your **project folder** (the Unity project
-root folder), the **name** of the asset and the **position** in the
-scene to place it. For instance:
+To achieve this, first thing you need to do is to press **play** on the Unity
+editor, as we need the *CittaVRApp* running. Then, open a terminal window, and
+use the `cittavr` companion **tool** to add the asset. You need to specify your
+**project folder** (the Unity project root folder), the **name** of the asset
+and the **position** in the scene to place it. For instance:
 
 {{< shell >}}
-$ cittavr . --add-asset CittaVR/ProximitySensor --pos 35.5 30.5 6 90
+cittavr . --add-asset CittaVR/ProximitySensor --pos 0 3.5 0 90
 {{< /shell >}}
 
 {{% note primary %}}
@@ -411,11 +408,12 @@ If you want to create **more than one** object of the same
 kind, you also need to provide the `--id` argument (an integer will
 do), with a **different** value for each instance. Feel free to run
 `cittavr --help` for more info.
+<br><br>
 {{% /note %}}
 
 Of course, you can use the supplied **Ice interface** directly from
 your program to achieve the same result. In any case, the proximity
-sensor should be displayed like a **transparent red box** (you will
+sensor should be displayed like a **red box** (you will
 see it in the game tab and also in the scene editor tab):
 
 {{< polaroid src="unity - proximity sensor.png"
@@ -428,26 +426,24 @@ stopped, otherwise you will loose the changes):
 {{< polaroid src="unity - disable render proximity sensor.png"
 caption="Proximity Sensor: disabling the red box">}}
 
-Now, when some object **collides** with this one, it will emit a
-message to its observer (if no observer is set, nothing will be
-done). Note that the colliding object should be a **Rigid Body**, and
-also have **some type of collider** on it. So its time to add the
-object that will **activate** this sensor, just to test if everything
-works. Press **Stop** on your player, and add a cube or something that
-will collide with your sensor (I've added a car running in a loop).
-Now, you can press play, and add the proximity sensor again, using the
+Now, when some object **collides** with this one, it will emit a message to its
+observer (if no observer is set, nothing will be done). Note that the colliding
+object should be a **Rigid Body**, and also have **some type of collider** on
+it. So its time to add the object that will **activate** this sensor, just to
+test if everything works. Press **Stop** on your player, and add a cube or
+something that will collide with your sensor (I've added a car running in a
+loop). Now, you can press play, and add the proximity sensor again, using the
 `cittavr` tool.
 
-But, if you expect the light to switch on, you will get disappointed!
-:) Why? Because we didn't **connect** both object yet. Its a simple
-step. Open a new terminal window, and use a tool called
-`observable-set`, available on the `citisim-dummies` Debian
-package. It needs **two** parameters: first, the proxy of **your
-observable** object (which is the source of the events), and second,
-the IDM address of **the observer** (that is the object that will
-receive the events). In this example, the observable object is the
-proximity sensor (IDM: `C1740003`) and the observer is your street
-lamp (IDM: `C1740100`).
+<!--
+But, if you expect the light to switch on, you will get disappointed! :) Why?
+Because we didn't **connect** both objects (yet). Its a simple step. Open a new
+terminal window, and use a tool called `observable-set`, available on the
+`citisim-dummies` Debian package. It needs **two** parameters: first, the proxy
+of **your observable** object (which is the source of the events), and second,
+the IDM address of **the observer** (that is the object that will receive the
+events). In this example, the observable object is the proximity sensor (IDM:
+`C1740003`) and the observer is your street lamp (IDM: `C1740100`).
 
 So, to **connect both** elements (using the router's proxy), run the
 following command:
