@@ -241,9 +241,9 @@ repository](https://bitbucket.org/arco_group/cittavr-unity), under the
 **latest versions**, just click to download and save them.
 
 * [CittaVR Core - Unity
-  package](https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-core-latest.unitypackage)
+  package](https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-core-20200217.unitypackage)
 * [CittaVR Assets - Unity
-  package](https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-assets-latest.unitypackage)
+  package](https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-assets-20200217.unitypackage)
 
 Now, you can import both packages into your project, using the same procedure as
 before, ot just **drag and drop** the package inside the Assets folder of your
