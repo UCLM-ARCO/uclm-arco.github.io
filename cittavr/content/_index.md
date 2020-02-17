@@ -137,7 +137,7 @@ Router.Ids = 0A01C17400000001
 To **launch the router**, just use this configuration file:
 
 {{< shell >}}
-$ idm-router --Ice.Config=router.config
+idm-router --Ice.Config=router.config
 {{< /shell >}}
 
 {{< polaroid src="vscode - running idm router.png"
@@ -232,7 +232,7 @@ The **Debian package** could be installed using the
 instructions), just like any other package:
 
 {{< shell >}}
-$ sudo apt install cittavr-unity
+sudo apt install cittavr-unity
 {{< /shell >}}
 
 The **Unity packages** could be downloaded from [CittaVR
@@ -411,17 +411,17 @@ do), with a **different** value for each instance. Feel free to run
 <br><br>
 {{% /note %}}
 
-Of course, you can use the supplied **Ice interface** directly from
-your program to achieve the same result. In any case, the proximity
-sensor should be displayed like a **red box** (you will
-see it in the game tab and also in the scene editor tab):
+Of course, you can use the supplied **Ice interface** directly from your program
+to achieve the same result. In any case, the proximity sensor should be
+displayed like a **red box** (you will see it in the game tab and also in the
+scene editor tab):
 
 {{< polaroid src="unity - proximity sensor.png"
 caption="Proximity Sensor: normal appearance">}}
 
-You may don't want to see this red box, so just uncheck the `Mesh
-Renderer` option of the proximity sensor prefab (when the player is
-stopped, otherwise you will loose the changes):
+You may don't want to see this red box, so just uncheck the `Mesh Renderer`
+option of the proximity sensor prefab (remember, if you want to make this change
+permanent, add the prefab to the scene statically):
 
 {{< polaroid src="unity - disable render proximity sensor.png"
 caption="Proximity Sensor: disabling the red box">}}
@@ -431,25 +431,24 @@ observer (if no observer is set, nothing will be done). Note that the colliding
 object should be a **Rigid Body**, and also have **some type of collider** on
 it. So its time to add the object that will **activate** this sensor, just to
 test if everything works. Press **Stop** on your player, and add a cube or
-something that will collide with your sensor (I've added a car running in a
-loop). Now, you can press play, and add the proximity sensor again, using the
-`cittavr` tool.
+something that will collide with your sensor. Now, you can press play, and add
+the proximity sensor again, using the `cittavr` tool.
 
-<!--
 But, if you expect the light to switch on, you will get disappointed! :) Why?
 Because we didn't **connect** both objects (yet). Its a simple step. Open a new
-terminal window, and use a tool called `observable-set`, available on the
-`citisim-dummies` Debian package. It needs **two** parameters: first, the proxy
+terminal window, and use a tool called `st-link-to`, available on the
+`smart-transducer` Debian package. It needs **two** parameters: first, the proxy
 of **your observable** object (which is the source of the events), and second,
-the IDM address of **the observer** (that is the object that will receive the
-events). In this example, the observable object is the proximity sensor (IDM:
-`C1740003`) and the observer is your street lamp (IDM: `C1740100`).
+the IDM address of **the observer** (that is the object that will receive the events).
+In this example, the observable object is the proximity sensor (IDM:
+`0A01C17400000003`) and the observer is your street lamp (IDM:
+`0A01C17400101234`).
 
-So, to **connect both** elements (using the router's proxy), run the
-following command:
+So, to **connect both** elements using the router endpoints, run the following
+command:
 
 {{< shell >}}
-$ observable-set 'C1740003 -t:tcp -h 127.0.0.1 -p 6140' C1740100
+st-link-to '0A01C17400000003 -t:tcp -h 127.0.0.1 -p 6140' 0A01C17400101234
 {{< /shell >}}
 
 Now, when the sensor **detects some collision**, it will **invoke**
@@ -457,11 +456,12 @@ the street lamp, which will power on. Later, if the sensor **stops
 detecting** the collider, it will **also notify** the lamp, but with a
 delay of 8 seconds (which is the default value of the prefab).
 
-{{< polaroid src="smallcity - car activating sensor.png"
-caption="SmallCity: the car just activated the proximity sensor">}}
+{{< polaroid src="test-object-colliding.png"
+caption="Test: the yellow cube just collided with the sensor">}}
 
 The next big thing to achieve is the task of creating **new CittaVR**
 compliant assets. This will be analyzed in the following section.
+
 
 # Creating a new CittaVR Asset
 
@@ -492,6 +492,7 @@ Unity, using the **ProBuilder**. You could even download it from
 [CGTrader](https://www.cgtrader.com/),
 [Sketchfab](https://sketchfab.com/),
 [BlendSwap](https://www.blendswap.com/)...
+<br><br>
 {{% /note %}}
 
 For this example, I've created a **simple barrier**, like this:
@@ -506,16 +507,11 @@ Add your model to the assets folder of your Unity project, and then to
 your scene, to check if **everything is correct**. Adjust your model
 materials, and textures, and add whatever component you need.
 
-Now, on your assets folder, **create a new empty** prefab:
+Now, to create your prefab, just **drag the model** you added in your scene
+(which you have modified, adding components, etc.), **drop it** on your
+assets folder and select `Original Prefab`:
 
-{{< polaroid src="unity - create empty prefab.png"
-caption="Unity: creating an empty prefab for your asset">}}
-
-Give it a name, and then, **drag the model** you added in your scene
-(which you have modified, adding components, etc.) and **drop it** on
-the empty prefab (in the assets folder):
-
-{{< polaroid src="unity: populate prefab.png"
+{{< polaroid src="unity - create prefab.png"
 caption="Unity: populating the prefab with your instance">}}
 
 Now, you have an object which will be the template used to instantiate
@@ -552,54 +548,51 @@ The given parameters are:
   to achieve it.
 * **`Ice.ObjectPrx router`**: the IDM router that you have to use.
 
-So, on this method, you should **create and return** an instance of
-your servant. For example, this asset will use the
-`SmartObject::DigitalSink` interface, so I create my servant as this:
+So, on this method, you should **create and return** an instance of your
+servant. For example, this asset will use the `st::IBool` interface, so I create
+my servant as this:
 
 {{< code cs >}}
-class LevelCrossingServant : SmartObject.DigitalSinkDisp_ {
+class LevelCrossingServant : st.IBoolDisp_ {
+    private static ILogger logger = Debug.unityLogger;
+
     private GameObject _obj;
     private ConcurrentQueue<GUITask> _task_queue;
     private Ice.ObjectPrx _router;
+    private string _observer;
+    private string _source;
 
     private Transform _barrier;
     private Quaternion _originalRot;
 
     public LevelCrossingServant(
-            GameObject obj, ConcurrentQueue<GUITask> task_queue,
-            Ice.ObjectPrx router) {
+              GameObject obj, ConcurrentQueue<GUITask> task_queue,
+              Ice.ObjectPrx router, string source) {
 
-        // store params for later usage
         this._obj = obj;
         this._task_queue = task_queue;
         this._router = router;
+        this._source = source;
 
-        // retrieve barrier object and save its rotation
         this._barrier = _obj.transform.GetChild(0);
         this._originalRot = _barrier.rotation;
     }
 
-    public override void notify(
-            bool value,
-            string source,
-            Dictionary<MetadataField, string> meta,
-            Current current = null) {
-
+    public override void set(bool value, string source, Current current=null) {
         // enqueue UI update
         _task_queue.Enqueue((mb) => {
-            _barrier.rotation = _originalRot *
-                Quaternion.AngleAxis(value ? 90: 0, Vector3.up);
+             _barrier.rotation =
+                _originalRot * Quaternion.AngleAxis(value ? 90: 0, Vector3. up);
         });
     }
 }
 {{< /code >}}
 
-Here, I've implemented the `notify()` method. What it does is to
-**enqueue an operation of update** inside the GUI thread, to just rotate
-the barrier to one side or the other.
+Here, I've implemented the `set()` method. What it does is to **enqueue an
+operation of update** inside the GUI thread, to just rotate the barrier to one
+side or the other.
 
-With this class, I implemented the `create_servant()` method as
-follows:
+With this class, I've implemented the `create_servant()` method as follows:
 
 {{< code cs >}}
 public class LevelCrossing : CittaVR.AssetManager {
@@ -624,7 +617,7 @@ used **Citisim ID**.
 To test the script, create an **instance** of your prefab, set the IDM address,
 and press play. You should see the advertisement of this object in the router
 output, and also should be able to change its state using the
-`digitalsink-client` again.
+`st-client` again.
 
 
 ## Exporting your asset
@@ -656,22 +649,28 @@ Click on `Export` and save the package wherever you want. It's also a
 good idea to **create a new Unity project** and check that everything
 worked fine.
 
-If you want to do this process but from the **command line**
-interface, open a terminal and go to your project folder. Then,
-execute the following command:
+If you want to do this process but from the **command line** interface, open a
+terminal and go to your project folder. If you are using the new unity-hub (like
+me), then you may need to create an alias for the binary `unity` to the location
+you specified on setup. For example, I have all the unity installs in the folder
+`~/use/share/unity`, so in my example, I will create the following alias:
+
+{{< shell >}}
+alias unity='~/usr/share/unity/2019.3.0f6/Editor/Unity'
+{{< /shell >}}
+
+Then, to create the package, execute the following command:
 
 {{%note primary %}}
 Make sure you **closed any running instance** of the Unity editor that opened
-this project. Otherwise, it will not work.
+this project. Otherwise, it will not work.<br><br>
 {{% /note %}}
 
 {{< shell >}}
-$ unity -quit -nographics -batchmode \
-        -projectPath $(pwd) \
-        -exportPackage \
-           Assets/LevelCrossing \
-        $(pwd)/cittavr-level-crossing.unitypackage
-
+unity -quit -nographics -batchmode \
+        -projectPath "$(pwd)" \
+        -exportPackage Assets/LevelCrossing \
+        "$(pwd)/cittavr-level-crossing.unitypackage"
 {{< /shell >}}
 
 
@@ -699,7 +698,7 @@ you import it inside your project, it sometimes loses the execution
 permission. To fix it, go to `Assets > Slice4Unity > Tools`, click
 over the `slice2cs` file and select `Open Containing Folder`. It will
 open a file explorer, so open the file properties and mark it as
-executable.
+executable.<br><br>
 {{% /note %}}
 
 After the installation, you can now select any `.ice` file, and the
@@ -710,12 +709,6 @@ inspector will show you a button to **compile the slice**, like this:
 caption="Slice4Unity: inspecting an slice file">}}
 
 
-When you press the button, it will create a folder called `Generated`
-with the generated code for that slice interface. For now, you don't
-have any other option, like support for including other directories,
-but I'm working on it :D
-
--->
-
-<hr>
-**Update in progress...**
+When you press the button, it will create a folder called `Generated` with the
+generated code for that slice interface. Nowadays, there is no other option,
+like support for including other directories, but I'm working on it :D
