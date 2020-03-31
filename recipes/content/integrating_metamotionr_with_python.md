@@ -152,11 +152,11 @@ sensor.wait_until_break()
 sensor.disconnect()
 {{</code>}}
 
-# References
+# API Reference
 
-This is a list of useful resources:
+For more information you can see the API reference:
 
-* [MetaMotion API Reference](/api/metamotion/)
+* [MetaMotion API Reference](/api/bosch-sensor/)
 
 
 
