@@ -1,8 +1,9 @@
 ---
 title: "Integrating MbientLab MetaMotionR sensors with Python"
 date: 2020-03-30T23:20:43+02:00
-draft: true
+draft: false
 
+image: "integrating_metamotionr_with_python/metamotionr.jpeg"
 description: "A recipe to learn how to use the MetaMotion library, and read data from the sensors of the MetaMotionR board usin Python"
 ---
 
@@ -70,7 +71,7 @@ sensor.connect()
 
 Finally you can read any value of the chip, in this case we are going to read the remanent percentage
 battery invoking the method `read_battery` of the class. This method returns a struct that is formed 
-by two fields, `voltage`, which represents the voltage that receives the board, and `battery` which 
+by two fields, `voltage`, which represents the voltage that receives the chip, and `battery` which 
 is the percentage of battery that the device has.
 
 {{<code py>}}
@@ -103,8 +104,8 @@ sensor.disconnect()
 
 
 {{% note "danger" %}}
-In some cases, when you are doing the bluetooth connectioni with this library, the program may 
-throw a `buffer overflow detected` error. The source of this error is part of the `metawear` library,
+In some cases, when you are doing the bluetooth connection with this library, the program may 
+throw a `buffer overflow detected` error. The source of this error is part of the `metawear` module,
 which is a wrapper of the C++ library with the same name created by the manufacturer **MbientLab**, 
 and is used to make the connection in the `MetaMotion` library. I'm still working in the solution for this 
 problem, if you experience this error, press the button of your sensor and execute yor program again
@@ -152,9 +153,10 @@ sensor.wait_until_break()
 sensor.disconnect()
 {{</code>}}
 
-# API Reference
+# MetaMotion API 
 
-For more information you can see the API reference:
+For more information you can see the API reference where you can find how to read
+all the measures available and the different methods to attach handlers:
 
 * [MetaMotion API Reference](/api/bosch-sensor/)
 
