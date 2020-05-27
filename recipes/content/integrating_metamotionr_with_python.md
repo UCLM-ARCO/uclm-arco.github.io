@@ -26,7 +26,7 @@ In order to follow the next recipe you will need the this ingredients:
 * The linux packages `bluez-utils`, `build-essential`, `libboost-all-dev`, `libbluetooth-dev` which
   enables the Bluetooth communication and provides the necessary compilers
 * The `metawear` package, a library created for **MbientLab** to read sensors measures
-* The `metamotion` library available in [pike][http://pike.esi.uclm.es/]
+* The `metamotion` library available in [Pike](http://pike.esi.uclm.es/)
 * Basic knwoledge of `Python3` and `Linux`
 
 In order to install al the dependencias you must execute the next commands
