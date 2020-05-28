@@ -26,6 +26,7 @@ In order to follow the next recipe you will need the this ingredients:
 * The linux packages `bluez`, `build-essential`, `libboost-all-dev`, `libbluetooth-dev` which
   enables the Bluetooth communication and provides the necessary compilers
 * The `metawear` package, a library created for **MbientLab** to read sensors measures
+* The `bleak` library in order to discover BLE devices
 * The `metamotion` library available in [Pike](http://pike.esi.uclm.es/)
 * Basic knwoledge of `Python3` and `Linux`
 
@@ -34,6 +35,7 @@ In order to install al the dependencias you must execute the next commands
 {{<shell>}}
 sudo apt install bluez build-essential libboost-all-dev libbluetooth-dev
 pip3 install metawear --upgrade
+pip3 install bleak
 sudo apt install metawear
 {{</shell>}}
 
