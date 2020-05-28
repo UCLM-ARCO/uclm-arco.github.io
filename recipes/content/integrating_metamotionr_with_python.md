@@ -23,7 +23,7 @@ the **rotation** by a Gyroscope.
 In order to follow the next recipe you will need the this ingredients:
 
 * A **MetaMotionR** device
-* The linux packages `build-essential`, `libboost-all-dev`, `libbluetooth-dev` which
+* The linux packages `bluez`, `build-essential`, `libboost-all-dev`, `libbluetooth-dev` which
   enables the Bluetooth communication and provides the necessary compilers
 * The `metawear` package, a library created for **MbientLab** to read sensors measures
 * The `metamotion` library available in [Pike](http://pike.esi.uclm.es/)
@@ -32,7 +32,7 @@ In order to follow the next recipe you will need the this ingredients:
 In order to install al the dependencias you must execute the next commands
 
 {{<shell>}}
-sudo apt install build-essential libboost-all-dev libbluetooth-dev
+sudo apt install bluez build-essential libboost-all-dev libbluetooth-dev
 pip3 install metawear --upgrade
 sudo apt install metawear
 {{</shell>}}
