@@ -9,11 +9,11 @@ description: "A recipe to learn how to use the MetaMotion library, and read data
 
 # Overview
 
-MbientLab is a manufacture of different wearable sensors, an example of this sensors
+MbientLab is a manufacture of different wearable devices, an example of these
 are the **Meta** sensors family, which is formed by different wearable devices like
 **MetaTracker**, **MetaMotionC** and **MetaMotionR**. The Meta family devices are formed
 by different sensors, like Accelerometers, Gyroscopes, Barometes, etc... In this case, 
-we are going to see how to use a Python library for the MetaMotionR, what enable the user 
+we are going to see how to use a Python library for the MetaMotionR, which enable the user 
 to read the sensors of this device. The measures that can be read with the Library are 
 the **acceleration**, **motion**, **tap**, **step counter** by an Accelerometer and 
 the **rotation** by a Gyroscope.
@@ -39,9 +39,10 @@ pip3 install bleak
 sudo apt install metawear
 {{</shell>}}
 
-In the following sections, we are going to explain the two main funcionalities of the library,
-read a value from a sensor, and attach a handler to a value produced by the sensor. Almost
-every measure of the sensor can be readed, but not all the measures support the use of a
+In the following sections, we are going to explain the main funcionalities of the library,
+read a value from a sensor, attach a handler to a value produced by the sensor and create
+logs of data that will be downloaded lately.
+Almost every measure of the sensor can be readed, but not all the measures support the use of a
 handler.
 
 # Connecting and Reading data from the device
@@ -62,9 +63,9 @@ button of the chip before execute the programa to assure the correct operation.
 {{% /note %}}
 
 Once you import the library you must instantiate your chip. In order to do that 
-you must invocate the constructor `MetaMotion` with the **MAC address** of the
-chip, which can be observer in the label of the device. Once the sensos is instanitated
-you must call the `connect()` method in order to establish the Bluetooth connection
+you must call the constructor `MetaMotion` with the **MAC address** of the
+chip, which can be observer in the label of the device. Once the sensor is instanitated,
+call the `connect()` method in order to establish the Bluetooth connection
 
 {{<code py>}}
 sensor = MetaMotion("E9:75:41:AF:11:AE")
@@ -82,7 +83,7 @@ print(measure.battery)
 {{</code>}}
 
 Before the end of the program is important to invoke the `disconnect` method, in order
-to disable the sensors and close the communication.
+to close the communication.
 
 {{<code py>}}
 sensor.disconnect()
@@ -117,14 +118,14 @@ problem, if you experience this error, press the button of your sensor and execu
 # Read a measure from a sensor
 
 Like it was said before, the MetaMotionR device is formed by several sensors. The most important sensors, 
-and those to which the library gives access are the **Acceleromter** and the **Gyro** sensor. In order
+and those to which the library gives access to, are the **Acceleromter** and the **Gyro** sensor. In order
 to access to the measures of this sensors, a `MetaMotion` instance has two attributes representing it, 
 `accelerometer` and `gyroscope`. Following, we are going to see an example in which we are going to read
 the **acceleration**.
 
 In order to read the acceleration, the first step is to active and initialize the accelerometer. 
-For this purpose you must invoke the method `setup_accelerometer` in order
-to active and initialize the accelerometer sensor. If you don't do this, and you try to
+For this purpose you must invoke the method `setup_accelerometer` with the aim of
+active and initialize the accelerometer sensor. If you don't do this, and you try to
 access the `accelerometer` sensor, an exception will be raised.
 
 {{<code py>}}
@@ -132,7 +133,7 @@ sensor.setup_accelerometer()
 {{</code>}}
 
 Once initialized the sensor, you can read the acceleration invoking the method form the `accelerometer`
-`read_acceleration`.
+`read_acceleration`, which returns the acceleration calculated by the sensor in **G** units.
 
 {{<code py>}}
 sensor.accelerometer.read_acceleration()
@@ -172,7 +173,7 @@ def handler(data):
     print(f"The acceleration is: {data.x} {data.y} {data.z}")
 {{</code>}}
 
-Once the handler is defined, you must attach it to the acceleration produce by the sensor, so that
+Once the handler is defined, you must attach it to the acceleration produced by the sensor, so that
 when an acceleration measure is received, the user function will be executed. The acceleration is
 produced by an **accelerometer** in the **MetaMotionR** device, for this reason, to add the handler
 you must call the `on_acceleration` method of the `accelerometer` attribute in your instance of the
@@ -199,30 +200,38 @@ sensor.disconnect()
 # Using a logger
 
 An interesting funcionality of the MetaMotionR devices is the posibility to create loggers. A logges
-make the users ables to register a set of data from a sensor in the device, and when they want download
-all this data. This is very useful if you don't want to communicate with the sensor in each measure. In
+make the users ables to register a set of data from a sensor in the device, and lately download
+all this data, avoiding maintaining a continuous streaming. 
+This is very useful if you don't want to communicate with the sensor in each measure. In
 the following example, we are going to create a logger for a **rotation** measure
 
 As in all previous examples, the first step is to made the connection with the sensor. Once the connection
-is made, and beacuse we are going to log a measure from the **Gyro**, we must invoke the method `setup_logger`
-from the `gyroscope` attribute to initialize the logger. After that, you must invoke the method `start_logging`
-in order to start to save the data.
+is made, and beacuse we are going to log a measure from the **Gyro**, we must invoke the method `setup_gyroscope` and `setup_logger`
+from the `gyroscope` attribute to initialize the sensor and the logger. After that, invoke the method `start_logging`
+in order to start to save the data. Following, you can disconnect from the sensor until you want to download the data.
 
 {{<code py>}}
+sensor.gyroscope.setup_gyroscope()
 sensor.gyroscope.setup_logger()
 sensor.start_logging()
+sensor.disconnect()
 {{</code>}}
 
-Stop the logging is as simple as execute the method `stop_logging`.
+Once you want to download data, connect to the sensor again and invoke the methods `stop_logging`
+in order to stop registering data.
 
 {{<code py>}}
 sensor.stop_logging()
 {{</code>}}
 
-Following, to get the data previously logged, you should invoke the method `subscribe_logged_data` from the **Gyro**
-and then invoke the method `download_data`. After this, the library will begin to download the log, to assure that all the data
-is downloaded before the program ends you can invoke the `wait_until_download_completed` method. Finally, you can read the complete
-log in the variable `rotation_log` from the `gyroscope`.
+At this point, there is a problem, our instance doesn't know which is the status of the sensor, which loggers
+were created, and which signal were registering. To solve this problem, can be used the method
+`sync_host_with_device`, that synchonize our instance with the actual status of our MetamotionR device.
+Now our instance knows which logger exists, but doesn't knows which signals were subscribed, for this reason,
+and to download all data, you must invoke the method `subscribe_anonymous_datasignals`. Once our instance is prepared,
+download the data is as simple as call the method `download_logs` to get all the data from the device, and
+`wait_until_download_completed`, to avoid the finish of the program until all the data is downloaded. Finally,
+the downloaded data is in a list, in this case in the attribute `rotation_log` from the `gyroscope`.
 
 {{<code py>}}
 sensor.stop_logging()
@@ -231,6 +240,13 @@ sensor.download_logs()
 
 sensor.gyroscope.wait_until_download_completed()
 print("The rotation is ", sensor.gyrocope.rotation_log)
+{{</code>}}
+
+Finally, is needed to clean the logger created in the device before disconnection.
+
+{{<code py>}}
+sensor.clean()
+sensor.disconnect()
 {{</code>}}
 
 The full code is listed bellow
@@ -245,18 +261,25 @@ from metamotion import MetaMotion
 sensor = MetaMotion("E9:75:41:AF:11:AE")
 sensor.connect()
 
+sensor.gyroscope.setup_gyroscope()
 sensor.gyroscope.setup_logger()
 sensor.start_logging()
+sensor.disconnect()
 
 time.sleep(4) #Wait 4 seconds to let the sensor log data
 
-sensor.stop_logging()
-sensor.gyroscope.subscribe_logged_data()
-sensor.download_logs()
+sensor = MetaMotion("E9:75:41:AF:11:AE")
+sensor.connect()
 
-sensor.gyroscope.wait_until_download_completed()
+sensor.stop_logging()
+sensor.sync_host_with_device()
+sensor.subscribe_anonymous_datasignals()
+
+sensor.download_logs()
+sensor.wait_until_download_complete()
 print("The rotation is ", sensor.gyrocope.rotation_log)
 
+sensor.clean()
 sensor.disconnect()
 {{</code>}}
 
@@ -266,10 +289,13 @@ You can use as many logs as you want, but you must follow the next workflow:
 2. Setup the necessary logger in their respective sensor from the chip
 3. Start the logging
 4. Wait a desired amount of time
-5. Stop the logging
-6. Subscribe to all the logged data by sensor
-7. Download the logs
-8. wait for each sensor to download its log data
+5. Connect with the sensor again
+6. Stop the logging
+7. Sync the client with the device status
+8. Subscribe to anonymous datasignals
+8. Download the logs
+9. Wait for each sensor to download its log data
+10. Clean and disconnect from the sensor
 
 # MetaMotion API 
 
