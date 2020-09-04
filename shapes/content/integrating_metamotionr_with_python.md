@@ -1,6 +1,14 @@
 ---
 title: "Integrating MbientLab MetaMotionR sensors with Python"
 date: 2020-03-30T23:20:43+02:00
+tags:
+- BLE
+- active ageing
+- imu
+- sensor
+- python
+- bosch
+- mbientlab
 draft: false
 
 image: "integrating_metamotionr_with_python/metamotionr.jpeg"
