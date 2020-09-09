@@ -70,7 +70,7 @@ After the Makefile is created, the following step is execute the `ian create` co
 
 This file saves all the information that help other tools to manage the package. An example of a control file can be found bellow.
 
-{{< code bash >}}
+{{< code >}}
 Source: metamotion
 Section: python
 Priority: optional
@@ -99,7 +99,7 @@ This file contains information about the resources, license and copyright of the
 
 This is a mandatory file with a special format, and also a good place where document all the changes on your source code. A simple example of a `changelog` is the following
 
-{{< code bash >}}
+{{< code>}}
 gentoo (0.9.12-1) unstable; urgency=low
 
  * Initial Release. Closes: #12345
