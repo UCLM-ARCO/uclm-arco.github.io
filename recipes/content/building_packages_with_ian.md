@@ -33,20 +33,6 @@ $ sudo apt install ian
 {{< /shell >}}
 
 # Configure Ian
-<!-- ## Generate a GPG key
-
-Before building the packages, is necessary to generate a `gpg key`. Your package will be signed with your gpg key, and your key will be signed with a repository key, thanks to that
-everybody who install the package could check that it belongs to the repository.
-
-In order to create your key you must execute the next command and answer the quetions properly:
-{{< shell >}}
-$ gpg --full-generate-key
-{{< /shell >}}
-
-{{% note warning %}}
-Once you have generated the key is very important dont forget the password and dont lose the key, you can expoert your key to a file with the command `$ gpg --export-secret-keys -a <huella_digital> > ~/<nombre-fichero>.asc`.
-When you generate your key is recommended a **RSA** with a key size of **4096** bits
-{{% /note %}} -->
 
 The first step after the installation of ian is to configure it. This step is as simple as modify the file `~.config/ian/config` with the next content. AS you can see, is required a gpg key, to sign the packages built.
 
@@ -58,37 +44,6 @@ DEBREPO_URL=debrepo@debrepo/shared
 EDITOR="emacs -nw"
 {{< /code >}}
 
-<!-- ## Configure dupload
-
-**Dupload** is a tool used to upload a package to a repository, when you execute `ian upload`, ian uses this tool to upload the package. Once installed, in order to configure this package you must create the file `~/.dupload.conf` with the following content:
-
-{{< code config >}}
-package config;
-
-$default_host = "debrepo";
-
-$cfg{'debrepo'} = {
-    fqdn => "debrepo",
-    login => "repouser",
-    method => "scpb",
-    incoming => "/shared/incoming/",
-
-    # The dinstall on ftp-master sends emails itself
-    dinstall_runs => 1,
-};
-
-$postupload{'changes'} = 'ssh debrepo "reprepro -V -b /shared processincoming sid-process"';
-
-1;  # DO NOT remove this line!
-{{< /code >}}
-
-## Generate a SSH key
-
-In order to upload your package to the repository you need to connect to it by ssh, so you need a ssh key. To create the key you must execute the next command.
-
-{{< shell >}}
-$ ssh-keygen -b 4096
-{{< /shell >}} -->
 
 # Preparaing the building
 
