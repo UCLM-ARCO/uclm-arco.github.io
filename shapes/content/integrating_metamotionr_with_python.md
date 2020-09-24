@@ -35,7 +35,7 @@ In order to follow the next recipe you will need the this ingredients:
   enables the Bluetooth communication and provides the necessary compilers
 * The `metawear` package, a library created for **MbientLab** to read sensors measures
 * The `bleak` library in order to discover BLE devices
-* The `metamotion` library available in [Pike](http://pike.esi.uclm.es/)
+* The `metamotion` library available in [ARCO's package repository](https://uclm-arco.github.io/debian/)
 * Basic knwoledge of `Python3` and `Linux`
 
 In order to install al the dependencias you must execute the next commands
