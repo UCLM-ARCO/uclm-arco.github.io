@@ -41,6 +41,8 @@ Aunque hay variaciones por distintos motivos (normalmente motivados por el proye
 
 * Lo que subas al repositorio por lo menos debe compilar
 
+* Para escribir recetas concretas sobre procedimientos de configuración, herramientas,  documentación técnica, etc sigue [estas instrucciones](https://arcogroup.bitbucket.io/recipes/creating_arco_docs/) 
+
 
 Otros procedimientos muy importantes a tener en cuenta:
 
