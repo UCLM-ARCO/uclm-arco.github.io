@@ -7,5 +7,5 @@ Visit https://arcogroup.bitbucket.io.
 
 ## Important
 
-Please, use Hugo v0.40 or greater!
+Please, use Hugo v0.40 or greater!.
 
