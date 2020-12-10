@@ -4,6 +4,7 @@ date: 2020-12-07T10:53:24+01:00
 draft: false
 
 description: "Explanation of the basics about the fall detection system that is in development"
+image: "fall_detection_system/fall_detector.jpg"
 ---
 
 # Overview
@@ -26,7 +27,9 @@ about this sensor in a preovious [recipe](https://arcogroup.bitbucket.io/shapes/
 where we explained how to use our library to extract different data from it. This IMU can give us information about
 the movement with two 3-AXIS sensor, an accelerometer and a gyroscope, but the raw data by itself doesn't give enough information,
 for this reason we must preprocess it to get the desired information. This sensor also counts with a magnetometer, that can be
-useful to calculate the orientation of the sensor, considering the earth's magnetic field.
+useful to calculate the orientation of the sensor, considering the earth's magnetic field. In our case we choose the place the
+sensor in the user's waist, because is the center of gravity of a person, and is sensitive to abrupt changes in the measurements 
+of the IMU when a fall occurs. 
 
 The algorithm developed for us is a mixture of the two type of algorithms used for fall detection, **Threshold algorithm** and
 **Machine Learning Algorithm**, the thresholds algorithm are mainly used in low performance devices. Our threshold algorithm is 
