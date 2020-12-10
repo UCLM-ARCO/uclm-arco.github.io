@@ -29,7 +29,9 @@ the movement with two 3-AXIS sensor, an accelerometer and a gyroscope, but the r
 for this reason we must preprocess it to get the desired information. This sensor also counts with a magnetometer, that can be
 useful to calculate the orientation of the sensor, considering the earth's magnetic field. In our case we choose the place the
 sensor in the user's waist, because is the center of gravity of a person, and is sensitive to abrupt changes in the measurements 
-of the IMU when a fall occurs. 
+of the IMU when a fall occurs.
+
+{{< polaroid src="sensor-waist.jpg" caption="Metamotion sensor placed on the waist">}}
 
 The algorithm developed for us is a mixture of the two type of algorithms used for fall detection, **Threshold algorithm** and
 **Machine Learning Algorithm**, the thresholds algorithm are mainly used in low performance devices. Our threshold algorithm is 
@@ -98,7 +100,8 @@ For testing purpose, training activities have been repeated in the following way
 
 In the next table you can see the results:
 
-|       Ejercicio      | True Positive | True Negative | False Positive | False Negative |
+{{< table "table table-dark table-striped table-bordered" >}}
+|       Exercise       | True Positive | True Negative | False Positive | False Negative |
 |:-------------------- |:-------------:|:-------------:|:--------------:|:--------------:|
 |  Hitting the sensor  |               |  3            |                |                |
 |        Jumping       |               |  3            |                |                |
@@ -108,6 +111,7 @@ In the next table you can see the results:
 |    Left-side fall    |  3            |               |                |                |
 |    Right-side fall   |  3            |               |                |                |
 |     Backward fall    |  2            |               |                |  1             |
+{{< /table >}}
 
 As you can see, almost all the results are the expected, with the exception of one backward fall, which produce
 a wrong result. You must to take into account that the tests were made with the same subject as training. Summarizing,
