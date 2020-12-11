@@ -1,6 +1,14 @@
 ---
 title: "Fall Detection System"
 date: 2020-12-07T10:53:24+01:00
+tags:
+- BLE
+- active ageing
+- imu
+- sensor
+- machine learning
+- mbientlab
+- fall detection
 draft: false
 
 description: "Explanation of the basics about the fall detection system that is in development"
@@ -29,9 +37,10 @@ the movement with two 3-AXIS sensor, an accelerometer and a gyroscope, but the r
 for this reason we must preprocess it to get the desired information. This sensor also counts with a magnetometer, that can be
 useful to calculate the orientation of the sensor, considering the earth's magnetic field. In our case we choose the place the
 sensor in the user's waist, because is the center of gravity of a person, and is sensitive to abrupt changes in the measurements 
-of the IMU when a fall occurs.
+of the IMU when a fall occurs. Following you can see the sensor and where was placed.
 
-{{< polaroid src="sensor-waist.jpg" caption="Metamotion sensor placed on the waist">}}
+{{< image src="sensor-waist.jpg" width="500" height="300">}}
+<br></br>
 
 The algorithm developed for us is a mixture of the two type of algorithms used for fall detection, **Threshold algorithm** and
 **Machine Learning Algorithm**, the thresholds algorithm are mainly used in low performance devices. Our threshold algorithm is 
@@ -70,7 +79,8 @@ At this point, we are using only one subject for both training and testing. The 
 the ARCO Research Group's lab, located in the Technology and System Information Institute (ITSI). Following you can see the 
 mattress used for the falls.
 
-{{< polaroid src="mattress.jpg" caption="Mattress used to collect data" >}}
+{{< image src="mattress.jpg" width="450" height="450">}}
+<br></br>
 
 The activities carried out in the collection are these:
 
@@ -117,4 +127,4 @@ As you can see, almost all the results are the expected, with the exception of o
 a wrong result. You must to take into account that the tests were made with the same subject as training. Summarizing,
 our system with the tests made has a reliability of **95,83%**. In future works, we are going to collect data from more
 subjects, create a more complete battery of tests, and finally deploy this solutions in a real environment, monitoring
-the residents from the nursing home El Salvador in order to test our system. 
+the residents from the nursing home El Salvador in order to test our system.

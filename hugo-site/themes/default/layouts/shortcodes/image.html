@@ -14,5 +14,5 @@
   {{ .Scratch.Set "path" $path }}
 {{ end }}
 
-<img src='/{{ .Scratch.Get "path" }}' />
+<img src='/{{ .Scratch.Get "path" }}' width='{{ .Get "width" }}' height='{{ .Get "height" }}'/>
 
