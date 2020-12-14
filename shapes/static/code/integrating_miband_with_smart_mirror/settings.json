@@ -1,0 +1,7 @@
+{
+    "db_name": "user-stadistics",
+    "db_user": "miband-dc",
+    "db_passwd": "mysecret",
+    "db_host": "postgresql.on.cloud.com",
+    "db_port": 5432
+}
