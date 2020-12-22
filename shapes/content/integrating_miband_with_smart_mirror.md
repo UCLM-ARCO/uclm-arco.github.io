@@ -24,7 +24,7 @@ In order to follow this recipe you will need:
 
 * A Xiaomi Mi Band 4 device or **MB4**.
 * A Raspberry Pi 4 or **RPi4**.
-* A PostgreSQL database with remote connections allowed. It could be located on the *cloud* or run locally with [the proper configuration](https://support.plesk.com/hc/en-us/articles/115003321434-How-to-enable-remote-access-to-PostgreSQL-server-on-a-Plesk-server-).
+* A PostgreSQL database with remote connections allowed. It could be located on the *cloud* or run locally. See [Appendix 1: Configuration for local database](#appendix-1-configuration-for-local-database).
 * The `miband-dc` package on your RPi4, which is our data collector, available in [ARCO package repository](https://uclm-arco.github.io/debian/).
 * The `miband-grafana` package on your PC, which will configure Grafana, also available in [ARCO package repository](https://uclm-arco.github.io/debian/).
 * Basic knowledge of `linux`.
@@ -55,7 +55,7 @@ The service needs a database to store the collected data. It reads the connectio
 
 {{<staticCode "settings.json">}}
 
-It is really important that the database user has, at least, CONNECT and INSERT privileges. 
+It is really important that the database user OWNS the database, so it has privileges to create a new table, if needed, and can perform any operation in it.
 
 ### Devices
 
@@ -119,6 +119,17 @@ This will provision our local Grafana instance. If we check [http://localhost:30
 To see what files where provisioned and the generated dashboards information use:
 {{<shell>}}
 user@pc:~/$ sudo miband-grafana -s
+INFO: Datasource provider file at /etc/grafana/provisioning/datasources/miband-grafana.yaml
+INFO: Dashboard provider file at /etc/grafana/provisioning/dashboards/miband-grafana.yaml
+INFO: Found dashboard definition at /var/lib/grafana/dashboards/miband-grafana_dev1.json:
+INFO:   Name: mi-band-data-user-1
+INFO:   UID: c9b38467
+INFO: Available panels:
+INFO:   ID: 11  Description: Steps per day
+INFO:   ID: 12  Description: Steps today
+INFO:   ID: 21  Description: Calories per day
+INFO:   ID: 22  Description: Calories today
+INFO:   ID: 31  Description: Heart rate
 {{</shell>}}
 
 ## Setting up the smart mirror
@@ -141,6 +152,8 @@ pi@raspberry:~/MagicMirror/$ cd modules
 pi@raspberry:~/MagicMirror/modules/$ git clone https://bitbucket.org/arco_group/mmm-grafanaembed.git MMM-GrafanaEmbed
 {{</shell>}}
 
+It is really important that the final folder is called **MMM-GrafanaEmbed**, respecting the capital letters. 
+
 Finally, we change Magic Mirror configuration `/MagicMirror/config/config.js` adding MMM-GrafanaEmbed parameters on `modules` list. For example:
 
 {{<code js>}}
@@ -151,9 +164,9 @@ modules: [
         position: 'bottom_center',
         config: {
             host: "192.168.0.22",   // Our PC IP address
-            dash_id: 'c9b38467-5d9a-3c27-918d-cfa1bd575db2',    // Dashboard uid gotten from miband-grafana
-            dash_name: 'mi-band-data-user-1',    // Dashboard name gotten from miband-grafana
-            panel_id: 11    // Panel id for number of steps gotten from miband-grafana
+            dash_id: 'c9b38467',    // Dashboard uid gotten from miband-grafana -s
+            dash_name: 'mi-band-data-user-1',    // Dashboard name gotten from miband-grafana -s
+            panels: [11]    // Panel ids for number of steps gotten from miband-grafana -s
         }
     }
 ]
@@ -167,10 +180,52 @@ pi@raspberry:~/MagicMirror/$ npm run start
 
 {{<image src="magicmirror-configured.png">}}
 
+## Troubleshooting
+
+### Grafana service is not running after provisioning
+
+Sometimes, after we run `miband-grafana -u`, the Grafana service, `grafana-server`, stops running and its log does not offer any relevant information about what went wrong with the provision. Do not modify any of the generated files by `miband-grafana`, they are properly tested, so the problem is with Grafana instance. For the time being, reinstalling Grafana works. So execute:
+
+{{<shell>}}
+user@pc:~/$ sudo apt purge grafana                      // Warning: This uninstalls miband-grafana package
+user@pc:~/$ sudo rm -drf /etc/grafana /var/lib/grafana  // Dpkg do not remove those if there were custom files on them, so do it manually
+user@pc:~/$ sudo apt install miband-grafana             // Reinstall miband-grafana and grafana
+user@pc:~/$ sudo miband-grafana -u                      // Try again!
+{{</shell>}}
+
 ## References
 
 * [Grafana](https://grafana.com/)
 * [Magic Mirror](https://magicmirror.builders/)
-* miband-dc(1)
-* [`miband-grafana` documentation](https://bitbucket.org/arco_group/miband-grafana/src/master/README.md)
-* [MMM-GrafanaEmbed documentation](https://bitbucket.org/arco_group/mmm-grafanaembed/src/master/README.md)
+* `miband-dc`(1)
+* `miband-grafana`(1)
+* [MMM-GrafanaEmbed](https://bitbucket.org/arco_group/mmm-grafanaembed/src/main/README.md)
+
+## Appendix 1. Configuration for local database
+
+If we have installed PostgreSQL locally, either in our RPi4 or in our PC, we must ensure they are in the same network or both hosts have public IP addresses. In these scenarios, either Grafana instance, in our PC, or `miband-dc`, in our RPI4, will have to access the database, so we must change PostgreSQL configuration to allow remote connections.
+
+First, we will change the value of `listen_addresses` to **'\*'** in the file `postgresql.conf`. If we execute `SHOW config_file` in our PostgreSQL instance we will know its location. For example:
+
+{{<shell>}}
+user@pc:~/$ sudo su postgres -c "psql -c 'SHOW config_file'"
+               config_file               
+-----------------------------------------
+ /etc/postgresql/12/main/postgresql.conf
+(1 row)
+
+user@pc:~/$ sudo grep -n listen_addresses /etc/postgresql/12/main/postgresql.conf 
+59:#listen_addresses = 'localhost'              # what IP address(es) to listen on;
+{{</shell>}}
+
+We will change, in the line 59, 'localhost' for '\*' and uncomment the line.
+
+Next we will open the file `pg_hba.conf`, whose path is specified in `postgresql.conf` with the `hba_file` parameter), and add the next line:
+
+{{<staticCode "pg_hba.conf">}}
+
+Replace the parameter **database** with the name of the database, `user-stadistics` in this recipe.
+
+In case your database is hosted by your RPi4, the remote **user** will be the one used by the Grafana instance, `grafana` in this recipe. If this host is not in the same net as your RPi4, replace **samenet** parameter with the public IP address of the Grafana host.
+
+If that was not the case and the database is located in your PC, the remote **user** will be the one used by `miband-dc` program running on the RPi4, `miband-dc` in this recipe. If this host is not in the same net as your PC, replace **samenet** parameter with the public IP address of the `miband-dc` host.
