@@ -66,7 +66,22 @@ At start, it will not have any device configured, so add them to `/usr/share/mib
 In order to get the device token, you can use [Huami token script](https://github.com/argrento/huami-token) and then paste it to the file. To sum up:
 
 1. Link your MB4 to Xiaomi MiFit app.
-2. Use huami_token script to get the token with your linked account credentials.
+2. Use huami_token script to get the token with your linked account credentials. An example:
+{{<shell>}}
+pi@raspberry:~/$ python3 huami_token.py -m amazfit -e pi@raspberry.com -p mypassword -b
+Getting access token with amazfit login method...
+Token: ['abcDEFghiJKLmnsOPQrst']
+Logging in...
+Logged in! User id: 0123456789
+Getting linked wearables...
++------------------------------------------------------------------------+
+|        MAC        |                      auth_key                      |
+|-------------------+----------------------------------------------------|
+| E3:49:01:ED:00:A6 |         0xabc123DEF456ghi789JKL3mnsOPQrst2         |  <------ Do not copy the '0x'
++------------------------------------------------------------------------+
+
+Logged out.
+{{</shell>}}
 3. Do not reset your MB4 nor unlink it from your account.
 
 ### Restart service
@@ -100,7 +115,7 @@ With the service running, the daemon is storing the MB4 data on the database pro
 
 ## Configuring `miband-grafana`
 
-This package exists to automate the Grafana provision with the data stored by `miband-dc`. In order to create the correct files, `miband-grafana` must know the connection parameters of the database, so we must modify its configuration file `/usr/share/miband-grafana/configuration.conf`. For example:
+This package exists to automate the Grafana provision with the data stored by `miband-dc`. In order to create the correct files, `miband-grafana` must know the connection parameters of the database, so we must edit its configuration file with `sudo miband-grafana -e`. A configuration can be:
 
 {{<staticCode "configuration.conf">}}
 
@@ -131,6 +146,8 @@ INFO:   ID: 21  Description: Calories per day
 INFO:   ID: 22  Description: Calories today
 INFO:   ID: 31  Description: Heart rate
 {{</shell>}}
+
+**NOTE:** If you want grafana to be started on boot, execute `sudo systemctl enable grafana-server.service`.
 
 ## Setting up the smart mirror
 
