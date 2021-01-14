@@ -51,7 +51,7 @@ But it needs configuration to work properly.
 
 ### Database
 
-The service needs a database to store the collected data. It reads the connection parameters from the file `/usr/share/miband-dc/settings.json`. An example is:
+The service needs a database to store the collected data. It reads the connection parameters from the file `/etc/miband-dc/settings.json`. An example is:
 
 {{<staticCode "settings.json">}}
 
@@ -59,7 +59,7 @@ It is really important that the database user OWNS the database, so it has privi
 
 ### Devices
 
-At start, it will not have any device configured, so add them to `/usr/share/miband-dc/devices.csv`. For example we have this configuration:
+At start, it will not have any device configured, so add them to `/etc/miband-dc/devices.csv`. For example we have this configuration:
 
 {{<staticCode "devices.csv">}}
 
