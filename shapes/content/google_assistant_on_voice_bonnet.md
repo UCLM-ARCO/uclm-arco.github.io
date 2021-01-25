@@ -15,10 +15,11 @@ You can set up your own Google Assistant with just a Raspberry Pi and an Adafrui
 ## Ingredients
 
 In order to follow this recipe you will need:
-* A Raspberry Pi 4 or **RPi4**
-* A Adafruit Voice Bonnet 
-* Two Mono Enclosed Speaker or headphones
-* A Google account
+
+- A Raspberry Pi 4 or **RPi4**
+- A Adafruit Voice Bonnet 
+- Two Mono Enclosed Speaker or headphones
+- A Google account
 
 ## Raspberry Pi Setup
 The first step is perform an update/upgrade and install the cross-platform package manager `pip`:
@@ -86,7 +87,7 @@ You can user `alsamixer` to adjust the volume. Select the card with **F6**
 {{<image src="alsamixer.png">}}
  
 ### Headphone/Speaker Test
-Make sure you ahce the audio on/off switch is set to on. Run `speaker-test -c2` and you will hear white noise. 
+Make sure the audio on/off switch is set to on. Run `speaker-test -c2` and you will hear white noise. 
 
 ### Microphone Test
 Run `sudo arecord -f cd -Dhw:2 | aplay -Dhw:2`. Then speak to hear yourself echoed. 
