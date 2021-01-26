@@ -238,7 +238,7 @@ La primera línea se usa para incluir la cabecera del sitio, **no la modifiques*
 <br>
 {{< /code >}}
 
-Por otro lado, es importante notar que la **plantilla por defecto** para una sección recién creada será la que hay definida en el tema del *site*. Es decir, si no creas una plantilla nueva o se lo indicas en el [Front Matter](https://gohugo.io/content-management/front-matter/) de tu sección, la plantilla que usará será `hugo-site/themes/default/layouts/_default/section.html`. Esta plantilla creara una lista con las páginas de tu sección, lo cual, combinado con la cabecera antes descrita, debería ser suficiente.
+Por otro lado, es importante notar que la **plantilla por defecto** para una sección recién creada será la que hay definida en el tema del *site*. Es decir, si no creas una plantilla nueva o se lo indicas en el [Front Matter](https://gohugo.io/content-management/front-matter/) de tu sección, la plantilla que usará será `hugo-site/themes/default/layouts/_default/section.html`. Esta plantilla creará una lista con las páginas de tu sección, lo cual, combinado con la cabecera antes descrita, debería ser suficiente.
 
 Sin embago, es posible que necesites **más flexibilidad**, o simplemente quieras crear la página de sección directamente en HTML. Para ello, será necesario que crees una plantilla específica. De entre las diversas formas de hacerlo, la **más sencilla** es indicar explícitamente en el fichero `_index.md` de la sección qué plantilla usará (parámetro `layout`). Por ejemplo:
 
