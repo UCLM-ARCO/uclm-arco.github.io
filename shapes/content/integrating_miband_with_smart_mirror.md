@@ -59,14 +59,21 @@ It is really important that the database user OWNS the database, so it has privi
 
 ### Devices
 
-At start, it will not have any device configured, so add them to `/etc/miband-dc/devices.csv`. For example we have this configuration:
+First, the MB4 has to be linked to an account at MiFit App (available on [Google Play Store](https://play.google.com/store/apps/details?id=com.xiaomi.hm.health&hl=es&gl=US) and [Apple Store](https://apps.apple.com/es/app/mi-fit/id938688461)). Register the MB4 following the MiFit instructions. While you are there, enable *continous heart rate monitoring*:
+
+1. Go to link device settings and select 'heart rate monitoring'.   
+2. Set monitoring method to 'Automatic heart rate monitoring and sleep assistant'.   
+3. Enable activity monitoring.   
+
+{{<image src="mifit_screenshot1.jpg" width="30%">}}
+{{<image src="mifit_screenshot2.jpg" width="30%">}}
+{{<image src="mifit_screenshot3.jpg" width="30%">}}
+
+When finished, turn off your smartphone Bluetooth and do not turn it back while `miband-dc` is running, as the service will not work properly. Then, store the MB4 information in `/etc/miband-dc/devices.csv` like:
 
 {{<staticCode "devices.csv">}}
 
-In order to get the device token, you can use [Huami token script](https://github.com/argrento/huami-token) and then paste it to the file. To sum up:
-
-1. Link your MB4 to Xiaomi MiFit app.
-2. Use huami_token script to get the token with your linked account credentials. An example:
+The device token can be obtained by using [Huami token script](https://github.com/argrento/huami-token) with the used account in MiFit credentials. An example is:
 {{<shell>}}
 pi@raspberry:~/$ python3 huami_token.py -m amazfit -e pi@raspberry.com -p mypassword -b
 Getting access token with amazfit login method...
@@ -82,7 +89,8 @@ Getting linked wearables...
 
 Logged out.
 {{</shell>}}
-3. Do not reset your MB4 nor unlink it from your account.
+
+It is important to not reset nor unlink the MB4 from your account. If so, just repeat the steps of this section.
 
 ### Restart service
 
@@ -209,6 +217,16 @@ user@pc:~/$ sudo rm -drf /etc/grafana /var/lib/grafana  // Dpkg do not remove th
 user@pc:~/$ sudo apt install miband-grafana             // Reinstall miband-grafana and grafana
 user@pc:~/$ sudo miband-grafana -u                      // Try again!
 {{</shell>}}
+
+### miband-dc: No detection of devices
+
+There are some issues with the Bluetooth service that we are not capable of locate yet. `miband-dc` is programmed to auto-restart the RPi4 Bluetooth service when it does not detect **any** configured device (the ones specified at `devices.csv`) within 15 minutes.
+
+If it still does not detect your device, you must **restart** the Bluetooth adaptor. You can do it using the UI, selecting the proper option at the Bluetooth icon up to the right of your screen, or via command-line with `sudo hciconfig hci0 reset`.
+
+### miband-dc: 'Are you root?' error
+
+`miband-dc` is running with admin privileges by `systemctl`, so **it is** running as root. The problem seems to be related with the Bluetooth adaptor, so a temporary solution is to restart the Bluetooth adaptor, just as is explained in the previous section.
 
 ## References
 
