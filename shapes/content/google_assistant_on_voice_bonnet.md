@@ -39,7 +39,7 @@ Blinka is a CirciutPython library compatibility layer. It requires just a few co
 {{<shell>}}
 pi@raspberrypi:~ $ cd ~
 pi@raspberrypi:~ $ sudo pip3 install --upgrade adafruit-python-shell
-pi@raspberrypi:~ $ wget hhtps://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
 pi@raspberrypi:~ $ sudo python3 raspi-blinka.py
 {{</shell>}}
 
