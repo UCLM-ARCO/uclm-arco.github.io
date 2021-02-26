@@ -50,14 +50,14 @@ Download the Z-Stack coordinator firmware from https://github.com/Koenkk/Z-Stack
 
 To burn this on your zzh! go to the directory `cc2538-bsl-master` and run:
 {{<shell>}}
-:~$ ./cc2538-bsl.py -p /dev/<port> -evw <firmware_zigbee>.hex
+user@user-pc:~$ ./cc2538-bsl.py -p /dev/<port> -evw <firmware_zigbee>.hex
 {{</shell>}}
 
 The port in my case is ttyUSB0, as shown in section *Drivers for CH341*, so don't forget to change to the port used on your machine.
 
 In case you want to erase the flash, run:
 {{<shell>}}
-:~$ ./cc2538-bsl.py -p /dev/<port> -e
+user@user-pc:~$ ./cc2538-bsl.py -p /dev/<port> -e
 {{</shell>}}
 
 ### Running 
@@ -76,7 +76,7 @@ These files are provided in the directory `shapes/static/code/zigbee2mqtt`.
 
 Then run: 
 {{<shell>}}
-:~$ make
+user@user-pc:~$ make
 {{</shell>}}
 
 When started successfully, you will see something like:
