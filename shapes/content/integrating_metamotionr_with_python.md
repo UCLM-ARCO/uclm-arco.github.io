@@ -38,13 +38,13 @@ In order to follow the next recipe you will need the this ingredients:
 * The `metamotion` library available in [ARCO's package repository](https://uclm-arco.github.io/debian/)
 * Basic knwoledge of `Python3` and `Linux`
 
-In order to install al the dependencias you must execute the next commands
+In order to install al the dependencies you must execute the next commands
 
 {{<shell>}}
 sudo apt install bluez build-essential libboost-all-dev libbluetooth-dev
 pip3 install metawear --upgrade
 pip3 install bleak
-sudo apt install metawear
+sudo apt install metamotion
 {{</shell>}}
 
 In the following sections, we are going to explain the main funcionalities of the library,
@@ -72,7 +72,7 @@ button of the chip before execute the programa to assure the correct operation.
 
 Once you import the library you must instantiate your chip. In order to do that 
 you must call the constructor `MetaMotion` with the **MAC address** of the
-chip, which can be observer in the label of the device. Once the sensor is instanitated,
+chip, which can be observer in the label of the device. Once the sensor is instantiated,
 call the `connect()` method in order to establish the Bluetooth connection
 
 {{<code py>}}
@@ -234,7 +234,7 @@ sensor.stop_logging()
 
 At this point, there is a problem, our instance doesn't know which is the status of the sensor, which loggers
 were created, and which signal were registering. To solve this problem, can be used the method
-`sync_host_with_device`, that synchonize our instance with the actual status of our MetamotionR device.
+`sync_host_with_device`, that synchronize our instance with the actual status of our MetamotionR device.
 Now our instance knows which logger exists, but doesn't knows which signals were subscribed, for this reason,
 and to download all data, you must invoke the method `subscribe_anonymous_datasignals`. Once our instance is prepared,
 download the data is as simple as call the method `download_logs` to get all the data from the device, and
@@ -285,7 +285,7 @@ sensor.subscribe_anonymous_datasignals()
 
 sensor.download_logs()
 sensor.wait_until_download_complete()
-print("The rotation is ", sensor.gyrocope.rotation_log)
+print("The rotation is ", sensor.gyroscope.rotation_log)
 
 sensor.clean()
 sensor.disconnect()
