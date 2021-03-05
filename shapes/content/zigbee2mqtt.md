@@ -61,8 +61,8 @@ user@user-pc:~$ ./cc2538-bsl.py -p /dev/<port> -e
 {{</shell>}}
 
 ### Running 
-It's possible to run Zigbee2MQTT in a Docker container using the official Zigbee2MQTT Docker image. For this purpose, `configuration.yaml` file in the zigbee2mqtt folder must contain the following:
-{{<staticCode "configuration.yaml">}}
+It's possible to run Zigbee2MQTT in a Docker container using the official Zigbee2MQTT Docker image. For this purpose, `docker-compose.yml` file in the zigbee2mqtt folder must contain the following:
+{{<staticCode "docker-compose.yml">}}
 
 And the `configuration.yaml` file in the zigbee2mqtt-data folder must contain the following:
 {{<staticCode "zigbee2mqtt-data/configuration.yaml">}}
@@ -72,7 +72,7 @@ To facilitate execution, you can create a Makefile.
 
 These files are provided in the directory `shapes/static/code/zigbee2mqtt`. 
 
-**Warning!** Before running, all you have to do is to look if your port is different from ttyUSB0, in this case you have to change it in the `configuration.yaml` files in the zigbee2mqtt and zigbee2mqtt-data folders.
+**Warning!** Before running, all you have to do is to look if your port is different from ttyUSB0, in this case you have to change it in the `docker-compose.yml` file in the zigbee2mqtt folder and the `configuration.yaml` files in the zigbee2mqtt-data folder.
 
 Then run: 
 {{<shell>}}
