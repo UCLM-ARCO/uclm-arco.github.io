@@ -50,14 +50,14 @@ Download the Z-Stack coordinator firmware from https://github.com/Koenkk/Z-Stack
 
 To burn this on your zzh! go to the directory `cc2538-bsl-master` and run:
 {{<shell>}}
-user@user-pc:~$ ./cc2538-bsl.py -p /dev/<port> -evw <firmware_zigbee>.hex
+pi@raspberrypi:~$ ./cc2538-bsl.py -p /dev/<port> -evw <firmware_zigbee>.hex
 {{</shell>}}
 
 The port in my case is ttyUSB0, as shown in section *Drivers for CH341*, so don't forget to change to the port used on your machine.
 
 In case you want to erase the flash, run:
 {{<shell>}}
-user@user-pc:~$ ./cc2538-bsl.py -p /dev/<port> -e
+pi@raspberrypi:~$ ./cc2538-bsl.py -p /dev/<port> -e
 {{</shell>}}
 
 ### Running 
@@ -76,7 +76,7 @@ These files are provided in the directory `shapes/static/code/zigbee2mqtt`.
 
 Then run: 
 {{<shell>}}
-user@user-pc:~$ make
+pi@raspberrypi:~$ make
 {{</shell>}}
 
 When started successfully, you will see something like:
@@ -100,48 +100,55 @@ zigbee2mqtt    | Zigbee2MQTT:info  2021-02-08 12:11:10: Connected to MQTT server
 Now zigbee is ready listening for pairing devices.
 
 ### Example with lidl sensors
-Two types of sensors have been used for this example: a smart plug and a smart motion sensor. First of all, you must pair the device to zzh! To do this you should see the led flashing on the device, then the device is ready for pairing. Once this step is done you will see on your terminal the events produced by the sensors.
+Two types of sensors have been used for this example: a smart plug and a smart motion sensor. First of all, you must pair the device to zzh! To do this you should see the led flashing on the device, then the device is ready for pairing. After everything has joined, you can change in the `configuration.yaml` file the name of the devices, as show below:
+
+{{<code yaml>}}
+devices:
+    '0xec1bbdfffea21a34':
+        friendly_name: 'smart_plug/SENSOR'
+    '0xbc33acfffe35ac11':
+        friendly_name: 'smart_motion/SENSOR'
+{{</code>}}
+
+Once this step is done you will see on your terminal the events produced by the sensors.
 
 In the case of the smart plug, the following events are displayed on our terminal indicating that the device has been connected and configured. In addition, the last two events show whether the plug has been turned on or off by the user.
 {{<shell>}}
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: Device '0xec1bbdfffea21a34' joined
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xec1bbdfffea21a34","ieee_address":"0xec1bbdfffea21a34"},"type":"device_joined"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: Starting interview of '0xec1bbdfffea21a34'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xec1bbdfffea21a34","ieee_address":"0xec1bbdfffea21a34","status":"started"},"type":"device_interview"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":{"friendly_name":"0xec1bbdfffea21a34"},"type":"device_connected"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:27: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_started","meta":{"friendly_name":"0xec1bbdfffea21a34"},"type":"pairing"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:45: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xec1bbdfffea21a34","ieee_address":"0xec1bbdfffea21a34"},"type":"device_announce"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:45: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"announce","meta":{"friendly_name":"0xec1bbdfffea21a34"},"type":"device_announced"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: Successfully interviewed '0xec1bbdfffea21a34', device has successfully been paired
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: Device '0xec1bbdfffea21a34' is supported, identified as: Lidl Silvercrest smart plug (EU, CH, FR, BS, DK) (HG06337)
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"definition":{"description":"Silvercrest smart plug (EU, CH, FR, BS, DK)","exposes":[{"features":[{"access":7,"description":"On/off state of the switch","name":"state","property":"state","type":"binary","value_off":"OFF","value_on":"ON","value_toggle":"TOGGLE"}],"type":"switch"},{"access":1,"description":"Link quality (signal strength)","name":"linkquality","property":"linkquality","type":"numeric","unit":"lqi","value_max":255,"value_min":0}],"model":"HG06337","supports_ota":false,"vendor":"Lidl"},"friendly_name":"0xec1bbdfffea21a34","ieee_address":"0xec1bbdfffea21a34","status":"successful","supported":true},"type":"device_interview"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: Configuring '0xec1bbdfffea21a34'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_successful","meta":{"description":"Silvercrest smart plug (EU, CH, FR, BS, DK)","friendly_name":"0xec1bbdfffea21a34","model":"HG06337","supported":true,"vendor":"Lidl"},"type":"pairing"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:16:51: Successfully configured '0xec1bbdfffea21a34'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:17:10: MQTT publish: topic 'zigbee2mqtt/0xec1bbdfffea21a34', payload '{"linkquality":147,"state":"ON"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:17:12: MQTT publish: topic 'zigbee2mqtt/0xec1bbdfffea21a34', payload '{"linkquality":144,"state":"OFF"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: Device 'smart_plug/SENSOR' joined
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_plug/SENSOR","ieee_address":"0xec1bbdfffea21a34"},"type":"device_joined"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: Starting interview of 'smart_plug/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_plug/SENSOR","ieee_address":"0xec1bbdfffea21a34","status":"started"},"type":"device_interview"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":{"friendly_name":"smart_plug/SENSOR"},"type":"device_connected"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_started","meta":{"friendly_name":"smart_plug/SENSOR"},"type":"pairing"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_plug/SENSOR","ieee_address":"0xec1bbdfffea21a34"},"type":"device_announce"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:05: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"announce","meta":{"friendly_name":"smart_plug/SENSOR"},"type":"device_announced"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:06: Successfully interviewed 'smart_plug/SENSOR', device has successfully been paired
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:06: Device 'smart_plug/SENSOR' is supported, identified as: Lidl Silvercrest smart plug (EU, CH, FR, BS, DK) (HG06337)
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:06: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"definition":{"description":"Silvercrest smart plug (EU, CH, FR, BS, DK)","exposes":[{"features":[{"access":7,"description":"On/off state of the switch","name":"state","property":"state","type":"binary","value_off":"OFF","value_on":"ON","value_toggle":"TOGGLE"}],"type":"switch"},{"access":1,"description":"Link quality (signal strength)","name":"linkquality","property":"linkquality","type":"numeric","unit":"lqi","value_max":255,"value_min":0}],"model":"HG06337","supports_ota":false,"vendor":"Lidl"},"friendly_name":"smart_plug/SENSOR","ieee_address":"0xec1bbdfffea21a34","status":"successful","supported":true},"type":"device_interview"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:06: Configuring 'smart_plug/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:06: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_successful","meta":{"description":"Silvercrest smart plug (EU, CH, FR, BS, DK)","friendly_name":"smart_plug/SENSOR","model":"HG06337","supported":true,"vendor":"Lidl"},"type":"pairing"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:07: Successfully configured 'smart_plug/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:23: MQTT publish: topic 'zigbee2mqtt/smart_plug/SENSOR', payload '{"linkquality":138,"state":"ON"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:24:24: MQTT publish: topic 'zigbee2mqtt/smart_plug/SENSOR', payload '{"linkquality":138,"state":"OFF"}'
 {{</shell>}}
 
 In the case of the intelligent motion sensor, as with the plug, the events that the sensor has been connected and configured correctly are displayed. In this case the last two events indicate whether or not there is presence in the room, being *occupancy* true if the sensor detects motion and false otherwise. 
 {{<shell>}}
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: Device '0xbc33acfffe35ac11' joined
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xbc33acfffe35ac11","ieee_address":"0xbc33acfffe35ac11"},"type":"device_joined"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: Starting interview of '0xbc33acfffe35ac11'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xbc33acfffe35ac11","ieee_address":"0xbc33acfffe35ac11","status":"started"},"type":"device_interview"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":{"friendly_name":"0xbc33acfffe35ac11"},"type":"device_connected"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:23: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_started","meta":{"friendly_name":"0xbc33acfffe35ac11"},"type":"pairing"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:24: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"0xbc33acfffe35ac11","ieee_address":"0xbc33acfffe35ac11"},"type":"device_announce"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:26:24: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"announce","meta":{"friendly_name":"0xbc33acfffe35ac11"},"type":"device_announced"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:11: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"linkquality":183}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:14: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"linkquality":186}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:15: Successfully interviewed '0xbc33acfffe35ac11', device has successfully been paired
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:15: Device '0xbc33acfffe35ac11' is supported, identified as: Lidl Silvercrest smart motion sensor (HG06335)
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:15: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"definition":{"description":"Silvercrest smart motion sensor","exposes":[{"access":1,"description":"Indicates whether the device detected occupancy","name":"occupancy","property":"occupancy","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Indicates if the battery of this device is almost empty","name":"battery_low","property":"battery_low","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Indicates whether the device is tampered","name":"tamper","property":"tamper","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Remaining battery in %","name":"battery","property":"battery","type":"numeric","unit":"%","value_max":100,"value_min":0},{"access":1,"description":"Link quality (signal strength)","name":"linkquality","property":"linkquality","type":"numeric","unit":"lqi","value_max":255,"value_min":0}],"model":"HG06335","supports_ota":false,"vendor":"Lidl"},"friendly_name":"0xbc33acfffe35ac11","ieee_address":"0xbc33acfffe35ac11","status":"successful","supported":true},"type":"device_interview"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:15: Configuring '0xbc33acfffe35ac11'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:15: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_successful","meta":{"description":"Silvercrest smart motion sensor","friendly_name":"0xbc33acfffe35ac11","model":"HG06335","supported":true,"vendor":"Lidl"},"type":"pairing"}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:17: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"linkquality":183}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:19: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"linkquality":180}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:28: Successfully configured '0xbc33acfffe35ac11'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:38: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"battery_low":false,"linkquality":177,"occupancy":false,"tamper":false}'
-zigbee2mqtt    | Zigbee2MQTT:info  2021-03-09 19:27:46: MQTT publish: topic 'zigbee2mqtt/0xbc33acfffe35ac11', payload '{"battery":100,"battery_low":false,"linkquality":183,"occupancy":true,"tamper":false}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: Device 'smart_motion/SENSOR' joined
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_motion/SENSOR","ieee_address":"0xbc33acfffe35ac11"},"type":"device_joined"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: Starting interview of 'smart_motion/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_motion/SENSOR","ieee_address":"0xbc33acfffe35ac11","status":"started"},"type":"device_interview"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":{"friendly_name":"smart_motion/SENSOR"},"type":"device_connected"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_started","meta":{"friendly_name":"smart_motion/SENSOR"},"type":"pairing"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"friendly_name":"smart_motion/SENSOR","ieee_address":"0xbc33acfffe35ac11"},"type":"device_announce"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:26:50: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"announce","meta":{"friendly_name":"smart_motion/SENSOR"},"type":"device_announced"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:20: Successfully interviewed 'smart_motion/SENSOR', device has successfully been paired
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:20: Device 'smart_motion/SENSOR' is supported, identified as: Lidl Silvercrest smart motion sensor (HG06335)
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:20: MQTT publish: topic 'zigbee2mqtt/bridge/event', payload '{"data":{"definition":{"description":"Silvercrest smart motion sensor","exposes":[{"access":1,"description":"Indicates whether the device detected occupancy","name":"occupancy","property":"occupancy","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Indicates if the battery of this device is almost empty","name":"battery_low","property":"battery_low","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Indicates whether the device is tampered","name":"tamper","property":"tamper","type":"binary","value_off":false,"value_on":true},{"access":1,"description":"Remaining battery in %","name":"battery","property":"battery","type":"numeric","unit":"%","value_max":100,"value_min":0},{"access":1,"description":"Link quality (signal strength)","name":"linkquality","property":"linkquality","type":"numeric","unit":"lqi","value_max":255,"value_min":0}],"model":"HG06335","supports_ota":false,"vendor":"Lidl"},"friendly_name":"smart_motion/SENSOR","ieee_address":"0xbc33acfffe35ac11","status":"successful","supported":true},"type":"device_interview"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:20: Configuring 'smart_motion/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:20: MQTT publish: topic 'zigbee2mqtt/bridge/log', payload '{"message":"interview_successful","meta":{"description":"Silvercrest smart motion sensor","friendly_name":"smart_motion/SENSOR","model":"HG06335","supported":true,"vendor":"Lidl"},"type":"pairing"}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:21: Successfully configured 'smart_motion/SENSOR'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:27:23: MQTT publish: topic 'zigbee2mqtt/smart_motion/SENSOR', payload '{"battery":100,"linkquality":162}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:29:06: MQTT publish: topic 'zigbee2mqtt/smart_motion/SENSOR', payload '{"battery":100,"battery_low":false,"linkquality":159,"occupancy":false,"tamper":false}'
+zigbee2mqtt    | Zigbee2MQTT:info  2021-03-10 10:29:15: MQTT publish: topic 'zigbee2mqtt/smart_motion/SENSOR', payload '{"battery":100,"battery_low":false,"linkquality":159,"occupancy":true,"tamper":false}'
 {{</shell>}}
