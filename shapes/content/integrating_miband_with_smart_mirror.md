@@ -73,7 +73,7 @@ When finished, turn off your smartphone Bluetooth and do not turn it back while 
 
 {{<staticCode "devices.csv">}}
 
-The device token can be obtained by using [Huami token script](https://github.com/argrento/huami-token) with the used account in MiFit credentials. An example is:
+The device token can be obtained by using [Huami token script](https://github.com/argrento/huami-token) with the used account in MiFit credentials. This works for Amazfit accounts, so if you are not sure what type of account you have, we encourage you to create a new one from within MiFit app. An example is:
 {{<shell>}}
 pi@raspberry:~/$ python3 huami_token.py -m amazfit -e pi@raspberry.com -p mypassword -b
 Getting access token with amazfit login method...
