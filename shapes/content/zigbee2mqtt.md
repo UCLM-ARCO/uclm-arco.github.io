@@ -1,7 +1,7 @@
 ---
 title: "Monitoring System"
 date: 2021-02-08T10:25:16+01:00
-draft: true
+draft: false
 tags: 
 - monitoring
 - zzh! 
@@ -12,7 +12,7 @@ tags:
 - smart sensors
 
 image: "zigbee2mqtt/icon.png"
-description: "A recipe for configuring Zigbee2mqtt."
+description: "Explanation of the installation and execution of the monitoring system."
 ---
 
 ## Overview

@@ -75,7 +75,7 @@ If you manually added or changed something keep in mind that DeepSpeech could no
 ## Making a mmap-able model
 The `shapes-mm-speechrecognition.pb` model file generated in the above step will be loaded in memory to be dealt with when running inference. This will results in extra loading time and memory consumption. One way to avoid this is to directly read data from the disk.
 
-Tensorflow has tooling to achieve this, so clone DeepSpeech repository with the command `git clone --branch v0.9.3 https://github.com/mozilla/DeepSpeech` and use `util/taskcluster.py` tool to download:
+Tensorflow has tooling to achieve this, so clone DeepSpeech repository with the command `git clone --branch v0.9.3 https://github.com/mozilla/DeepSpeech`. To use the tools in this repository you must have python version 3.6. To do this you can create a virtual environment with that version with the command `python3 -m virtualenv -p /usr/bin/python3.6 <name_virtual_environment>`. Then use `util/taskcluster.py` tool to download:
 {{<shell>}}
 user@user-pc:~$ python3 util/taskcluster.py --source tensorflow --artifact convert_graphdef_memmapped_format --branch r1.15 --target .
 {{</shell>}}
