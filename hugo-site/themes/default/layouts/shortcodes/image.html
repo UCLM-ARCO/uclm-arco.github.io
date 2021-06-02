@@ -14,5 +14,24 @@
   {{ .Scratch.Set "path" $path }}
 {{ end }}
 
-<img src='/{{ .Scratch.Get "path" }}' width='{{ .Get "width" }}' height='{{ .Get "height" }}'/>
+{{ .Scratch.Set "style" "" }}
+
+{{ if ne (.Get "align") "" }}
+  {{ if or (eq (.Get "align") "center") (eq (.Get "align") "left") (eq (.Get "align") "right") }}
+    {{ .Scratch.Set "style" (printf "%s%s" (.Scratch.Get "style") "display: block;") }}
+  {{ end }}
+  {{ if or (eq (.Get "align") "center") (eq (.Get "align") "left") }}
+    {{ .Scratch.Set "style" (printf "%s%s" (.Scratch.Get "style") "margin-right: auto;") }}
+  {{ end }}
+  {{ if or (eq (.Get "align") "center") (eq (.Get "align") "right") }}
+    {{ .Scratch.Set "style" (printf "%s%s" (.Scratch.Get "style") "margin-left: auto;") }}
+  {{ end }}
+{{ end }}
+
+{{ if ne (.Get "max-width") "" }}
+  {{ .Scratch.Set "style" (printf "%smax-width: %s;" (.Scratch.Get "style") (.Get "max-width")) }}
+{{ end }}
+
+
+<img src='/{{ .Scratch.Get "path" }}' width='{{ .Get "width" }}' height='{{ .Get "height" }}'{{ if ne (.Scratch.Get "style") "" }}style='{{ (.Scratch.Get "style") | safeCSS }}'{{ end }}/>
 
