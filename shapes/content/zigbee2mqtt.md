@@ -34,12 +34,6 @@ In order to follow this recipe you will need:
 First step in getting the zzh! set up is to ensure that the host computer has the right drivers for the CH341 installed. Plug your device and ensure that zzh is recognised with the command `dmesg`. If recognized, you will see something like:
 
 {{<shell>}}
-[ 2513.148412] usb 1-1: new full-speed USB device number 9 using xhci_hcd
-[ 2513.298446] usb 1-1: New USB device found, idVendor=1a86, idProduct=7523, bcdDevice= 2.64
-[ 2513.298451] usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
-[ 2513.298455] usb 1-1: Product: USB Serial
-[ 2514.187751] usbcore: registered new interface driver usbserial_generic
-[ 2514.187757] usbserial: USB Serial support registered for generic
 [ 2514.373835] usbcore: registered new interface driver ch341
 [ 2514.373867] usbserial: USB Serial support registered for ch341-uart
 [ 2514.373903] ch341 1-1:1.0: ch341-uart converter detected
@@ -123,10 +117,10 @@ INFO: Found dashboard definition at /var/lib/grafana/dashboards/shapes-monitorin
 INFO: 	Name: smart-sensors
 INFO: 	UID: fFBmCCrMz
 INFO: Available panels:
-INFO: 	Humidity
-INFO: 	Temperature
-INFO: 	Motion
-INFO: 	Door/Window
+INFO: 	ID: 1	Description: Bathroom sensors
+INFO: 	ID: 2	Description: Living room sensors
+INFO: 	ID: 3	Description: Bedroom sensors
+INFO: 	ID: 4	Description: Kitchen sensors
 {{</shell>}}
 
 **NOTE:** If you want grafana to be started on boot, execute `sudo systemctl enable grafana-server.service`.
@@ -135,21 +129,27 @@ Once the service `shapes-monitoring-service` is started and the database has bee
 {{<shell>}}
 pi@raspberrypi:~$ shapes-monitoring-client
 Connected to MQTT Broker localhost:1883 with return code 0!
-Received {"battery":100,"linkquality":165,"occupancy":true,"voltage":3025} from zigbee2mqtt/motion_xiaomi/SENSOR topic!
-Sensor data: {'battery': 100, 'linkquality': 165, 'occupancy': 1, 'voltage': 3025}
-Sensor data published!
+Received {"battery":100,"contact":true,"linkquality":162,"voltage":3005} from zigbee2mqtt/door_window_living-room/SENSOR topic!
+Sensor data: {'battery': 100, 'contact': 1, 'linkquality': 162, 'voltage': 3005}
+Sensor data published to zigbee2mqtt/smart-sensors/living-room topic!
 
-Connected to MQTT Broker localhost:1883 with return code 0!
-Received {"battery":97,"humidity":41.72,"linkquality":168,"pressure":947.7,"temperature":19.62,"voltage":2995} from zigbee2mqtt/temperature_humidity_xiaomi/SENSOR topic!
-Received {"battery":100,"contact":true,"linkquality":168,"voltage":3005} from zigbee2mqtt/door_window_xiaomi/SENSOR topic!
-Sensor data: {'battery': 100, 'contact': 1, 'linkquality': 168, 'voltage': 3005}
-Sensor data published!
+Received {"battery":100,"contact":true,"linkquality":158,"voltage":3005} from zigbee2mqtt/door_window_bedroom/SENSOR topic!
+Sensor data: {'battery': 100, 'contact': 0, 'linkquality': 158, 'voltage': 3005}
+Sensor data published to zigbee2mqtt/smart-sensors/bedroom topic!
 
-Connected to MQTT Broker localhost:1883 with return code 0!
-Received {"battery":100,"contact":false,"linkquality":183,"voltage":3005} from zigbee2mqtt/door_window_xiaomi/SENSOR topic!
-Sensor data: {'battery': 100, 'contact': 0, 'linkquality': 183, 'voltage': 3005}
-Sensor data published!
+Received {"battery":100,"humidity":52.09,"linkquality":129,"pressure":947.6,"temperature":25.24, "voltage":3015} from zigbee2mqtt/temperature_humidity_living-room/SENSOR topic!
+Sensor data published to zigbee2mqtt/smart-sensors/living-room topic!
 {{</shell>}}
 
-To view the data transmitted by the sensors go to the Smart Sensors dashboard and you will see something similar to the following image:
-{{<image src="smart-sensors_dashboard.png" width="100%">}}
+To view the data transmitted by the sensors go to the **Smart Sensors** dashboard and you will see something similar to the following image:
+- Bathroom sensors
+{{<image src="dashboard-baño.png" width="100%">}}
+
+- Living-room sensors
+{{<image src="dashboard-salon.png" width="100%">}}
+
+- Bedroom sensors
+{{<image src="dashboard-dormitorio.png" width="100%">}}
+
+- Kitchen sensors
+{{<image src="dashboard-cocina.png" width="100%">}}
