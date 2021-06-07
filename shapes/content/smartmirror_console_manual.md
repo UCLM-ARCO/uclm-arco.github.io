@@ -13,7 +13,7 @@ description: "Learn how to configure and manage an ARCO Smart Mirror with the pa
 
 ## Overview
 
-A *Smart Mirror* can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, must be shaped into its final user needs. For that, `smartmirror-console` comes in handy, as it provides a **high-level** interface to configure all *Smart Mirror* packages and services.
+A *Smart Mirror* can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, this have to be shaped into its final user needs. For that, the `smartmirror-console` comes in handy, as it provides a **high-level** interface to configure all *Smart Mirror* packages and services.
 
 ## Ingredients
 
@@ -25,7 +25,7 @@ The mandatory ingredients to follow this recipe are:
 
 ## Start the environment
 
-To access the console, open the PC browser and write the RPi4 address, its IP address or a public one if it has any. It is required to specifiy the port to access to, which is 5000. This is done by preciding the port number with a colon.
+To access the console, open the PC browser (different from Chrome as Google is not supporting HTTP, as it is the case for the moment) and write the RPi4 address, its IP address or a public one if it has any. It is required to specifiy the port to access to, which is 5000. This is done by preciding the port number with a colon.
 
 For example, if the RPi4 has the address *`my-smartmirror.com`*, the console address will be *`http://my-smartmirror.com:5000`*.
 
@@ -43,7 +43,7 @@ In this section it will be explained how to configure each one of the *Smart Mir
 
 ### Mi Band 4 Data Collector
 
-This section will explain how to configure the *Mi Band 4 Data Collector* module, that refers to `miband-dc` package. 
+This section explains how to configure the *Mi Band 4 Data Collector* module, that refers to `miband-dc` debian package. 
 
 It can also be managed using its **low-level** interface, through configuration files. To know more about this, read `miband-dc` manual page or [*Configuring `miband-dc`* section at Integrating Xiaomi Mi Band 4 devices with *Smart Mirror*](https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/#configuring-miband-dc).
 
@@ -82,13 +82,13 @@ The service `miband-dc`, the data collector, can notify the user, if the user wa
 
 ##### Hooks
 
-This service can be linked with [Magic Mirror](https://magicmirror.builders/), `magic-mirror-2` package, through its modules. To do so, be sure to have installed said package and the required modules for each hook. To enable a hook, just select it and click "Save".
+This service can be linked with [Magic Mirror](https://magicmirror.builders/), `magic-mirror-2` package, through its modules. To do so, make sure you have installed the aforementioned package and the required modules for each hook. To enable a hook, just select it and click "Save".
 
 {{<image src="miband-dc-hooks.png" width="900px" max-width="100%" align="center">}}
 
 ##### Charging station
 
-To ease data updating, the data collector can act, if configured, as a charging station. This mode pretends to simulate an *updating station*, where users leave their devices charging while data is being stored, resulting in a less aggressive communication. To enable it, select the option and click "Save".
+To ease the data updating process, the data collector can perform, if configured, as a charging station. This mode pretends to simulate an *updating station*, where users leave their devices charging while data is being stored, resulting in a less aggressive communication. To enable it, select the option and click "Save".
 
 {{<image src="miband-dc-charging-station.png" width="900px" max-width="100%" align="center">}}
 
@@ -159,4 +159,4 @@ Each time you add a new device, go to *Profile > My devices > Active band > Hear
 2. Detection frequency to less or equal than 10 minutes. 
 3. Enable *Activity monitoring*.
 
-Once done, it is important to turn off the Bluetooth, as it will interfere with the communication between the data collector and the active band. If you require enabling the Bluetooth, leave said MB4 far away, if possible.
+Once done, it is important to turn off the Bluetooth of the mobile phone you used to activate the band, as it will interfere with the communication between the data collector and the active band. If you need to enable the Bluetooth, just make sure that you place the MB4 far away, if possible.
