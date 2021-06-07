@@ -16,7 +16,7 @@ description: "Explanation of the installation and execution of the monitoring sy
 ---
 
 ## Overview
-Zigbee2mqtt is an open-source project that enables the interconnection of different-brand devices with Zigbee connectivity. It can also be integrated with Home Assistant thanks to the bidirectional message relay from the network to MQTT. Additionally, we need a zigbee adapter, this is the zig-a-zig-ah! (zzh!).
+Zigbee2mqtt is an open-source project that enables the interconnection of different-brand devices with Zigbee connectivity. It can also be integrated with Home Assistant thanks to the bidirectional message relay from the network to MQTT. Because neither our Raspberry Pi nor our laptop has a ZigBee interface, we additionally need a zigbee adapter, this is the zig-a-zig-ah! (zzh!).
 
 ## Ingredients
 
@@ -25,13 +25,13 @@ In order to follow this recipe you will need:
 - A suported Zigbee adapter (zzh!).
 - One or more suported Zigbee device/s.
 - A Raspberry Pi 4 or **RPi4**.
-- The `shapes-monitoring-service` package, which will configure ZigBee2MQTT, Mosquitto, InfluxDB, Telegraf and Grafana, available in [ARCO package repository](https://uclm-arco.github.io/debian/).
+- The `shapes-monitoring-service` debian package, which will configure ZigBee2MQTT, Mosquitto, InfluxDB, Telegraf and Grafana, available in [ARCO package repository](https://uclm-arco.github.io/debian/).
 - Grafana APT repository, the latest OSS release, available in [download link](https://grafana.com/docs/grafana/latest/installation/debian/).
 
 ## Configuring zzh!
 
 ### Drivers for CH341
-First step in getting the zzh! set up is to ensure that the host computer has the right drivers for the CH341 installed. Plug your device and ensure that zzh is recognised with the command `dmesg`. If recognized, you will see something like:
+First step in getting the zzh! set up is to ensure that the host computer has the right drivers for the CH341 installed. Plug your device and ensure that zzh is detected with the command `dmesg`. If detected, you will see something like:
 
 {{<shell>}}
 [ 2514.373835] usbcore: registered new interface driver ch341
@@ -41,19 +41,19 @@ First step in getting the zzh! set up is to ensure that the host computer has th
 {{</shell>}}
 
 ### Download cc2538-bsl
-To run cc2538-bsl.py you need to have python and pip installed on your system. If you don't have them installed running the following commands should work: `sudo apt update && sudo apt-get install python3-pip`  
+To run cc2538-bsl.py you need to have python3 and pip3 installed on your system. If you don't have them installed running the following commands should work: `sudo apt update && sudo apt-get install python3-pip`  
 
 To download and extract cc2538-bsl run `wget -O cc2538-bsl.zip https://codeload.github.com/JelmerT/cc2538-bsl/zip/master && unzip cc2538-bsl.zip` in your terminal and to install the required dependencies run `sudo pip3 install pyserial intelhex`.
 
 ## Configuring ZigBee2MQTT
-Download the Z-Stack coordinator firmware from https://github.com/Koenkk/Z-Stack-firmware. The firmware you'll need can be found under `coordinator/Z-Stack_3.x.0/bin/CC26X2R_coordinator_<date>.zip`. Download and extract this. 
+Download the Z-Stack coordinator firmware from https://github.com/Koenkk/Z-Stack-firmware. The firmware you need can be found under `coordinator/Z-Stack_3.x.0/bin/CC26X2R_coordinator_<date>.zip`. Download and extract this. 
 
 To burn this on your zzh! go to the directory `cc2538-bsl-master` and run:
 {{<shell>}}
 pi@raspberrypi:~$ ./cc2538-bsl.py -p /dev/<port> -evw <firmware_zigbee>.hex
 {{</shell>}}
 
-The port in my case is ttyUSB0, as shown in section *Drivers for CH341*, so don't forget to change to the port used on your machine.
+The port, in my case, is ttyUSB0, as shown in section *Drivers for CH341*, so do not forget to verify the port you are using on your machine and change it, accordingly, if needed.
 
 In case you want to erase the flash, run:
 {{<shell>}}
@@ -90,7 +90,7 @@ This service runs ZigBee2MQTT, Mosquitto, InfluxDB and Telegraf with docker. If 
 In addition, this package automates the provision of Grafana with data stored in InfluxDB. To create the correct files, `shapes-monitoring-service` must know the database connection parameters, so we must edit its configuration file with `sudo shapes-monitoring-service -e`. A configuration can be:
 {{<staticCode "configuration.conf">}}
 
-Then execute the next command to create the database in InfluxDB: 
+Then, execute the following command to create the database in InfluxDB: 
 {{<shell>}}
 pi@raspberrypi:~$ sudo shapes-monitoring -u
 Connected to http://localhost:8086 version 1.8.5
@@ -105,7 +105,7 @@ Database checked!
 Done updating!
 {{</shell>}}
 
-This will provision our local Grafana instance. If we check [http://localhost:3000](http://localhost:3000) we will see Grafana UI, and following on the side menu *Dashboards > Manage* we can see our provisioned dashboards:
+This will provision our local Grafana instance. If you check [http://localhost:3000](http://localhost:3000) you will see the Grafana UI, and following on the side menu *Dashboards > Manage* we can see our provisioned dashboards:
 {{<image src="grafana_ui.png">}}
 
 To see what files where provisioned and the generated dashboards information use:
@@ -125,7 +125,7 @@ INFO: 	ID: 4	Description: Kitchen sensors
 
 **NOTE:** If you want grafana to be started on boot, execute `sudo systemctl enable grafana-server.service`.
 
-Once the service `shapes-monitoring-service` is started and the database has been configured, you must run the shapes-monitoring command. This command executes an mqtt client that transforms the values true and false by 1 and 0 in the motion and door and window sensors to stores them in the database. The output of this command would look like this:
+Once the service `shapes-monitoring-service` is started and the database has been configured, you have to run the shapes-monitoring command. This command executes an mqtt client that transforms the values true and false into an 1 and 0 for the motion and door and window sensors before storing them in the database. The output of this command would look like this:
 {{<shell>}}
 pi@raspberrypi:~$ shapes-monitoring-client
 Connected to MQTT Broker localhost:1883 with return code 0!
