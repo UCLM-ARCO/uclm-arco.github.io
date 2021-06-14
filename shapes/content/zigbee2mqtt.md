@@ -11,7 +11,7 @@ tags:
 - telegraf
 - smart sensors
 
-image: "zigbee2mqtt/icon.png"
+image: "zigbee2mqtt/monitoring.png"
 description: "Explanation of the installation and execution of the monitoring system."
 ---
 
@@ -142,6 +142,8 @@ Sensor data published to zigbee2mqtt/smart-sensors/living-room topic!
 {{</shell>}}
 
 To view the data transmitted by the sensors go to the **Smart Sensors** dashboard and you will see something similar to the following image:
+
+
 - Bathroom sensors
 {{<image src="dashboard-baño.png" width="100%">}}
 
