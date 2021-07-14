@@ -19,13 +19,13 @@ A *Smart Mirror* can be overloaded with multiple services and utilities to serve
 
 The mandatory ingredients to follow this recipe are:
 
-* A PC with a browser installed that allows HTTP connections.
+* A PC with a browser installed.
 * A Raspberry Pi 4, or **RPi4**, either connected to the same network as the PC, or with a public ID address.
 * The package `smartmirror-console` installed on your RPi4, which is available in [ARCO package repository](https://uclm-arco.github.io/debian/). Be sure it has the version `0.20210510+ds.1` or higher.
 
 ## Start the environment
 
-To access the console, open the PC browser (different from Chrome as Google is not supporting HTTP, as it is the case for the moment) and write the RPi4 address, its IP address or a public one if it has any. It is required to specifiy the port to access to, which is 5000. This is done by preciding the port number with a colon.
+To access the console, open the PC browser and write the RPi4 address, its IP address or a public one if it has any. It is required to specifiy the port to access to, which is 5000. This is done by preciding the port number with a colon.
 
 For example, if the RPi4 has the address *`my-smartmirror.com`*, the console address will be *`http://my-smartmirror.com:5000`*.
 
