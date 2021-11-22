@@ -207,6 +207,19 @@ pi@raspberry:~/MagicMirror/$ npm run start
 
 ## Troubleshooting
 
+### Grafana is not installable
+
+Using the `apt` program, it can occur that Grafana package is not installable. This is because `apt` cannot find the **source package** within its sources lists. To solve this problem, execute the following commands:
+
+{{<shell>}}
+user@pc:~/$ sudo apt-get install -y apt-transport-https software-properties-common wget
+user@pc:~/$ wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+user@pc:~/$ echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+user@pc:~/$ sudo apt-get update
+{{</shell>}}
+
+Now you can install `miband-grafana` normally, as `apt` can find Grafana package now.
+
 ### Grafana service is not running after provisioning
 
 Sometimes, after we run `miband-grafana -u`, the Grafana service, `grafana-server`, stops running and its log does not offer any relevant information about what went wrong with the provision. Do not modify any of the generated files by `miband-grafana`, they are properly tested, so the problem is with Grafana instance. For the time being, reinstalling Grafana works. So execute:
