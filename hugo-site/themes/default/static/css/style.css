@@ -11,6 +11,10 @@ body {
     flex-direction: column;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    padding: 0.7em 0 0.3em;
+}
+
 .jumbotron {
     padding-bottom: 15px;
     padding-top: 15px;
@@ -303,31 +307,33 @@ pre.shell {
 
 .alert {
     background-color: inherit;
-    margin: 0px;
+    margin: 0;
     margin-bottom: 15px;
-    padding: 0px;
+    padding: 0 0 15px 0;
 }
 
 .alert hr.separator {
-    margin: 0px;
+    margin: 0;
 }
 
 .alert .alert-body {
     padding: 20px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .alert .alert-heading {
-    margin: 0px;
+    margin: 0;
     padding: .75rem 1.25rem;
+    font-weight: bold;
+    font-size: 1.4em;
 }
 
-.alert-danger .alert-heading {  background-color: #f8d7da; }
+.alert-danger .alert-heading  { background-color: #f8d7da; }
 .alert-warning .alert-heading { background-color: #fff3cd; }
 .alert-primary .alert-heading { background-color: #cce5ff; }
 .alert-success .alert-heading { background-color: #d4edda; }
 
-.alert-danger, .alert-danger hr {  border-color: #c4767e; }
+.alert-danger, .alert-danger hr   { border-color: #c4767e; }
 .alert-warning, .alert-warning hr { border-color: #beae7d; }
 .alert-primary, .alert-primary hr { border-color: #8ba4c0; }
 .alert-success, .alert-success hr { border-color: #5aa06b; }

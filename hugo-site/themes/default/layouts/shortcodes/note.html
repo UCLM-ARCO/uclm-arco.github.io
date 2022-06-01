@@ -1,10 +1,20 @@
-{{ $type := .Get 0 }}
+{{ if .IsNamedParams }}
+  {{ .Scratch.Set "type" (.Get "type") }}
+  {{ .Scratch.Set "title" (.Get "title") }}
+{{ else }}
+  {{ .Scratch.Set "type" (.Get 0) }}
+  {{ .Scratch.Set "title" (.Get 1) }}
+{{ end }}
+
+{{ $type := .Scratch.Get "type" }}
+{{ $title := .Scratch.Get "title" }}
+
 <div class="alert alert-{{ $type }}" role="alert">
   <h4 class="alert-heading">
     {{ if or (eq $type "warning") (eq $type "danger") }}
-      Warning!
+      {{ if eq $title "" }}Warning!{{ else }}{{ $title }}{{ end }}
     {{ else }}
-      Note:
+      {{ if eq $title "" }}Note:{{ else }}{{ $title }}{{ end }}
     {{ end }}
   </h4>
   <hr class="separator"><div class="alert-body">
