@@ -1,0 +1,10 @@
+{{ partial (print .Section "/header.html") . }}
+
+<h1>{{ .Title }}</h1>
+{{ .TableOfContents }}
+
+<div class="recipe-content">
+  {{ .Content }}
+</div>
+
+{{ partial "footer.html" . }}

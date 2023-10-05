@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>miband4 on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/miband4/</link>
+    <description>Recent content in miband4 on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Jun 2021 09:14:01 +0200</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/miband4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manage your Smart Mirror with smartmirror-console</title>
+      <link>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</guid>
+      <description>Overview A Smart Mirror can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, this have to be shaped into its final user needs. For that, the smartmirror-console comes in handy, as it provides a high-level interface to configure all Smart Mirror packages and services.
+Ingredients The mandatory ingredients to follow this recipe are:
+ A PC with a browser installed. A Raspberry Pi 4, or RPi4, either connected to the same network as the PC, or with a public ID address.</description>
+    </item>
+    
+    <item>
+      <title>Integrating Xiaomi Mi Band 4 devices with smart mirror</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</guid>
+      <description>Overview Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a smart mirror, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</description>
+    </item>
+    
+  </channel>
+</rss>

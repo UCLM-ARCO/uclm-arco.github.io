@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/recipes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/images/arco-logo-128.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/recipes" style="color: inherit">Arco Recipes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Amazfit 2 Dynamic Core: Integration with Python</h1>
+<nav id="TableOfContents"></nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p>Under the Amazit branch name, there are a lot of devices. Among them, Xiaomi
+sells &lsquo;smart&rsquo; shoes (or sneakers) that have a <strong>device</strong> inside which measures
+some variables and also <strong>counts the steps</strong>. The device could be purchased
+alone, and is known as <em>Amazfit 2 Smart Chip</em> or <em>Dynamic Core</em>. In this recipe,
+we will use a <strong>Python</strong> library to connect to that device, and acquire the
+provided information.</p>
+<h1 id="ingredients">Ingredients</h1>
+<p>Of course, to follow this recipe you will need <strong>the device</strong> itself, but also
+the following <strong>packages</strong> (assuming that you are on GNU/Linux):</p>
+<ul>
+<li><code>python3-bluez</code>: generic support for <strong>Bluetooth</strong></li>
+<li><code>python3-gattlib</code>: specific support for BLE and <strong>GATT</strong> protocols. More
+information on <a href="https://bitbucket.org/OscarAcena/pygattlib/src/default/#markdown-header-installation">bitbucket.org/OscarAcena/pygattlib</a></li>
+<li><code>amazfit2-dynamic-core</code>: specific <strong>library</strong> for this device</li>
+</ul>
+<p>The easiest way to install all these packages is using the
+<a href="http://pike.esi.uclm.es/">pike</a> Debian repository. To install it:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>wget -qO- http://pike.esi.uclm.es/add-pike-repo.sh | sudo sh
+sudo apt update</pre>
+</div>
+<p>Then, install with <code>apt</code> the needed packages:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>sudo apt install python3-bluez python3-gattlib amazfit2-dynamic-core</pre>
+</div>
+<h1 id="discovering-and-connecting">Discovering and Connecting</h1>
+<p>The <strong>first step</strong> you would do in order to check if your device is ready for
+connection (has enough battery, is awake, is near your Bluetooth transceiver,
+etc.) is a <strong>discovery</strong>.</p>
+<!-- raw HTML omitted -->
+<pre><code>  Warning!
+</code></pre>
+<!-- raw HTML omitted -->
+<p>So, first things first, <strong>import</strong> the Smart Chip library into your script.
+There is only one interesting class, called <code>Core2</code>, so:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>#!/usr/bin/python3
+
+from amazfit import Core2</code></pre>
+</div>
+<p>Now, you can use the method <code>find_all()</code> (which is a <code>@classmethod</code>) to perform
+the <strong>discovery</strong>. It will try to find all the BLE (Bluetooth Low Energy)
+devices near you, and then <strong>filter them</strong> by its vendor ID. Because this is an
+endless operation, you can specify the <strong>maximum time</strong> you want to wait for
+responses (by default is <strong>5 seconds</strong>), using the argument <code>timeout</code>.</p>
+<p><code>find_all()</code> will return a <strong>list</strong> with the found devices. A similar operation
+is <code>find()</code>, which only returns the <strong>first result</strong> in the list:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>chip = Core2.find(timeout=10)
+if chip is None:
+    print(&#34;ERROR: no device found!&#34;)</code></pre>
+</div>
+<p>Next step is <strong>connect</strong> to the device. This will create a communication
+&ldquo;channel&rdquo; between your computer and the chip, used to read sensor values,
+receive notifications, etc. For this purpose, call the method <code>connect()</code>, which
+does not have any argument:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>chip.connect()</code></pre>
+</div>
+<p>If it <strong>returns</strong> normally, the connection has been <strong>stablished</strong>. If something
+went wrong (maybe the device is asleep&hellip;), it will raise a <code>RuntimeError</code> with
+a message about the problem.</p>
+<h1 id="about-pairing">About pairing</h1>
+<p>After the connection has been stablished, you can run a <em>bonding</em> or <em>pairing</em>
+process. It will be used to <strong>exchange a cyphering</strong> key with the device, which
+is the way to validate client&rsquo;s identity. Also, it will <strong>reset the step counter</strong>
+to zero.</p>
+<p>Although in many devices this is a critical part (otherwise, the device will
+disconnect or ignore your requests), on the Smart Chip <strong>is not required</strong> to
+read sensor values or receive notifications. If you need it, just use the method
+<code>pair()</code>, which does not accept any parameter:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>chip.pair()</code></pre>
+</div>
+<p>During this stage, the chip will <strong>blink a red led</strong> to indicate that you must
+<strong>shake</strong> the device in that moment. If you don&rsquo;t do it, then the pairing will
+<strong>fail</strong>. Otherwise, it will be successful, and you can read the exchanged key in
+the property <code>key</code>. Store it for later usage:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>print(f&#34;Pairing key: {chip.key}&#34;)</code></pre>
+</div>
+<h1 id="reading-static-information">Reading Static Information</h1>
+<p>The Smart Chip holds some specific <strong>static information</strong> that barely changes,
+like the device <strong>address</strong>, its name, product id, vendor id, and so on. All
+this data could be read using the method <code>read_info()</code>. This method will contact
+with the device and <strong>retrieve</strong> all those fields. Then, you can access each one
+using its specific property. For a complete list of the fields, please see the
+<a href="/api/amazfit_2_dynamic_core/#span-class-api-func-read-info-span">API
+reference</a>. The
+following is an example of use:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>chip.read_info()
+print(
+    f&#34;Device Information:\n&#34;
+    f&#34;- name: {chip.name}\n&#34;
+    f&#34;- address: {chip.address}\n&#34;
+    f&#34;- serial number: {chip.serial_number}\n&#34;
+    f&#34;- hardware version: {chip.hardware_rev}\n&#34;
+    f&#34;- software version: {chip.software_rev}&#34;
+)</code></pre>
+</div>
+<h1 id="reading-step-count">Reading Step Count</h1>
+<p>There are some other values that could be read from the device, but are not
+considered static information because they change <strong>along the time</strong>: the step
+counter and the device orientation. Let&rsquo;s review first the steps.</p>
+<p>The Amazfit library exposes the <strong>step counter</strong> as a property, <code>steps</code>. Each
+time is accessed, the library will read it <strong>from the device</strong> (no caching is done).
+So, as an example:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>print(f&#34;- steps: {chip.steps}&#34;)</code></pre>
+</div>
+<p>Now, you may put the device inside your shoes and <strong>walk</strong>. Then, run the program
+again, which should return a different result.</p>
+<p>Of course, it is very cumbersome (and battery draining) to <strong>poll</strong> the value
+every few seconds. For this reason, you can use a push-notification system. The
+library will call a user-configured <strong>callback</strong> each time the counter changes.
+To setup this callback, use the method <code>on_steps()</code>, which accepts a single
+parameter: the callback function with the following signature:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>def on_steps_callback(steps)</code></pre>
+</div>
+<p>Of course, this push mechanism is <strong>asynchronous</strong>, which means that once the
+callback is set, the <code>on_steps()</code> method will return, allowing you to <strong>do other
+things</strong>. If you just want to wait for incoming events, you can create a waiting
+<em>event loop</em>, or just call the library&rsquo;s builtin with <code>wait_until_break()</code>.</p>
+<p>The following example will print <strong>every new update</strong> on the step counter:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>def on_steps_callback(steps):
+    print(f&#34;- steps changed, new value: {steps}&#34;)
+
+chip.on_steps(on_steps_callback)
+chip.wait_until_break()</code></pre>
+</div>
+<h1 id="reading-chip-orientation">Reading Chip Orientation</h1>
+<p>Another dynamic value that could be read from the device is the <strong>orientation</strong>,
+which are a pair of values representing the angle of (X, Y) axis (it is given as
+a tuple). Once again, you retrieve it using a <strong>property</strong> that will be read from
+the device each time is used:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>print(f&#34;- axis: {chip.orientation}&#34;)</code></pre>
+</div>
+<p>It will take <strong>a little</strong> to acquire this value, and could not be read very
+frecuently.</p>
+<!-- raw HTML omitted -->
+<pre><code>  Warning!
+</code></pre>
+<!-- raw HTML omitted -->
+<p>Again, you can also configure a <strong>callback</strong> to be called when this value has
+changed (using the <code>on_orientation()</code> method), but, you are warned, no new
+notifications will be received unless someone <strong>fires a read request</strong>, with the
+method <code>fire_orientation_read()</code>. See the following example:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>print(f&#34;- axis: {chip.orientation}&#34;)
+
+def on_orientation_callback(axis):
+    print(f&#34;- orientation changed, new value: {axis}&#34;)
+
+chip.on_orientation(on_orientation_callback)
+
+while True:
+    try:
+        chip.fire_orientation_read()
+        time.sleep(2)
+    except KeyboardInterrupt:
+        break</code></pre>
+</div>
+<h1 id="references">References</h1>
+<p>This is a list of useful resources:</p>
+<ul>
+<li><a href="/api/amazfit_2_dynamic_core/">Amazfit 2 Chip API Reference</a></li>
+</ul>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

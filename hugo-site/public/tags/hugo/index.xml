@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/hugo/</link>
+    <description>Recent content in hugo on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Feb 2019 14:25:28 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cómo crear documentación</title>
+      <link>https://arcogroup.bitbucket.io/recipes/creating_arco_docs/</link>
+      <pubDate>Mon, 18 Feb 2019 14:25:28 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/creating_arco_docs/</guid>
+      <description>Introducción La documentación del grupo Arco se genera mediante una herramienta de gestion de sitios estáticos, llamada Hugo, y se mantiene en una serie de repositorios. Para añadir o editar cualquier contenido, se ha de conocer esta estructura, y se deben utilizar las herramientas adecuadas.
+El objetivo de esta receta es proporcionar una visión global, y algunos mecanismos para llevar a cabo la tarea de documentar. Si necesitas más información, puedes visitar la página de documentación de Hugo.</description>
+    </item>
+    
+  </channel>
+</rss>

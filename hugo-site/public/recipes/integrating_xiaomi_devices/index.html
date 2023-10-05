@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/recipes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/images/arco-logo-128.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/recipes" style="color: inherit">Arco Recipes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Integrating Xiaomi Devices</h1>
+<nav id="TableOfContents"></nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p>Xiaomi (or Aqara or Mijia) has a family of products intended to be part of a Smart Home environment that everyone can install and use. They are beautiful and simple, but the associated <em>cloud app</em> sometimes does <strong>not</strong> fullfill our requirements (for instance, <strong>cloudless control</strong>).</p>
+<p>Thus, here we present a <strong>Python library</strong> that you could use to interact with those devices, <em>changing</em> its state and <em>receiving events</em> from their sensors. Let&rsquo;s review what you will need to follow up.</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/recipes/images/integrating_xiaomi_devices/mijia-kit-2.jpg' />
+  
+  <div class="polaroid-caption">
+    <p>Xiaomi/Mijia smart home kit</p>
+  </div>
+  
+</div>
+
+
+<h1 id="ingredients">Ingredients</h1>
+<p>For this recipe, you will need the following items:</p>
+<ul>
+<li>A <strong>Mijia Gateway</strong>, and the devices you want to control (PIR, push button, magnet sensor, &hellip;)</li>
+<li>A <strong>WiFi</strong> access point (you may also use your own Smartphone AP)</li>
+<li>An updated Debian/Ubuntu <strong>Linux</strong> box</li>
+<li><strong>Python 3</strong> installed and ready</li>
+<li><a href="http://pike.esi.uclm.es/">Pike</a>&rsquo;s repository for library package</li>
+</ul>
+<p>For this last requirement, and if you already have Pike&rsquo;s repository configured on your system, just install the library:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ sudo apt install mijia-smart-home</pre>
+</div>
+<h1 id="setting-up-the-environment">Setting up the environment</h1>
+<p>The library you just installed uses what is called the <a href="https://aqara.gitbooks.io/lumi-gateway-lan-communication-api/content/">Lan Communication API</a>, which is an open API that allows <strong>third-party</strong> applications to control Mijia devices. It should be enabled on the Gateway, as it&rsquo;s disabled by default.</p>
+<p>So, your first step should be to <strong>install</strong> the &ldquo;Mi Home&rdquo; application on your smartphone. Now, plug the Mijia Gateway and wait for a chinese message. It should now <strong>blink on yellow</strong>. If not, press the button for 5 seconds and release. It should <em>beep</em>, say the message and blink on yellow. This state is the <strong>&ldquo;binding&rdquo;</strong> state. Now, open the &ldquo;Mi Home&rdquo; app on your smartphone.</p>
+<p>If required, login or register. Then, press the <strong>upper-right plus</strong> button. It will show an scan procedure, and find the connected Mijia Gateway. Press it when found.</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/recipes/images/integrating_xiaomi_devices/01-plus-button.png' />
+  
+  <div class="polaroid-caption">
+    <p>Adding Gateway to Mi Home</p>
+  </div>
+  
+</div>
+
+
+<p>Now, it will show you a dialog to enter the <strong>WiFi credentials</strong>. The Mi Home app wil send this information to the Gateway, so it can also connect to your AP. Just select your SSID and provide the AP password. Note that this AP <strong>must have</strong> Internet conectivity for this step to be completed. But just for this step, once the Gateway is configured, you can let the AP isolated from the Internet.</p>
+<p>Press &ldquo;next&rdquo;, and the app will <strong>finish the setup</strong> procedure. You may also hear a message from the Gateway saying that the connection is ready.</p>
+<p>Next, select the Gateway in the app, and open its &ldquo;Settings&rdquo;, and press on &ldquo;About&rdquo;.</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/recipes/images/integrating_xiaomi_devices/02-settings-about.png' />
+  
+  <div class="polaroid-caption">
+    <p>Gateway &#39;settings&#39; &gt; &#39;about&#39; </p>
+  </div>
+  
+</div>
+
+
+<p>It will show you an screen with a <strong>link to the forum</strong>, and the &ldquo;Plug-in version&rdquo; at the <strong>bottom</strong>. Press that label (&ldquo;Plug-in version&rdquo;) until you see a message, and more options appear.</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/recipes/images/integrating_xiaomi_devices/03-hidden-settings.png' />
+  
+  <div class="polaroid-caption">
+    <p>Enabling the hidden settings</p>
+  </div>
+  
+</div>
+
+
+<p>There, you should see now the option &ldquo;Wireless communication protocol&rdquo;. Tap it. Here you can <strong>enable</strong> the protocol, and regenerate a <strong>new password</strong>. Do both of them, and <strong>store the password</strong>, as you will need it later. Press OK when finish.</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/recipes/images/integrating_xiaomi_devices/04-enable-proto.png' />
+  
+  <div class="polaroid-caption">
+    <p>Enabling the &#39;Wireles Communication Protocol&#39;</p>
+  </div>
+  
+</div>
+
+
+<p>Now, you can disconnect your WiFi from the internet (if you want), and close the &ldquo;Mi Home&rdquo; app. You are now <strong>ready</strong> to use the library.</p>
+<h1 id="connection-to-the-gateway">Connection to the Gateway</h1>
+<p>The <code>mijia-smart-home</code> library provides some objects that <strong>represents</strong> the real-life devices. You can call these object&rsquo;s methods to <strong>attach handlers</strong> that will be called when an event arrives, or call directly a method to <strong>change the state</strong> of some device.</p>
+<p>So, the first object you should create is the Gateway itself. Import the library and create a <code>LumiGateway()</code> instance. Then, call the method <code>start()</code>, which does the following:</p>
+<ul>
+<li>Starts a <strong>discovery</strong> stage, to find the Gateway.</li>
+<li>Setups a listener thread, to process <strong>incoming</strong> events from it.</li>
+</ul>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>from mijia import LumiGateway
+
+gw = LumiGateway()
+gw.start()</code></pre>
+</div>
+<!-- raw HTML omitted -->
+<pre><code>  Warning!
+</code></pre>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>The <code>LumiGateway</code>&rsquo;s constructor has <strong>some parameters</strong> but we will review them later. When the <code>start()</code> returns, you can inspect the list of <strong>linked devices</strong> to the Gateway (both online and offline).</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>for dev in gw.get_devices().values():
+    print(dev)</code></pre>
+</div>
+<p>Each device is of an <strong>specific class</strong>, having its specific methods, but all of them have an <code>sid</code>, which is the device identifier, and a <code>status</code>, which indicates if the device is <strong>online</strong> and the Gateway acknowledges it or not. The rest of the interface will be analyzed in following sections.</p>
+<p>So, the <strong>full code</strong> for this part would be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/integrating_xiaomi_devices/list-devices.py"
+	     title="Click to download this code!">list-devices.py</a>
+  </div>
+  <pre><code class="language-">#!/usr/bin/python3
+
+from mijia import LumiGateway
+
+
+class ListDevices:
+    def __init__(self):
+        # create the gateway
+        gw = LumiGateway()
+        gw.start()
+
+        for dev in gw.get_devices().values():
+            print(dev)
+
+
+if __name__ == &#34;__main__&#34;:
+    ListDevices()</code></pre>
+</div>
+<p>Running that script in a <strong>well configured</strong> environment, should yield something like this:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ ./list-devices.py
+INFO:root:using 192.168.8.157 for multicast membership
+WARNING:root:using not ciphered key (password not provided)
+&lt;Plug, sid: 158d0002699f12, status: unknown, enabled: False, inuse: False&gt;
+&lt;Magnet, sid: 158d0002520b26, status: unknown, open: None&gt;
+&lt;Switch, sid: 158d00027b8eff, status: unknown, pressed: False&gt;
+&lt;WeatherV1, sid: 158d0002c8f54e, status: unknown, temp: 10000, humi: 0, press: 0&gt;
+&lt;Unsupported Device, sid: d0cf5efffeccf1dc, status: unknown&gt;
+&lt;Motion, sid: 158d0002567d32, status: unknown, elapsed: None&gt;
+&lt;SensorCube, sid: 158d00029a8fa6, status: unknown&gt;</pre>
+</div>
+<h1 id="receiving-events">Receiving events</h1>
+<p>On the above listing you can see a number of defices, each one of an specific class. For instance, there are a <code>Switch</code> and a <code>Motion</code>, and both <strong>emit events</strong> when somenthing happens. You can configure event <strong>listeners</strong> to be run when one of such events arrives. There is also an <code>Unsupported Device</code>, which is a device that the Gateway sees but can not control (yet).</p>
+<p>So, let&rsquo;s <strong>subscribe</strong> to some event. To do that, each device has one method per event type, usually called <code>on_[event_name]()</code>. For example, the <code>Switch</code> object will emit <code>click</code> events when single pressed, <code>double_click</code> when double tapped, and so on. If you want to know the <strong>supported devices</strong> and their events, please see the <a href="/api/mijia_smart_home">Mijia Smart Home API</a>. For now, we are interested only in the <code>click</code> event, so we use the <code>on_click()</code> method to register our listener. A listener is just a <strong>function</strong> (or method) that will be called upon event arrival, so let&rsquo;s define it:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>def on_event(self, event, dev):
+    print(&#34;- event: {}, dev: {}&#34;.format(event, dev))</code></pre>
+</div>
+<p>As you can see, the method receives two arguments:</p>
+<ul>
+<li><code>event</code>: which is the name of the event (so you can reuse this method for multiple event types)</li>
+<li><code>dev</code>: which is the device object that produced this event</li>
+</ul>
+<p>These arguments are <strong>common</strong> to all event types. This event does not have any specific argument, but other events do (so please, review the <strong>correct signature</strong> for your event type!).</p>
+<p>Now, it&rsquo;s time to register the listener. So the first step is to get the <code>Switch</code> object. The Gateway&rsquo;s <code>get_devices()</code> method has an optional argument, <code>filter</code>, used to return only devices of an <strong>specific</strong> type. In my case there is only one <code>Switch</code>, so the code would be:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>devices = gw.get_devices(filter=&#34;switch&#34;)
+switch = list(devices.values())[0]</code></pre>
+</div>
+<p>And now, to <strong>subscribe the listener</strong> method to the <code>click</code> event, you need to use the <code>on_click()</code> method:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>switch.on_click(self.on_click_event)</code></pre>
+</div>
+<p>One last step: as all of the previous methods are <strong>non-blocking</strong>, if you run the script, it will finish before any event may arrive. To solve this, we could <strong>wait</strong> somehow (for instance using a sleep, or with an event loop). Also, we could use the Gateway&rsquo;s <strong>waiting function</strong>, <code>wait_until_break()</code>, which does that very thing: sleeps until a <em>Ctrl+C</em> is received, and then returns. So, the whole script would be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/integrating_xiaomi_devices/switch-listener.py"
+	     title="Click to download this code!">switch-listener.py</a>
+  </div>
+  <pre><code class="language-">#!/usr/bin/python3
+
+from mijia import LumiGateway
+
+
+class SwitchListener:
+    def __init__(self):
+        # create the gateway
+        gw = LumiGateway()
+        gw.start()
+
+        # get the switch device
+        devices = gw.get_devices(filter=&#34;switch&#34;)
+        switch = list(devices.values())[0]
+        switch.on_click(self.on_click_event)
+
+        # wait for incomming events
+        gw.wait_until_break()
+
+    def on_click_event(self, event, dev):
+        print(&#34;- event: {}, dev: {}&#34;.format(event, dev))
+
+
+if __name__ == &#34;__main__&#34;:
+    SwitchListener()</code></pre>
+</div>
+<p>If you run it, and then <strong>press the button</strong> once, you may obtain a result like this:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ ./switch-listener.py
+INFO:root:using 192.168.8.157 for multicast membership
+WARNING:root:using not ciphered key (password not provided)
+- event: click, dev: &lt;Switch, sid: 158d00027b8eff, status: online, pressed: False&gt;</pre>
+</div>
+<h1 id="sending-actions">Sending actions</h1>
+<p>Some devices allow you to <strong>change its</strong> state. For instance, you are able to switch on and off the <code>Plug</code>, or change the light status of the <code>LumiGateway</code>.</p>
+<p>In order to <strong>gain permission</strong> to modify the state of any device, you must provide the <strong>password</strong> that the Gateway is using (remember the number that you got when activating the Lan Protocol?). So, you need to change the <code>LumiGateway</code> instantiation like this:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>gw = LumiGateway(passwd=&#34;thePassword&#34;)</code></pre>
+</div>
+<p>Of course, <strong>you don&rsquo;t want</strong> to store the password inside the script, so it may be a variable obtained elsewhere (in our example, we will use <code>sys.argv[1]</code>, but it is not a good place either).</p>
+<p>Now, to change some parameter of your device, just <strong>call</strong> the appropiate method with the required arguments. For instance, to <strong>change the light</strong> of the Gateway, we use <code>set_light_color()</code>, which accepts the values for Red, Green and Blue components (in relative range of 0-255), and also the Intensity (from 0 to 100). If you want a bright red color, your call will be:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>gw.set_light_color(255, 0, 0, 100)</code></pre>
+</div>
+<p>Or, if you want to <strong>smoothly range</strong> from green to red:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>for i in range(0, 255):
+    gw.set_light_color(i, 255-i, 0, 100)
+    time.sleep(0.05)</code></pre>
+</div>
+<p>To review the <strong>devices</strong> that you can control, and what <strong>methods</strong> they have, please go to the <a href="/api/mijia_smart_home">Mijia Smart Home API</a> section.</p>
+<!-- raw HTML omitted -->
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

@@ -1,0 +1,1058 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/shapes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/shapes/images/shapes-logo.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/shapes" style="color: inherit">Shapes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Creación de Módulos para Phyxio</h1>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introducción">Introducción</a></li>
+    <li><a href="#requisitos">Requisitos</a></li>
+    <li><a href="#arquitectura-de-los-módulos">Arquitectura de los módulos</a></li>
+    <li><a href="#creación-de-un-módulo">Creación de un módulo</a>
+      <ul>
+        <li><a href="#instalación">Instalación</a></li>
+      </ul>
+    </li>
+    <li><a href="#esquema-general-de-funcionamiento">Esquema general de funcionamiento</a></li>
+    <li><a href="#flujo-de-ejecución-del-binario">Flujo de ejecución del binario</a>
+      <ul>
+        <li><a href="#argumentos-del-ejercicio">Argumentos del ejercicio</a></li>
+        <li><a href="#trackernbspde-manos"><em>Tracker</em> de manos</a></li>
+        <li><a href="#modificación-del-bucle-de-eventos">Modificación del bucle de eventos</a></li>
+      </ul>
+    </li>
+    <li><a href="#interfaz-de-usuario-eci">Interfaz de usuario (ECI)</a></li>
+    <li><a href="#compilando-y-probando">Compilando y probando</a></li>
+    <li><a href="#soporte-para-calibración">Soporte para calibración</a>
+      <ul>
+        <li><a href="#componente-de-vídeo-para-calibración">Componente de vídeo para calibración</a></li>
+        <li><a href="#interfaz-eci-de-calibración">Interfaz ECI de calibración</a></li>
+        <li><a href="#uso-de-datos-de-calibración">Uso de datos de calibración</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<div class="recipe-content">
+  <h2 id="introducción">Introducción</h2>
+<p>Phyxio es una aplicación distribuida formada por dos componentes clave: el servicio web y los módulos del
+<em>runner</em>. Estos últimos se encargan de utilizar el <strong>hardware de la máquina</strong> (GPU, TPU, cámaras, etc) para ofrecer
+servicios de reconocimiento de un ejercicio en concreto.</p>
+<p>Este manual explica el proceso de <strong>desarrollo</strong> de un módulo de Phyxio.</p>
+<h2 id="requisitos">Requisitos</h2>
+<p>Para poder seguir con este manual, se asume que los siguientes <strong>paquetes Debian</strong> están correctamente instalados:</p>
+<ul>
+<li>
+<p><code>phyxio-module-runner</code>: se encarga de <strong>lanzar/parar</strong> los módulos que Phyxio necesite para la realización
+de cierto ejercicio. Será necesario para probar el módulo que estemos desarrollando.</p>
+</li>
+<li>
+<p><code>phyxio-module-creator</code>: herramienta de gestión para la <strong>creación de módulos</strong> Phyxio. Si estás leyendo esta
+documentación, es posible que ya tengas ese paquete instalado.</p>
+</li>
+</ul>
+<h2 id="arquitectura-de-los-módulos">Arquitectura de los módulos</h2>
+<p>Un módulo es básicamente una aplicación que corre dentro del hardware del Totem, y que se <strong>comunica con Phyxio</strong>
+por medio de una o varias interfaces Ice. Puede ser un programa binario escrito en C++, C#, un script en Python, o
+cualquier otro lenguaje para el que existan bindings de <a href="https://zeroc.com/products/ice">ZeroC Ice</a>. La herramienta
+<code>phyxio-module-creator</code> y, por ende, este manual asumen que el módulo será escrito en <strong>Python</strong>.</p>
+<p>Un módulo se compone básicamente de las siguientes partes:</p>
+<ul>
+<li>
+<p><strong>Binario</strong>: este es el programa principal que se ejecutará cuando Phyxio lo indique. Se encarga de procesar
+el vídeo, de la lectura del hardware, las comunicaciones con el <em>runner</em> y con phyx.io, etc.</p>
+</li>
+<li>
+<p><strong>Interfaz ECI</strong>: forma la interfaz web que se mostrará <em>durante</em> la realización del ejercicio. La ECI (
+<em>Embedded Controller Interface</em>) está formada por un fichero HTML, que cargará una guía de estilos en CSS
+y una aplicación en Javascript.</p>
+</li>
+</ul>
+<p>
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/creating_phyxio_modules/basic-architecture.png' width='100%' height=''/>
+
+
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>La herramienta <code>phyxio-module-creator</code> genera la jerarquía y el <strong>código mínimo necesario</strong> para un módulo básico.
+A partir de ahí, el desarrollador podrá aportar la funcionalidad que necesite.</p>
+<h2 id="creación-de-un-módulo">Creación de un módulo</h2>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    
+      Nota
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Este manual explicará el proceso de creación de un módulo que analizará la <strong>posición de las manos</strong>
+del usuario y detectará cuando coloca una de ellas en un punto determinado de la pantalla. Se empleará OpenCV y/o
+mediapipe, aunque los detalles técnicos del proceso de detección no se discutirán aquí.
+  </div>
+</div>
+<p>Para <strong>crear un módulo</strong> de Phyxio, llamado <code>move-to-point</code>, ejecuta el siguiente comando en una terminal:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>phyxio-mod-admin -c move-to-point</pre>
+</div>
+<p>El anterior comando <strong>generará un directorio</strong>, del mismo nombre que el módulo, con la estructura básica necesaria.
+Algo similar a lo siguiente:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ tree
+move-to-point
+├── Makefile
+├── module.json
+└── src
+    ├── bin
+    │   └── move-to-point.py
+    ├── eci
+    │   ├── calibration.html
+    │   ├── css
+    │   │   └── style.css
+    │   ├── index.html
+    │   └── js
+    │       └── app.js
+    │       └── calibration.js
+    ├── module.conf
+    └── move-to-point.ice</pre>
+</div>
+<p>La <strong>función</strong> de cada uno de esos archivos se detalla a continuación:</p>
+<ul>
+<li>
+<p>El fichero <code>Makefile</code> contiene las reglas necesarias para algunas tareas rutinarias. En particular, permite
+<strong>compilar las interfaces</strong> Slice a Javascript, para ser usadas dentro de la aplicación JS. También tiene algunas
+otras reglas específicas para la creación de paquetes Debian y de artefactos de mender, pero no se usarán en este
+manual. <strong>No es necesario editar este fichero</strong>.</p>
+</li>
+<li>
+<p><code>module.json</code> sirve para especificar la <strong>configuración básica</strong> del módulo. Se indica el nombre del módulo,
+<code>name</code>; su nombre en clave, o <code>codename</code>, cuyo valor se empleará al registrar el módulo dentro de Phyxio; la ruta
+relativa (<code>module_dir</code>) donde se encuentran el binario y la interfaz ECI; el nombre del binario (<code>exec</code>); y
+una serie de parámetros de configuración para la ECI (en especial, el <code>proxy</code> que deberá usar para comunicarse
+con el binario). Los valores por defecto suelen ser adecuados, y <strong>no es necesario cambiar nada</strong> (al menos de
+momento).</p>
+</li>
+<li>
+<p><code>src/bin/move-to-point.py</code> es el binario del módulo, que será <strong>lo que se ejecute</strong> cuando Phyxio lo indique.
+Este fichero contiene el código mínimo necesario para un módulo Python, pero es posible reescribirlo por
+completo, usando cualquier otro lenguaje compatible. Más adelante comentaremos su contenido paso a paso.</p>
+</li>
+<li>
+<p>El directorio <code>src/eci</code> contiene la <strong>interfaz web</strong> que se empotrará dentro de phyx.io cuando se esté realizando
+un ejercicio que use este módulo, o cuando se realize el proceso de calibración. También hablaremos después
+de su contenido más detalladamente.</p>
+</li>
+<li>
+<p><code>src/module.conf</code> especifica la configuración de ZeroC Ice que usará el binario para crear su <em>Communicator</em> y
+el adaptador de objectos. Los valores especificados por defecto son suficiente, por lo que <strong>tampoco es necesario
+cambiar nada</strong> (salvo requisitos muy concretos).</p>
+</li>
+<li>
+<p><code>src/move-to-point.ice</code> define la interfaz ZeroC Ice que se empleará en la comunicación entre el binario y la
+interfaz ECI (aplicación web). Por defecto, la interfaz hereda de <code>ECIClient</code>, pero está pensada para <strong>ser extendida
+con nuevos métodos</strong>, según sea necesario. Comentaremos su uso más adelante.</p>
+</li>
+</ul>
+<h3 id="instalación">Instalación</h3>
+<p>Para que el módulo recién creado pueda usarse, debe <strong>instalarse en el sistema</strong>. La aplicación
+<code>phyxio-mod-admin</code> también se encarga de ello. Basta con indicarle el nombre del módulo (desde el directorio
+en dónde esté), con la opción <code>-i</code>. Esto <strong>copiará el módulo completo</strong> a su ruta correspondiente. A veces, sin
+embargo, y sobre todo durante el desarrollo, es conveniente tener el módulo instalado (para probarlo) y a su
+vez, poder seguir realizando modificaciones en él. A tal efecto existe la opción <code>-s</code>, que le indica a
+<code>phyxio-mod-admin</code> que debe realizar un <strong>enlace simbólico</strong> (en vez de una copia completa).</p>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">
+    
+      ¡Atención!
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Si usas la opción <code>-s</code>, asegúrate de que <strong>otros usuarios pueden acceder</strong> a la carpeta donde tienes el módulo (y
+a todos sus ancestros). De otra forma, el servicio no podrá cargar el módulo correctamente. Además, dado que
+se crea un enlace simbólico a la ruta local, recuerda que no debes cambiarle el nombre a esa carpeta, o moverla de
+sitio, pues eso <strong>romperá el enlace simbólico</strong>, y dejará de funcionar.
+  </div>
+</div>
+<p>Por tanto, si queremos instalar nuestro módulo, y seguir trabajando con él, ejecutaremos el siguiente
+comando:</p>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-warning" role="alert">
+  <h4 class="alert-heading">
+    
+      ¡Importante!
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Es necesario ejecutarlo con <code>sudo</code>, pues la aplicación modificará rutas del sistema.
+  </div>
+</div>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>sudo phyxio-mod-admin -i -s move-to-point</pre>
+</div>
+<p>Si deseas desinstalar, usa la opción <code>-u</code> de la misma forma:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>sudo phyxio-mod-admin -u move-to-point</pre>
+</div>
+<p>Al instalar un nuevo módulo (o desinstalarlo), es necesario <strong>reiniciar el servicio</strong> que lo usa (para que
+actualice sus registros). Así pues, ejecuta el siguiente comando después de la (des)instalación:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>sudo systemctl restart phyxio-module-runner.service</pre>
+</div>
+<p>Y, para comprobar que la instalación (y la carga) se han realizado satisfactoriamente, puedes ver el log
+del servicio con el siguiente comando:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>journalctl -f -u phyxio-module-runner.service
+
+...
+INFO:ModuleRunner: Loading module /usr/share/phyxio-module-runner/modules/move-to-point/module.json
+INFO:ModuleRunner: - module named &#39;move-to-point&#39; correctly loaded!
+...</pre>
+</div>
+<h2 id="esquema-general-de-funcionamiento">Esquema general de funcionamiento</h2>
+<p>Cuando el usuario visita la web de <a href="https://phyx.io?fmode=totem">phyx.io</a>, en la <strong>vista de totem</strong>, entra en una
+rutina y pulsa sobre <em>Comenzar</em>, se abre una página de <strong>carga</strong> para el primer ejercicio de la rutina. Esta
+página corre una aplicación en JavaScript que contacta con un servicio llamado <code>module-runner</code> (usando ZeroC Ice),
+y le indica que ejecute el binario del módulo específico para ese ejercicio.</p>
+<p>El <code>module-runner</code>, al iniciar, registra todos los módulos instalados (leyendo el fichero <code>module.json</code> de cada
+uno). Cuando la página de carga le indica el nombre del módulo (usando su <code>codename</code>), este lo busca
+en su registro, obtiene la ruta al binario, y <strong>lo ejecuta</strong>. Además, lanza un servidor web con la interfaz ECI
+del módulo, y <strong>notifica</strong> a la página de carga que está disponible.</p>
+<p>La página de carga (también llamada cliente), al recibir la notificación del <em>runner</em>, <strong>carga la web ECI</strong> del
+módulo y se queda esperando más eventos desde el <em>runner</em>. A partir de este momento, el control lo toma el módulo
+del ejercicio, tanto la aplicación que corre en la ECI, como el binario que ha ejecutado el <em>runner</em>.</p>
+<h2 id="flujo-de-ejecución-del-binario">Flujo de ejecución del binario</h2>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    
+      Nota
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Si bien es cierto que llamamos <em>binario</em> a la aplicación principal del módulo, no tiene porqué ser un
+binario como tal (algo compilado). De hecho, <strong>la mayoría de las veces</strong>, hablamos de un script en Python. No
+obstante, seguiremos usando esta notación en aras de la simplicidad.
+  </div>
+</div>
+<p>El binario del módulo que se ha generado (el fichero <code>src/bin/move-to-point.py</code>) consta de una aplicación Ice
+(<code>Ice.Application</code>), con su <em>communicator</em> correspondiente, y un adaptador de objetos:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>class MoveToPoint(Ice.Application):
+    def run(self, args):
+        if not self._check_args(args):
+            return -1
+
+        # create communicator and adapter
+        ic = self.communicator()
+        adapter = ic.createObjectAdapter(&#34;MoveToPoint.Adapter&#34;)
+        adapter.activate()</code></pre>
+</div>
+<p>Además, <strong>se crea un proxy</strong> a un objeto que reside en el <em>runner</em> y que sirve para notificarle cambios en el
+estado del módulo:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        # get proxy to runner service
+        runner = Phyxio.ModuleHandlerPrx.checkedCast(
+            ic.stringToProxy(self.args.runner_prx))</code></pre>
+</div>
+<p>En concreto, se usará el método <code>ready()</code> para indicar al <em>runner</em> que el módulo ha arrancado
+correctamente y está activo, y <code>finish()</code> para notificar la finalización del ejercicio, y mandar un reporte
+de resultados.</p>
+<p>Por otro lado, también se crea <strong>un sirviente</strong> que será registrado en el adaptador de objetos, y estará a
+disposición de la ECI. La interfaz de ese sirviente es <code>Phyxio.ECIObserver</code>, y tiene como objetivo permitir la
+comunicación desde la ECI con el módulo. En particular, la interfaz enviará al módulo el proxy de otro
+<strong>observador</strong>, que se empleará en la comunicación entre el módulo y la ECI. De esta forma, se establece
+un canal de comunicación bidireccional entre ambas partes. La interfaz de ese observador está definida en el
+fichero slice que se ha generado (en este caso, <code>move-to-point.ice</code>) y se puede modificar según sea necesario.</p>
+<p>En la librería de componentes, hay una implementación genérica del <code>ECIObserver</code>, llamada <code>PhyxioECIObserverI</code>,
+que es la que se usa en el código generado por <code>phyxio-mod-admin</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        # add observer servant, to receive client proxy
+        servant = PhyxioECIObserverI(self.args, runner)
+        prx = adapter.add(servant, Ice.stringToIdentity(&#34;MoveToPoint&#34;))
+        log.info(f&#34; Module proxy: {prx}&#34;)</code></pre>
+</div>
+<p>Por último, la aplicación <strong>notifica su estado</strong> y ejecuta el <strong>bucle de eventos</strong> del <em>communicator</em>. De
+ser necesario, es posible reemplazar este por otro bucle de eventos (lo veremos más tarde). El código
+relacionado es el siguiente:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        # notify runner that we are ready, and wait events
+        runner.readyAsync()
+        self.callbackOnInterrupt()
+        ic.waitForShutdown()
+        ic.destroy()</code></pre>
+</div>
+<p>Todo el código discutido hasta ahora ha sido generado por la herramienta <code>phyxio-mod-admin</code>, y <strong>no es necesario
+realizar modificaciones</strong> en él (salvo que se indique lo contrario). También existen algunos puntos, marcados
+con sendos comentarios, donde es probable que necesites realizar cambios. Según progresemos en el ejemplo,
+los iremos viendo.</p>
+<h3 id="argumentos-del-ejercicio">Argumentos del ejercicio</h3>
+<p>La clase principal del binario que estamos analizando contiene un método llamado <code>_check_args()</code>, que se encarga
+de parsear los argumentos de la línea de órdenes. Estos argumentos (que los aporta el <em>runner</em>) se obtienen
+de dos sitios diferentes: 1) la <strong>configuración interna</strong> del runner (parámetros comunes a todos los módulos)
+y 2) las opciones de <strong>configuración del ejercicio</strong> (determinada por el <em>trainer</em> al crearlo).</p>
+<p>Utilizando la función <code>get_global_parser()</code> de la librería <em>tools</em>, se crea un parser (en concreto, un
+<a href="https://docs.python.org/3/library/argparse.html#argumentparser-objects">ArgumentParser</a>) que ya tiene
+configuradas las opciones comunes. En el método <code>_check_args()</code> puedes añadir cualquier opción particular que
+tu módulo necesite. A modo de ejemplo, vamos a hacer que <code>move-to-point</code> acepte un argumento
+opcional para indicar si limitamos el punto dónde el usuario debe mover la mano a una parte del espacio: derecha,
+izquierda, arriba o abajo. Para ello, añadimos un argumento al parser, <code>--limit-area</code>, de la siguiente forma:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>    def _check_args(self, args):
+        parser = get_global_parser()
+
+        parser.add_argument(&#34;--limit-area&#34;,
+            choices=[&#34;left&#34;, &#34;right&#34;, &#34;top&#34;, &#34;bottom&#34;],
+            help=&#34;limit area to specified section&#34;)</code></pre>
+</div>
+<p>A partir de ese momento, la aplicación podrá acceder al valor de ese parámetro opcional desde
+<code>args.limit_area</code>.</p>
+<h3 id="trackernbspde-manos"><em>Tracker</em> de manos</h3>
+<p>El módulo que genera <code>phyxio-mod-admin</code> por defecto está orientado al <strong>análisis de vídeo</strong> mediante
+técnicas de visión por computador. Esto implica que está pensado para ser usado con un componente de vídeo
+que procese los <em>frames</em> de entrada, realice las operaciones pertinentes, y escriba los <em>frames</em> resultantes a
+un sumidero de vídeo. Y esa es precisamente la funcionalidad que aporta la clase <code>VideoComponent</code> de la librería
+de componentes.</p>
+<p><code>VideoComponent</code> se encarga de <strong>inicializar los dispositivos de vídeo</strong>, tanto de entrada como de salida. Además,
+implementa un <strong>bucle de eventos</strong> específico, que realiza las siguientes acciones:</p>
+<ul>
+<li><strong>Captura un frame</strong> del dispositivo de vídeo de entrada.</li>
+<li>Lo <strong>invierte</strong> horizontalmente (para obtener una imagen especular).</li>
+<li>Llama al método <code>on_frame()</code>, pasando el frame como argumento.</li>
+<li><strong>Escribe</strong> en el dispositivo de vídeo de salida el frame retornado por <code>on_frame()</code>.</li>
+</ul>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    
+      Nota
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    <code>VideoComponent</code> también implementa <strong>otros métodos</strong> de soporte para notificar cambios a la
+ECI, detener el bucle de eventos, etc. Los iremos viendo según sea necesario.
+  </div>
+</div>
+<p>Para usar el <code>VideoComponent</code>, es necesario definir un nuevo componente que herede de él. Por ejemplo,
+para el módulo <code>move-to-point</code>, definiremos la clase <code>HandPositionDetector</code>, en cuyo constructor crearemos los
+objetos necesarios para realizar el tracking de las manos (usando
+<a href="https://google.github.io/mediapipe/solutions/hands.html">MediaPipe Hands</a>):</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>import mediapipe as mp
+mp_draw = mp.solutions.drawing_utils
+mp_draw_styles = mp.solutions.drawing_styles
+mp_hands = mp.solutions.hands
+
+from libs.components import VideoComponent
+
+class HandPositionDetector(VideoComponent):
+    def __init__(self, args, servant):
+        super().__init__(args, observer=servant)
+        self._target_pos = TargetPositionIterator(args)
+
+        self._hands = mp_hands.Hands(
+            max_num_hands=1,
+            model_complexity=0,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5)</code></pre>
+</div>
+<p>Como parámetros del constructor, tenemos los argumentos que procesó el parser de la línea de órdenes (<code>args</code>),
+y el sirviente que creamos en la aplicación principal (la instancia de <code>PhyxioObserver</code>, <code>servant</code>). El
+constructor de la clase <code>VideoComponent</code> acepta un parámetro opcional más llamado <code>has_video_out</code> que indica si
+deseamos proporcionar feedback de vídeo al usuario o no. Por defecto es <code>True</code>, pero si le pasamos <code>False</code>, <strong>no
+se creará</strong> el dispositivo de vídeo de salida (lo cual podría ser útil para módulos que procesan el vídeo pero
+no necesitan mostrarlo al usuario).</p>
+<p>El método más importante que <strong>debemos sobreescribir</strong> de la clase <code>VideoComponent</code> es <code>on_frame</code>. Acepta
+un único parámetro, un frame de vídeo, y debe devolver el mismo frame (quizá modificado), o uno similar, con
+las <strong>mismas características</strong> (tamaño, bpp, etc.).</p>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-warning" role="alert">
+  <h4 class="alert-heading">
+    
+      ¡Importante!
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Este método lo invocará el bucle de eventos <strong>con cada frame</strong> del dispositivo de entrada de vídeo que se capture,
+por lo que el procesamiento debe ser el mínimo imprescindible, para evitar latencia o <em>frame dropping</em>.
+  </div>
+</div>
+<p>En el ejemplo que estamos desarrollando, este método realizará lo siguiente:</p>
+<ul>
+<li>Dibujar un círculo en la <strong>posición objetivo</strong></li>
+<li>Hacer el <em>tracking</em> de una mano y obtener su <strong>centro geométrico</strong></li>
+<li>Comparar ambos (posición objetivo y centro geométrico), y si hay superposición, <strong>actualizar el objetivo</strong> a
+una nueva posición, e <strong>incrementar</strong> (y notificar a la ECI) el número de iteraciones realizadas.</li>
+</ul>
+<p>Su implementación sería la siguiente:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>    def on_frame(self, image):
+        # draw target position
+        self._target_pos.draw(image)
+
+        # detect hands, and exit if no hand detected
+        # NOTE: to improve performance, mark the image as not writeable (pass by reference)
+        image.flags.writeable = False
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        results = self._hands.process(image)
+        image.flags.writeable = True
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+        if results.multi_hand_landmarks is None:
+            return image
+
+        # get hand center, and draw &#34;a ball&#34;
+        hand_center = self._get_hand_center(image, results.multi_hand_landmarks[0])
+        cv2.circle(image, hand_center, 32, ORANGE, cv2.FILLED, cv2.LINE_AA)
+
+        # check if center is inside target
+        if self._target_pos.match(hand_center):
+            self._target_pos.next()
+            self.iter_add()
+
+        # draw the hand annotations on the image (only for debug)
+        if self._is_debug:
+            self._draw_hand_skel(image, results)
+
+        return image</code></pre>
+</div>
+<p>También he definido en la misma clase un par de métodos auxiliares, que se emplean en <code>on_frame</code>. Uno es el
+encargado de obtener el centro geométrico de la mano:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>    def _get_hand_center(self, image, landmarks):
+        # https://google.github.io/mediapipe/solutions/hands.html#hand-landmark-model
+        x = (landmarks.landmark[5].x &#43; landmarks.landmark[17].x &#43; landmarks.landmark[0].x) / 3
+        y = (landmarks.landmark[5].y &#43; landmarks.landmark[17].y &#43; landmarks.landmark[0].y) / 3
+
+        # landmark positions are normalized, return global positions
+        return int(x * image.shape[1]), int(y * image.shape[0])</code></pre>
+</div>
+<p>Y el otro se encarga de dibujar los landmarks que el módulo <code>Hands</code> ha detectado (es decir, el &ldquo;esqueleto&rdquo;
+de la mano). Esto se usa sólo a modo de depuración, y no se llamará a menos que, al definir el ejercicio en
+phyx.io se incluya el flag <code>--debug-info</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>    def _draw_hand_skel(self, image, results):
+        for hand_landmarks in results.multi_hand_landmarks:
+            mp_draw.draw_landmarks(image, hand_landmarks,
+                mp_hands.HAND_CONNECTIONS,
+                mp_draw_styles.get_default_hand_landmarks_style(),
+                mp_draw_styles.get_default_hand_connections_style())</code></pre>
+</div>
+<p>En la clase anterior, también he instanciado un objeto encargado de generar al azar la <strong>posición objetivo</strong> a la
+que el usuario tendrá que mover la mano (el <code>TargetPositionIterator</code>). Por razones de completitud, he aquí
+su código:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>import random
+import cv2
+
+ORANGE  = (0, 95, 253)    # BGR
+GREEN   = (50, 194, 134)  # BGR
+GRAY    = (100, 100, 100) # BGR
+WHITE   = (255, 255, 255) # BGR
+
+class TargetPositionIterator:
+    def __init__(self, args, radius=64):
+        self._w = args.video_width
+        self._h = args.video_height
+        self._r = radius
+        self._limit = args.limit_area
+
+        self._current = (0, 0)
+        self.next()
+
+    def draw(self, image):
+        x, y = self._current
+        cv2.circle(image, (x&#43;1, y&#43;1), self._r, GRAY, 3, cv2.LINE_AA)
+        cv2.circle(image, (x, y), self._r, WHITE, 3, cv2.LINE_AA)
+
+    def match(self, position):
+        dx = abs(position[0] - self._current[0])
+        dy = abs(position[1] - self._current[1])
+        return dx &lt; self._r and dy &lt; self._r
+
+    def next(self):
+        # (0,0) is at top-left corner
+        x1, y1 = self._r, self._r
+        x2, y2 = self._w - self._r, self._h - self._r
+
+        if self._limit == &#34;top&#34;:
+            y2 = self._h / 2
+        elif self._limit == &#34;bottom&#34;:
+            y1 = self._h / 2
+        elif self._limit == &#34;left&#34;:
+            x2 = self._w / 2
+        elif self._limit == &#34;right&#34;:
+            x1 = self._w / 2
+
+        x = random.randrange(x1, x2)
+        y = random.randrange(y1, y2)
+        self._current = (x, y)</code></pre>
+</div>
+<h3 id="modificación-del-bucle-de-eventos">Modificación del bucle de eventos</h3>
+<p>Hasta ahora, nuestro módulo utilizaba el bucle de eventos de Ice para mantenerse activo. Sin embargo, al
+implementar un <code>VideoComponent</code>, es necesario <strong>reemplazarlo</strong> por el que trae el componente de vídeo.
+La modificación se debe hacer en el método <code>run</code> de la aplicación principal (en el caso que nos ocupa, la
+clase <code>MoveToPoint</code> que hereda de <code>Ice.Application</code>). Los pasos para realizar esta modificación son:</p>
+<ol>
+<li>Crear una <strong>instancia</strong> del <code>VideoComponent</code>:</li>
+</ol>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        self._detector = HandPositionDetector(self.args, servant)</code></pre>
+</div>
+<ol start="2">
+<li>Reemplazar el <strong>bucle de eventos</strong> de Ice por el suyo:</li>
+</ol>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        # ic.waitForShutdown()
+        self._detector.run()</code></pre>
+</div>
+<ol start="3">
+<li><strong>Detener el detector</strong> cuando se produce una interrupción. Básicamente es llamar al método <code>stop</code> cuando el
+<em>runner</em> solicita que nuestro módulo debe detenerse (por ejemplo, porque el usuario ha pulsado sobre el botón
+<em>stop</em>). Este código debe ir en el método <code>interruptCallback</code>:</li>
+</ol>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>    def interruptCallback(self, sig):
+        self._detector.stop()</code></pre>
+</div>
+<h2 id="interfaz-de-usuario-eci">Interfaz de usuario (ECI)</h2>
+<p>La interfaz empotrada de control (<em>Embedded Control Interface</em>) es la parte que phyx.io cargará en el <strong>cliente
+web</strong>, y supone la parte visual y de interacción con el usuario del módulo. Consta inicialmente de un fichero
+en HTML (<code>src/eci/index.html</code>) con la plantilla que necesitamos para funcionar, y una aplicación JavaScript
+(<code>src/eci/js/app.js</code>) que implementa la interfaz Ice que hayamos definido, y la inicialización mínima necesaria.</p>
+<p>La interfaz que genera la herramienta <code>phyxio-mod-admin</code> está compuesta de:</p>
+<ul>
+<li><strong>Feedback de vídeo</strong> empotrado a pantalla completa. Este es el vídeo de salida que genera el módulo.</li>
+<li><strong>Contador</strong> de tiempo e iteraciones (realizadas y objetivo).</li>
+<li>Vídeo del <strong>modelo</strong> de prueba del ejercicio, para indicar al usuario qué debe hacer.</li>
+<li>Panel de <strong>información</strong> sobre la tarea a realizar.</li>
+</ul>
+<p>Si existe algún componente que no queramos mostrar, simplemente <strong>borramos</strong> el código HTML correspondiente. Por
+ejemplo, en <code>move-to-point</code> no tendremos vídeo de muestra del ejercicio, por ello, eliminamos las siguientes líneas
+de código del fichero HTML (no es necesario cambiar nada de la aplicación en JavaScript).</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.html
+    
+  </div>
+  
+  <pre><code class='language-html'>&lt;!-- -----------------------------------------------------------
+     video from trainer model sample
+--&gt;
+&lt;div id=&#34;model-video&#34;&gt;
+  &lt;video id=&#34;mv-elem&#34; poster=&#34;/shared/images/model-poster.png&#34; autoplay loop muted&gt;&lt;/video&gt;
+&lt;/div&gt;</code></pre>
+</div>
+<h2 id="compilando-y-probando">Compilando y probando</h2>
+<p>Antes de poder probar el módulo recién creado, y siempre que realicemos modificaciones en la interfaz
+Ice, será necesario compilar el slice. Para ello, ejecuta el siguiente comando:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>make compile-slices</pre>
+</div>
+<p>Esto generará un fichero .js con los skeletons/stubs para nuestro cliente JavaScript. Y dado que en un paso
+anterior ya hicimos la instalación del módulo, y reiniciamos el <code>module-runner</code>, no es necesario hacer nada
+más para poder usarlo. Simplemente, registra el módulo en phyx.io (usando su <code>condename</code>), y crea un
+ejercicio que lo use, añádelo a una rutina y asignala a un usuario de prueba. Accede a la página del totem, y
+¡prueba tu módulo!</p>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    
+      Nota
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Recuerda que necesitas permiso para <strong>acceder a la cámara</strong>. Por ello, si usas una ventana de incógnito o es la
+primera vez que lo usas, el navegador te mostrará un mensaje solicitando acceso. Por otro lado, también necsitarás
+registrar los <strong>certificados TLS</strong> que usa el <em>runner</em>, por lo que también habrás tenido que ejecutsar
+<code>phyxio-install</code> en tu usuario local.
+  </div>
+</div>
+<h2 id="soporte-para-calibración">Soporte para calibración</h2>
+<p>Algunos ejercicios están ligados a ciertos <strong>parámetros</strong> que son específicos <strong>de cada usuario</strong> que los realiza.
+Esta información se ha de obtener previamente, en un proceso de calibración. En esta etapa, el ejercicio se ejecuta
+de forma similar a como lo haría normalmente, pero la lógica se centra en obtener del usuario los parámetros
+pertinentes, notificándoselos a Phyxio para que los proporcione en próximas ejecuciones.</p>
+<p>No todos los módulos requieren de calibración, y de hecho está <strong>desactivada por defecto</strong>. Para habilitarla, o
+bien al crear un ejercicio, o bien desde la vista de edición, se ha de marcar la casilla <em>Calibración</em>:</p>
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/creating_phyxio_modules/enable-calibration.png' width='100%' height=''/>
+
+
+<p>Una vez marcada, nuestro módulo podrá recibir dos argumentos relacionados:</p>
+<ul>
+<li><code>--calibrate</code>, que le indicará que debe arrancar el módulo en modo calibración.</li>
+<li><code>--calibration-data</code>, que proporciona los datos de calibración almacenados para este usuario. <strong>No es necesario</strong>
+parsear esta opción, pues ya lo hace el componente de vídeo. En su lugar, tendremos una propiedad llamada
+<code>_calibration</code> con los parámetros correctos.</li>
+</ul>
+
+  
+  
+
+
+
+
+
+<div class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">
+    
+      Nota
+    
+  </h4>
+  <hr class="separator"><div class="alert-body">
+    Los datos de calibración son específicos por cada para <strong>ejercicio / usuario</strong>, y por tanto, están vinculados
+a las opciones de configuración del ejercicio. No son únicos para cada módulo.
+  </div>
+</div>
+<h3 id="componente-de-vídeo-para-calibración">Componente de vídeo para calibración</h3>
+<p>Cuando el binario recibe el argumento <code>--calibrate</code>, debe ejecutarse en modo calibración, con el objetivo de
+obtener del usuario los parámetros requeridos. Queda bajo el <strong>criterio del desarrollador</strong> implementar los
+mecanismos necesarios para conseguirlo. Por ejemplo, podría simplemente <strong>mostrar una interfaz web</strong> (sin vídeo),
+con varios controles que el usuario debe ajustar (con el ratón, o el <em>touchscreen</em>). Una vez ajustados, al
+pulsar sobre un botón &ldquo;guardar&rdquo; se notifica a Phyxio que la calibración ha concluido.</p>
+<p>Otra forma de calibrar un ejercicio concreto (especialmente los que usan vídeo), es indicar al usuario que
+haga las mismas acciones que haría normalmente, pero en vez de esperar a que llegue a un umbral específico, lo
+que hace el módulo es <strong>registrar los rangos máximos</strong> a los que el usuario es capaz de llegar.</p>
+<p>Utilizaremos una aproximación mixta para añadir soporte de calibración al ejercicio del ejemplo <code>move-to-point</code>.
+El parámetro que vamos a calibrar es el <strong>radio del círculo</strong> que se pinta como objetivo. Y para ello, diseñamos
+un nuevo componente de vídeo, <code>HandPositionCalibrator</code>, que heredará de <code>HandPositionDetector</code> para reutilizar
+algunos métodos ya implementados.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>class HandPositionCalibrator(HandPositionDetector):
+    def __init__(self, args, servant):
+        super().__init__(args, servant)
+        self._target_pos = TargetPositionCalibrator(args)
+
+        # set initial values of calibration
+        self._update_calibration()
+
+    def on_frame(self, image):
+        # draw target position
+        self._target_pos.draw(image)
+
+        # detect hands, and exit if no hand detected
+        # NOTE: to improve performance, mark the image as not writeable (pass by reference)
+        image.flags.writeable = False
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        results = self._hands.process(image)
+        image.flags.writeable = True
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+        if results.multi_hand_landmarks is None:
+            return image
+
+        # get hand center, and draw &#34;a ball&#34;
+        hand_center = self._get_hand_center(image, results.multi_hand_landmarks[0])
+        cv2.circle(image, hand_center, 32, ORANGE, cv2.FILLED, cv2.LINE_AA)
+
+        # update target radius
+        if self._target_pos.update(hand_center) and self._event_observer is not None:
+            self._update_calibration()
+
+        # draw the hand annotations on the image (only for debug)
+        if self._is_debug:
+            self._draw_hand_skel(image, results)
+
+        return image
+
+    def _update_calibration(self):
+        self._event_observer.record_calibration(target_radius=self._target_pos.radius)
+        self._event_observer.sync_calibration()</code></pre>
+</div>
+<p>La implementación es <strong>similar al tracker</strong> que antes definimos. Los métodos interesantes aquí son los
+relacionados con la calibración, que están en el objeto <code>_event_observer</code>.</p>
+<ul>
+<li>
+<p><code>record_calibration()</code>, encargado de notificar al sirviente los nuevos parámetros que deseamos almacenar
+como datos de calibración. Se utiliza un diseño tipo clave-valor, usando los nombres de los parámetros de la
+función como clave. En el ejemplo, los datos almacenados serán: <code>{&quot;target_radius&quot;: x}</code>, siendo <code>x</code> el valor
+actual del radio (que lo tenemos en <code>self._target_pos.radius</code>). No es necesario indicar todos los parámetros
+al mismo tiempo; podríamos, por ejemplo, llamar de nuevo a la función con otro dato (algo como
+<code>record_calibration(date=now)</code>), y ambos registros se conservarían, tanto <code>target_radius</code> como <code>date</code>.</p>
+</li>
+<li>
+<p><code>sync_calibration()</code>, que envía a la ECI <strong>todos los datos</strong> de calibración almacenados hasta ahora. Queda por
+cuenta del desarrollador cómo se representarán en la interfaz.</p>
+</li>
+</ul>
+<p>Por cuestiones de completitud, he aquí de nuevo la implementación de la clase que gestiona el <em>target position</em>,
+llamada <code>TargetPositionCalibrator</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>class TargetPositionCalibrator:
+    def __init__(self, args, min_radius=64):
+        self._w = args.video_width
+        self._h = args.video_height
+        self._min_r = min_radius
+
+        self.radius = min_radius
+
+        self._handler_r = 16
+        self._pos = (self._w // 2 - self.radius, self._h // 2 - self.radius)
+
+    def draw(self, image):
+        # outter target circle
+        x, y = self._pos
+        cv2.circle(image, (x &#43; 1, y &#43; 1), self.radius, GRAY, 3, cv2.LINE_AA)
+        cv2.circle(image, self._pos, self.radius, WHITE, 3, cv2.LINE_AA)
+
+        # handler point
+        cv2.circle(image, (x &#43; self.radius, y), self._handler_r, GREEN, cv2.FILLED, cv2.LINE_AA)
+
+    def update(self, position):
+        &#34;&#34;&#34;Returns whether registered calibration values have changed or not.&#34;&#34;&#34;
+        dx = abs(position[0] - (self._pos[0] &#43; self.radius))
+        dy = abs(position[1] - self._pos[1])
+        if dx &lt; self._handler_r * 2 and dy &lt; self._handler_r * 2:
+            self.radius = max(self._min_r, abs(position[0] - self._pos[0]))
+            return True
+        return False</code></pre>
+</div>
+<p>Por último, un <strong>paso importante</strong> es instanciar el nuevo componente de vídeo. Como la aplicación principal es
+la misma, y queremos seguir dando soporte al ejercicio que teníamos hecho, debemos crear un componente u otro en
+función del argumento <code>--calibrate</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>class MoveToPoint(Ice.Application):
+    def run(self, args):
+
+        ...
+
+        # create our hand detector
+        if self.args.calibrate:
+            self._detector = HandPositionCalibrator(self.args, servant)
+        else:
+            self._detector = HandPositionDetector(self.args, servant)</code></pre>
+</div>
+<p>Otra posible implementación habría supuesto utilizar el mismo componente de vídeo, pero implementar
+internamente la lógica que hiciera una función u otra, en función del valor de <code>args.calibrate</code>.</p>
+<h3 id="interfaz-eci-de-calibración">Interfaz ECI de calibración</h3>
+<p>Cuando se ejecuta el módulo en modo de calibración, el fichero HTML que se cargará no será <code>index.html</code>, como
+hasta ahora, sino <code>calibration.html</code>, que reside en la misma carpeta. Esta interfaz no contie los contadores
+de tiempo o de iteraciones, sino que muestra al usuario los <strong>valores actuales</strong> de calibración. También hay
+un botón que permite determinar cuando la calibración ha concluido, e indicar al <em>backend</em> que deben almacenarse
+los valores recogidos.</p>
+<p>Al igual que la interfaz principal, la de calibración también cuenta con <em>feedback</em> de vídeo, y un <em>placeholder</em>
+para los <strong>vídeos modelo</strong> del ejercicio, por si fueran necesarios para la calibración. En el ejemplo que estamos
+desarrollando no hay modelos, por lo que elimino esta sección de la plantilla:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.html
+    
+  </div>
+  
+  <pre><code class='language-html'>    &lt;!-- -----------------------------------------------------------
+         video from trainer model sample
+    --&gt;
+    &lt;div id=&#34;model-video&#34;&gt;
+      &lt;video id=&#34;mv-elem&#34; poster=&#34;/shared/images/model-poster.png&#34; autoplay loop muted&gt;&lt;/video&gt;
+    &lt;/div&gt;</code></pre>
+</div>
+<p>Por otro lado, sí deseo mostrar el <strong>valor actual del parámetro</strong> que quiero almacenar en la calibración (a saber,
+el radio del círculo objetivo). Para ello existe la sección <code>stats</code>. Esta formada por una lista de pares,
+<em>nombre-valor</em>, donde el primer elemento (<code>&lt;span&gt;</code>) es el nombre, y el segundo (<code>&lt;h1&gt;</code>) es el valor. Para el
+ejemplo, la modificamos de la siguiente forma:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.html
+    
+  </div>
+  
+  <pre><code class='language-html'>      &lt;!-- -----------------------------------------------------------
+           current calibration parameters (modify to suit your needs)
+      --&gt;
+      &lt;div class=&#34;stats&#34;&gt;
+        &lt;span&gt;Target Radius:&lt;/span&gt;
+        &lt;h1 id=&#34;target-radius&#34;&gt;0&lt;/h1&gt;
+      &lt;/div&gt;</code></pre>
+</div>
+<p>Ahora será necesario actualizar ese elemento, <code>#target-radius</code>, con el valor que nos proporciona el módulo al
+sincronizar. Para ello, necesitamos modificar el fichero JavaScript que contiene el código relacionado con la
+interfaz ECI, que es diferente del principal (<code>app.js</code>). En este caso, se llama <code>calibration.js</code>, y el método
+que nos interesa es <code>syncCalibration</code>, que recibe un objeto con todos los datos de calibración almacenados para
+este ejercicio y este usuario, según lo hayamos definido en el módulo con <code>record_calibration</code>. Así, en nuestro
+ejemplo, tendremos disponible directamente el valor usando la clave <code>target_radius</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.js
+    
+  </div>
+  
+  <pre><code class='language-js'>   // this is an RMI invocation (common iface)
+   syncCalibration(data) {
+      data = JSON.parse(data);
+      $(&#39;#target-radius&#39;).text(data.target_radius);
+   }</code></pre>
+</div>
+<p>¡Y listo! Aunque hay más cosas que podemos modificar, para este ejemplo, tenemos todo lo necesario para iniciar
+el proceso de calibración de nuestro módulo.</p>
+<h3 id="uso-de-datos-de-calibración">Uso de datos de calibración</h3>
+<p>Una vez que el ejercicio está <strong>correctamente calibrado</strong>, es necesario realizar una última modificación en el
+componente principal (no el de calibración) para que use los datos convenientemente. La calibración está
+disponible en el atributo <code>_calibration</code> de la clase <code>VideoComponent</code> y sus derivadas. Es un diccionario con las
+claves y valores que hayamos registrado.</p>
+<p>Para el ejemplo que nos atañe, he modificado la creación de la instancia <code>TargetPositionIterator</code> para pasarle
+el radio que se indica en la calibración. Dado que la clase se reutiliza, y que en modo calibración no hay
+<code>_calibration</code>, el código es un poco más complejo, pero podría haber sido simplemente
+<code>TargetPositionIterator(args, self._calibration[&quot;target_radius&quot;])</code>:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.python
+    
+  </div>
+  
+  <pre><code class='language-python'>        kwargs = {}
+        if self._calibration is not None:
+            kwargs[&#34;radius&#34;] = self._calibration[&#34;target_radius&#34;]
+            self._target_pos = TargetPositionIterator(args, **kwargs)</code></pre>
+</div>
+<p>Con ese cambio, ya deberías poder cambiar el tamaño del círculo objetivo en el módulo <code>move-to-point</code>.</p>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

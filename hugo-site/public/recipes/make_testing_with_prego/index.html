@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/recipes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/images/arco-logo-128.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/recipes" style="color: inherit">Arco Recipes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Make testing with Prego</h1>
+<nav id="TableOfContents"></nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p><strong>Prego</strong> is a library consisting on a set of clases and hamcrest matchers usefull to specify shell command interactions through files, environment variables, network ports.</p>
+<p>The main concept in prego is the <code>Task()</code>. A task is a set of assertions with three different checkers:</p>
+<ol>
+<li><strong>task.assert_that</strong>, for single shot checking</li>
+<li><strong>task.wait_that</strong>, for polling recurrent checking</li>
+<li><strong>task.command</strong>, to run arbitrary shell command</li>
+</ol>
+<p>A task also counts with two assertions asociated, <code>runnning()</code> and <code>terminated()</code>, which check if the task is working or has finished respectively.</p>
+<p>Prego also counts with <code>context</code>, an object whose attribute may be aytomatically interpolated in command and filename paths. Some of the attributes are set as default values for <code>command()</code> parameters.</p>
+<h1 id="set-up-the-environment">Set up the environment</h1>
+<p>In this recipe the following elements are needed:</p>
+<ul>
+<li>The <code>python3-prego</code> package, available at <a href="http://pike.esi.uclm.es/">Pike</a>&rsquo;s repository</li>
+<li>The <code>python3-nose</code>, <code>python3-hamcrest</code> packages</li>
+<li>A Debian/Ubuntu Linux distribution</li>
+<li>Basic knowledge of python and shell comands</li>
+</ul>
+<p>If you don&rsquo;t count with <strong>Pike</strong> in the repository list of your machine you <strong>must add it</strong>.</p>
+<p>Following, you must install the packages previously mentioned with the next command.</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ sudo apt install python3-prego python3-nose python3-hamcrest</pre>
+</div>
+<h1 id="a-simple-example">A simple example</h1>
+<p>In order to make a simple example we are going to use a tool named <code>ncat</code> that will permit us to emulate a system with a server and a client. To perform the testing with prego we must define tasks, in this case can be differentiated two different tasks, the server and the client. The purpose of our emulate system will be that the client will send the command <code>echo testing</code> to the server, what means that the server must show in the stdout the message <em>&ldquo;testing&rdquo;</em>. Once the funcionality of the system is clearly is time to make the test.</p>
+<p>First of all, the context object can be used to set default values. In this case, a variable <strong>port</strong> can be defined, representing the port where the server will be listening. To access the value of the variable you have to use the <code>$</code> character.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>prego.context.port = 2000</code></pre>
+</div>
+<p>The next step is create the server task. As you can see in the snippet of code, first the task is initialized, and in this case we say to prego to launch the task in background (<code>detach=true</code>), if we don&rsquo;t do it, the server will block the execution and the task of the client will never be executed. Once the task is defined, a command is assigned to it. The variable <code>cmd</code> will be usefull to check the stdout of the server.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>server = prego.Task(desc=&#39;ncat server&#39;, detach=True)
+cmd = server.command(&#39;ncat -l -p $port&#39;)</code></pre>
+</div>
+<p>The task of the client will be very similar, the main differences are that the client won&rsquo;t be detached, and obviously the command that will be assigned to the task will be different.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>client = prego.Task(desc=&#39;ncat client&#39;)
+client.wait_that(server, prego.running())
+client.command(&#39;ncat -c &#34;echo testing&#34; localhost $port&#39;)</code></pre>
+</div>
+<p>The task of the client make a polling checking with <code>wait_that</code>, thanks to this the task of the client won&rsquo;t be executed until the server is running.</p>
+<p>Finally, is time to check if the server has received the message from the client. Thanks to <strong>hamcrest</strong> and with the variable <code>cmd</code> previously declared, we can compare the stdout of the server with an arbitrary <code>string</code>.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>server.assert_that(cmd.stdout.content, hamcrest.contains_string(&#39;testing&#39;))</code></pre>
+</div>
+<h1 id="executing-a-test">Executing a test</h1>
+<p>The code of the test should look similar to this.</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/make_testing_with_prego/test.py"
+	     title="Click to download this code!">test.py</a>
+  </div>
+  <pre><code class="language-">import hamcrest
+import prego
+
+class TestNcat(prego.TestCase):
+	def test_server(self):
+
+		prego.context.port = 2000
+		
+		server = prego.Task(desc=&#39;ncat server&#39;, detach=True)
+		cmd = server.command(&#39;ncat -l -p $port&#39;)
+		server.assert_that(cmd.stdout.content, hamcrest.contains_string(&#39;testing&#39;))
+
+		client = prego.Task(desc=&#39;ncat client&#39;)
+		client.wait_that(server, prego.running())
+		client.command(&#39;ncat -c &#34;echo testing&#34; localhost $port&#39;)		</code></pre>
+</div>
+<p>Execute the test is as simple as type the following in the shell.</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ nosetests3 test.py</pre>
+</div>
+<p>If all is correct and the test pass, your shell must show the message <strong>OK</strong>.</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>.
+----------------------------------------------------------------------
+Ran 1 test in 0.228s
+
+OK</pre>
+</div>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+
