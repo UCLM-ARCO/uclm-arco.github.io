@@ -368,4 +368,4 @@ Por otro lado, si la clase hereda de otra, y quieres evitar que se incluya el *d
 
 Por último, resaltar que la documentación generará un **índice** al principio con todas las **clases** documentadas, con enlaces a sus respectivas subsecciones.
 
-[probando la compilación automática]
+.
