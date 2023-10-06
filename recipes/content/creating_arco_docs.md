@@ -367,3 +367,5 @@ Como puedes observar, la herramienta ha incluido **sólo** aquellas clases o mé
 Por otro lado, si la clase hereda de otra, y quieres evitar que se incluya el *docstring* de un método en concreto, puedes **sobreescribirlo** e incluir una cadena vacía (algo similar a lo que ocurre en el ejemplo con el método `__init__`).
 
 Por último, resaltar que la documentación generará un **índice** al principio con todas las **clases** documentadas, con enlaces a sus respectivas subsecciones.
+
+[probando la compilación automática]
