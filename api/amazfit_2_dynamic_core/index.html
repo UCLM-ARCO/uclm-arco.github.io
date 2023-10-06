@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/api/css/style.css">
+
+<div class="box">
+    <a href="/">
+      <img src="/api/images/api-logo.png"
+           style="padding: 0 25px; width: 110px" />
+    </a>
+    <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+      <a href="/api" style="color: inherit">API References</a>
+    </h1>
+  </div>
+
+  <hr style="border: 1px solid #333333">
+
+
+  <h1 id="amazfit-2-chip-api-reference">Amazfit 2 Chip API Reference</h1>
+<h2 id="class-index">class index:</h2>
+<ul>
+<li><!-- raw HTML omitted -->Core2<!-- raw HTML omitted --></li>
+</ul>
+<!-- raw HTML omitted -->
+<h1 id="span-classapi-moduleamazfitspan-api-documentation"><!-- raw HTML omitted -->amazfit<!-- raw HTML omitted --> API Documentation</h1>
+<h2 id="anchor-class-Core2">Class <!-- raw HTML omitted -->Core2<!-- raw HTML omitted --></h2>
+<p>This class provides access to the <strong>Huami Smart Chip</strong> (version 2),
+which could be found on Amazfit or Xiaomi sneakers. Use this class to
+discover a new device, connect and pair to it, retrieve device
+information, orientation, steps, etc.</p>
+<p>For some of the properties, it also supports a push mechanism which
+allows to receive <strong>notifications</strong> when the property changes.</p>
+<h3 id="span-classapi-propbatteryspan"><!-- raw HTML omitted --><code>battery</code><!-- raw HTML omitted --></h3>
+<p>[<em>read-only property</em>] Holds the current <strong>battery level</strong>, in
+percentage, of the device. It will retrieve it (synchronously) when used
+(no caching).</p>
+<p><strong>NOTE</strong>: due to a <strong>bug</strong> in the device firmware, this characteristic
+<strong>may not</strong> return any payload. In that case, <code>None</code> will be returned (an
+error will also be logged).</p>
+<h3 id="span-classapi-propcurrent_timespan"><!-- raw HTML omitted --><code>current_time</code><!-- raw HTML omitted --></h3>
+<p>[<em>read-only property</em>] It returns the current <strong>date and time</strong>
+configuration of the device, in <strong>string</strong> format. It will retrieve it
+(synchronously) when used (no caching).</p>
+<h3 id="span-classapi-proporientationspan"><!-- raw HTML omitted --><code>orientation</code><!-- raw HTML omitted --></h3>
+<p>[<em>read-only property</em>] Returns the <strong>IMU orientation</strong> readings of the
+device. It is a <strong>tuple</strong> with two fields, one for each axis.</p>
+<p><em>FIXME: semantic of these fields is to be determined!</em></p>
+<h3 id="span-classapi-propstepsspan"><!-- raw HTML omitted --><code>steps</code><!-- raw HTML omitted --></h3>
+<p>[<em>read-only property</em>] Provides the current <strong>step count</strong> of the device. It
+will retrieve it (synchronously) when used (no caching).</p>
+<h3 id="span-classapi-func__init__span"><!-- raw HTML omitted --><code>__init__</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> __init__(self, address, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, key<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Smart Chip (a.k.a <strong>Dyanmic Core 2</strong>) constructor. This is the basic
+object you need to instantiate. It could be created <strong>directly</strong>
+(providing the device address) or performing a <strong>discovery</strong> with the
+<code>.find()</code> method (explained later).</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>address</code>, the <strong>Bluetooth</strong> MAC address of the device to connect. It
+should be in the form <em>aa:bb:cc:dd:ee:ff</em> (case insensitive).</li>
+<li><code>name</code>, <em>[optional]</em> the name of the device. It also could be obtained
+later from the device itself.</li>
+<li><code>key</code>: <em>[optional]</em> the encription <strong>key</strong> (AES/ECB) used to pair with
+the device. If not provided, it will be <strong>generated</strong> randomly.</li>
+</ul>
+<h3 id="span-classapi-funcconnectspan"><!-- raw HTML omitted --><code>connect</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Try to connect to the device, using the provided address. Returns when
+then connection is <strong>established</strong>. If the device is not present (before
+the <em>timeout</em> expires), it will raise an exception. This method <strong>must</strong>
+be called <strong>before</strong> any other operation.</p>
+<h3 id="span-classapi-funcfindspan"><!-- raw HTML omitted --><code>find</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return the
+<strong>first</strong> found.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>timeout</code>: (default: 5), maximum <strong>elapsed time</strong> to wait for devices to
+answer discovery.</li>
+</ul>
+<h3 id="span-classapi-funcfind_allspan"><!-- raw HTML omitted --><code>find_all</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_all</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return <strong>all</strong> the
+devices found.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>timeout</code>: (default: 5), maximum <strong>elapsed time</strong> to wait for devices to
+answer discovery.</li>
+</ul>
+<h3 id="span-classapi-funcfire_orientation_readspan"><!-- raw HTML omitted --><code>fire_orientation_read</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fire_orientation_read</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Forces a <strong>new read</strong> on the orientation characteristic. You should call
+<code>on_orientation()</code> before, in order to setup a notification <strong>callback</strong>.</p>
+<h3 id="span-classapi-funcon_orientationspan"><!-- raw HTML omitted --><code>on_orientation</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_orientation</span>(self, cb)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>orientation handle</strong>, and configures a
+callback to be called when a <strong>new</strong> notification arrives.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>cb</code>: the <strong>function or method</strong> to be called. The signature should be
+as follows: <code>def callback([self,] axis)</code></li>
+</ul>
+<p><strong>NOTE:</strong> the orientation characteristic <strong>will not</strong> issue new
+notifications when the value has changed. To receive them, you should
+force a new event with the <code>fire_orientation_read()</code> method.</p>
+<h3 id="span-classapi-funcon_stepsspan"><!-- raw HTML omitted --><code>on_steps</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_steps</span>(self, cb)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>step readings</strong>, and configures a callback to
+be called when a <strong>new</strong> notification arrives.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>cb</code>: the <strong>function or method</strong> to be called. The signature should be as
+follows: <code>def callback([self,] steps)</code></li>
+</ul>
+<h3 id="span-classapi-funcpairspan"><!-- raw HTML omitted --><code>pair</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Bond with this device. It will exchange the private key used to cipher
+messages with the chip (although it is <strong>not</strong> necessary for every
+operation). This procedure also will <strong>reset the step counter</strong> in the
+device.</p>
+<h3 id="span-classapi-funcread_infospan"><!-- raw HTML omitted --><code>read_info</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_info</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Retrieve all the <strong>static information</strong> provided by the device. After
+calling this method, you can access the following attributes:</p>
+<ul>
+<li><code>name</code>: the device <strong>name</strong> (if provided on constructor, it will be
+updated)</li>
+<li><code>appearance</code>: a <strong>number</strong> which identifies the type of this device
+(like &lsquo;<em>Generic Phone</em>&rsquo;, &lsquo;<em>Sports Watch</em>&rsquo; or &lsquo;<em>Heart rate Sensor</em>&rsquo;).</li>
+<li><code>privacy_flag</code>: indicates if this device has <strong>privacy</strong> enabled or
+disabled.</li>
+<li><code>min_connection_int</code>: Preferred connection parameter, <strong>BLE</strong> minimum
+connection interval.</li>
+<li><code>max_connection_int</code>: Preferred connection parameter, <strong>BLE</strong> maximum
+connection interval.</li>
+<li><code>slave_latency</code>: Preferred connection parameter, <strong>BLE</strong> Slave
+latency.</li>
+<li><code>timeout_mult</code>: Preferred connection parameter, <strong>BLE</strong> connection
+supervision timeout multiplier.</li>
+<li><code>service_changed_start</code>: Start of affected <strong>GATT</strong> attribute handle
+range.</li>
+<li><code>service_changed_end</code>: End of affected <strong>GATT</strong> attribute handle
+range.</li>
+<li><code>system_id</code>: This is a 64-bit structure which consists of a 40-bit
+<strong>manufacturer-defined</strong> identifier concatenated with a 24 bit unique
+Organizationally <strong>Unique</strong> Identifier.</li>
+<li><code>serial_number</code>: The serial number of this device.</li>
+<li><code>hardware_rev</code>: Hardware revision number.</li>
+<li><code>software_rev</code>: Software revision number.</li>
+<li><code>vendor_src</code>: Bit which identifies the source of the Vendor ID:
+Bluetooth SIG or USB implementer.</li>
+<li><code>vendor_id</code>: Identifies the product <strong>vendor</strong> from the namespace in
+the Vendor ID Source</li>
+<li><code>product_id</code>: Manufacturer managed identifier for this product</li>
+<li><code>product_ver</code>: Manufacturer managed <strong>version</strong> for this product</li>
+</ul>
+<h3 id="span-classapi-funcwait_until_breakspan"><!-- raw HTML omitted --><code>wait_until_break</code><!-- raw HTML omitted --></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wait_until_break</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Blocks</strong> the calling thread execution until it receives a
+<code>KeyboardInterrupt</code> (Ctrl+C) Use it (or use instead an <strong>event loop</strong>) to keep
+the application <strong>running</strong> while you wait for incoming events.</p>
+
+
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

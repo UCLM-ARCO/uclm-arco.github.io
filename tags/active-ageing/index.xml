@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>active ageing on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/active-ageing/</link>
+    <description>Recent content in active ageing on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Dec 2020 10:53:24 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/active-ageing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fall Detection System</title>
+      <link>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</guid>
+      <description>Overview In ARCO Research Group, in the context of the European project H2020 Shapes, we are working in a set of solutions to encourage the active ageing and improve the health condition at an advanced age. One of these solutions is a fall detection system that will allow us to automatically detect when a person has fell, in order to provide a prompt response. The system here presented could be a very powerful and useful tool, taking into account that falls are the leading cause of accidental death.</description>
+    </item>
+    
+    <item>
+      <title>Integrating MbientLab MetaMotionR sensors with Python</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</link>
+      <pubDate>Mon, 30 Mar 2020 23:20:43 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</guid>
+      <description>Overview MbientLab is a manufacture of different wearable devices, an example of these are the Meta sensors family, which is formed by different wearable devices like MetaTracker, MetaMotionC and MetaMotionR. The Meta family devices are formed by different sensors, like Accelerometers, Gyroscopes, Barometes, etc&amp;hellip; In this case, we are going to see how to use a Python library for the MetaMotionR, which enable the user to read the sensors of this device.</description>
+    </item>
+    
+  </channel>
+</rss>

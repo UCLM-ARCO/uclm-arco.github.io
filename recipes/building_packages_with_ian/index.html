@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/recipes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/images/arco-logo-128.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/recipes" style="color: inherit">Arco Recipes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Building Packages with Ian</h1>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#control">control</a></li>
+    <li><a href="#copyright">copyright</a></li>
+    <li><a href="#changelog">changelog</a></li>
+    <li><a href="#rules">rules</a></li>
+  </ul>
+</nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p><strong>Ian</strong> is a very useful tool that facilitates the task of builiding and uploading packages to a repository. Building packages in debian could be a very annoying task, thanks to Ian, you can build your package barely with a few commands.</p>
+<p>Some of the mos relevant commandas that we are going to use are <code>ian create</code>, <code>ian build</code> and <code>ian upload</code>. In this recipe the focus will be put in how to build a package, at the end of the recipe a link you can find a link to a recipe that explain how tu upload a package to the arco repository.</p>
+<h1 id="ingredients">Ingredients</h1>
+<p>In order to follow this recipe, you will need to satisfy the following requirements:</p>
+<ul>
+<li>The <code>gpg</code> and <code>ssh</code> package.</li>
+<li>The <code>ian</code> package.</li>
+<li>A Debian/Ubuntu Linux.</li>
+<li>Basic knowledge of Linux and Makefiles.</li>
+</ul>
+<p>In order to install the tool <code>ian</code> you must execute the following command.</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ sudo apt install ian</pre>
+</div>
+<h1 id="configure-ian">Configure Ian</h1>
+<p>The first step after the installation of ian is to configure it. This step is as simple as modify the file <code>~.config/ian/config</code> with the next content. AS you can see, is required a gpg key, to sign the packages built.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.config
+    
+  </div>
+  
+  <pre><code class='language-config'>DEBFULLNAME=&#34;Jesús Fernández-Bermejo Ruiz&#34;
+DEBEMAIL=jesus.fbermejo@gmail.com
+DEBSIGN_KEYID=&lt;gpg_key&gt;
+DEBREPO_URL=debrepo@debrepo/shared
+EDITOR=&#34;emacs -nw&#34;</code></pre>
+</div>
+<h1 id="preparaing-the-building">Preparaing the building</h1>
+<p>Now, is time to build your package. The first step is create a directory with the named of your package (for example <code>example-package</code>) where you are going to save the source files of your program. In this example case, we are going to package a python program that consists in a file named <code>example.py</code>.</p>
+<p>Once you moved your source code, you have to create a <code>Makefile</code>. This <code>Makefile</code> must contains two directives, <strong>build</strong> and <strong>install</strong>, build is an optinal directive and contains the actions needed to compile the software, in the other hand, the directive install contains the actions needed to install the executable file of your program.</p>
+<p>Due to python is an interpreted programming language, the compilation is not needed, so only the install directive is mandatory. The Makefile would be the following.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.make
+    
+  </div>
+  
+  <pre><code class='language-make'>DESTDIR ?= ~
+
+install:
+	install -vd $(DESTDIR)/usr/bin
+	install -v -m 555 example.py $(DESTDIR)/usr/bin/example</code></pre>
+</div>
+<p>The directive install performs the following tasks. Firstly if the directory <code>~/usr/bin</code> doesn&rsquo;t exist it is created, after that, it copies the python file to the specified directory with the properly permissions (read and execute permissions), converting the word <strong>example</strong> in a command that execute the <code>example.py</code> program.</p>
+<p>After the Makefile is created, the following step is execute the <code>ian create</code> command, this command will create a folder named <code>debian</code> with a default information about the package. In the <code>debian</code> directory is saved all the information required to build the package, and is formed by different files and directories, some of them optionals. The most important files are the following:</p>
+<h2 id="control">control</h2>
+<p>This file saves all the information that help other tools to manage the package. An example of a control file can be found bellow.</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.
+    
+  </div>
+  
+  <pre><code class='language-'>Source: metamotion
+Section: python
+Priority: optional
+Maintainer: Jesús Fernández-Bermejo Ruiz &lt;jesus.fruiz@uclm.es&gt;
+Build-Depends: debhelper (&gt;= 12), quilt, python3, libbluetooth-dev, dh-python
+Standards-Version: 4.3.0
+
+Package: metamotion
+Architecture: all
+Depends: ${misc:Depends}, python3, ${python3:Depends}
+Description: Python library to control MetaMotionR devices
+ This package present a useful library that enable the users
+ to request differente data from the MetaMotionR sensor, like
+ the acceleration and rotation of the sensor.</code></pre>
+</div>
+<p>In the first seven lines, is added the control information of the package. The firs line indicates the name of the source package, the second the section inside the distribution where the package can be found, some section examples are devel for programming tool, main for open source programs, non-free for propietary code&hellip; etc. The tird line describes the relevance of the package for the user, the fourth the maintainer of the package and the fifth the list of packages needed to build our package.</p>
+<p>In the second paragraph, the first line is the name of the binary package, the second the architectures where the package can be compile, the third line is a list of packages needed for our package instalation, if some of that packages are not installed, our packaged will not be installed. In the fourth line, is added a short and a long description.</p>
+<h2 id="copyright">copyright</h2>
+<p>This file contains information about the resources, license and copyright of the original sources of the package, in a simple use, isn&rsquo;t necessary to modify this file.</p>
+<h2 id="changelog">changelog</h2>
+<p>This is a mandatory file with a special format, and also a good place where document all the changes on your source code. A simple example of a <code>changelog</code> is the following</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.
+    
+  </div>
+  
+  <pre><code class='language-'>gentoo (0.9.12-1) unstable; urgency=low
+
+ * Initial Release. Closes: #12345
+ * This is my first Debian package.
+ * Adjusted the Makefile to fix $(DESTDIR) problems.
+
+-- Josip Rodin &lt;joy-mg@debian.org&gt;  Mon, 22 Mar 2010 00:37:31 &#43;0100</code></pre>
+</div>
+<p>In the first line, and in this order, is presented the name of the package, its version, the distribution where the pacakge can be installed (should be unstable) and the urgency. Following, you can see a log entry with the changes for the new version of the package and at the end, information about the author of the changes and a timestamp.</p>
+<h2 id="rules">rules</h2>
+<p>This is a <code>Makefile</code> that will be executed at the time to build the package.</p>
+<h1 id="building-the-package">Building the package</h1>
+<p>Finally and once all the information is added to debian directory, builduing the package is as simple as executing the command <code>ian build -c</code>. After this command, all the files of your package will be created. If you want to know more about ian, the command <code>ian help</code> will tell you all the options that this tool have. If you want to know more about building debian packages I recommend you to read the <a href="https://www.debian.org/doc/manuals/maint-guide/">debian maintainer&rsquo;s guide</a> and specially the fourth chapter.</p>
+<h1 id="uploading-the-package">Uploading the package</h1>
+<p>For the package upload, you can find all the information about how to upload a package to the ARCO&rsquo;s repository <a href="https://github.com/UCLM-ARCO/debian/wiki/Upload-through-local-repo">here</a>. You need to have a GitHub account with permission.</p>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

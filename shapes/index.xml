@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shapes on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/shapes/</link>
+    <description>Recent content in Shapes on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 May 2022 10:53:24 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/shapes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creación de Módulos para Phyxio</title>
+      <link>https://arcogroup.bitbucket.io/shapes/creating_phyxio_modules/</link>
+      <pubDate>Sun, 29 May 2022 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/creating_phyxio_modules/</guid>
+      <description>Introducción Phyxio es una aplicación distribuida formada por dos componentes clave: el servicio web y los módulos del runner. Estos últimos se encargan de utilizar el hardware de la máquina (GPU, TPU, cámaras, etc) para ofrecer servicios de reconocimiento de un ejercicio en concreto.
+Este manual explica el proceso de desarrollo de un módulo de Phyxio.
+Requisitos Para poder seguir con este manual, se asume que los siguientes paquetes Debian están correctamente instalados:</description>
+    </item>
+    
+    <item>
+      <title>Manage your Smart Mirror with smartmirror-console</title>
+      <link>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</guid>
+      <description>Overview A Smart Mirror can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, this have to be shaped into its final user needs. For that, the smartmirror-console comes in handy, as it provides a high-level interface to configure all Smart Mirror packages and services.
+Ingredients The mandatory ingredients to follow this recipe are:
+A PC with a browser installed. A Raspberry Pi 4, or RPi4, either connected to the same network as the PC, or with a public ID address.</description>
+    </item>
+    
+    <item>
+      <title>Speech Recognition with DeepSpeech</title>
+      <link>https://arcogroup.bitbucket.io/shapes/speech_recognition/</link>
+      <pubDate>Wed, 28 Apr 2021 10:28:08 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/speech_recognition/</guid>
+      <description>Overview DeepSpeech is a speech recognition engine developed by Mozilla that uses a model trained by machine learning techniques. This recipe will explain how to make use of this tool for speech recognition.
+Ingredients Linux environment (tested on Ubuntu 20.04 LTS x64) APT dependencies: docker (&amp;gt;= 20.10.2), python3 (&amp;gt;= 3.7), venv The speech recognition repository available in this link Setup First, clone the repository provided in the Ingredients section. Once cloned you must copy the audios, in .</description>
+    </item>
+    
+    <item>
+      <title>Monitoring System</title>
+      <link>https://arcogroup.bitbucket.io/shapes/zigbee2mqtt/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/zigbee2mqtt/</guid>
+      <description>Overview Zigbee2mqtt is an open-source project that enables the interconnection of different-brand devices with Zigbee connectivity. It can also be integrated with Home Assistant thanks to the bidirectional message relay from the network to MQTT. Because neither our Raspberry Pi nor our laptop has a ZigBee interface, we additionally need a zigbee adapter, this is the zig-a-zig-ah! (zzh!).
+Ingredients In order to follow this recipe you will need:
+A suported Zigbee adapter (zzh!</description>
+    </item>
+    
+    <item>
+      <title>Google Assistant on the Voice Bonnet</title>
+      <link>https://arcogroup.bitbucket.io/shapes/google_assistant_on_voice_bonnet/</link>
+      <pubDate>Wed, 20 Jan 2021 10:13:30 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/google_assistant_on_voice_bonnet/</guid>
+      <description>Overview You can set up your own Google Assistant with just a Raspberry Pi and an Adafruit Voice Bonnet. You through setting up the Google Assistant API you can install a few library, enable permissions and get the Google Assistant running on the RPi. Now you can ask Google what you want with the simple push of a button.
+Ingredients In order to follow this recipe you will need:
+A Raspberry Pi 4 or RPi4 A Adafruit Voice Bonnet Two Mono Enclosed Speaker or headphones A Google account Raspberry Pi Setup The first step is perform an update/upgrade and install the cross-platform package manager pip:</description>
+    </item>
+    
+    <item>
+      <title>Integrating Xiaomi Mi Band 4 devices with smart mirror</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</guid>
+      <description>Overview Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a smart mirror, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</description>
+    </item>
+    
+    <item>
+      <title>Fall Detection System</title>
+      <link>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</guid>
+      <description>Overview In ARCO Research Group, in the context of the European project H2020 Shapes, we are working in a set of solutions to encourage the active ageing and improve the health condition at an advanced age. One of these solutions is a fall detection system that will allow us to automatically detect when a person has fell, in order to provide a prompt response. The system here presented could be a very powerful and useful tool, taking into account that falls are the leading cause of accidental death.</description>
+    </item>
+    
+    <item>
+      <title>Integrating MbientLab MetaMotionR sensors with Python</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</link>
+      <pubDate>Mon, 30 Mar 2020 23:20:43 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</guid>
+      <description>Overview MbientLab is a manufacture of different wearable devices, an example of these are the Meta sensors family, which is formed by different wearable devices like MetaTracker, MetaMotionC and MetaMotionR. The Meta family devices are formed by different sensors, like Accelerometers, Gyroscopes, Barometes, etc&amp;hellip; In this case, we are going to see how to use a Python library for the MetaMotionR, which enable the user to read the sensors of this device.</description>
+    </item>
+    
+  </channel>
+</rss>

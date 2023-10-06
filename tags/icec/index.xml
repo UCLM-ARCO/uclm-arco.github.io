@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>icec on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/icec/</link>
+    <description>Recent content in icec on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 Mar 2019 13:08:00 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/icec/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Programming IceC in X86</title>
+      <link>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</guid>
+      <description>Overview IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middleware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
+Ingredients In order to follow the next recipe you will need the following requirements:
+The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
+    </item>
+    
+  </channel>
+</rss>

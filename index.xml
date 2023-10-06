@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/</link>
+    <description>Recent content on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 May 2022 10:53:24 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creación de Módulos para Phyxio</title>
+      <link>https://arcogroup.bitbucket.io/shapes/creating_phyxio_modules/</link>
+      <pubDate>Sun, 29 May 2022 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/creating_phyxio_modules/</guid>
+      <description>Introducción Phyxio es una aplicación distribuida formada por dos componentes clave: el servicio web y los módulos del runner. Estos últimos se encargan de utilizar el hardware de la máquina (GPU, TPU, cámaras, etc) para ofrecer servicios de reconocimiento de un ejercicio en concreto.
+Este manual explica el proceso de desarrollo de un módulo de Phyxio.
+Requisitos Para poder seguir con este manual, se asume que los siguientes paquetes Debian están correctamente instalados:</description>
+    </item>
+    
+    <item>
+      <title>Manage your Smart Mirror with smartmirror-console</title>
+      <link>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</guid>
+      <description>Overview A Smart Mirror can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, this have to be shaped into its final user needs. For that, the smartmirror-console comes in handy, as it provides a high-level interface to configure all Smart Mirror packages and services.
+Ingredients The mandatory ingredients to follow this recipe are:
+A PC with a browser installed. A Raspberry Pi 4, or RPi4, either connected to the same network as the PC, or with a public ID address.</description>
+    </item>
+    
+    <item>
+      <title>Speech Recognition with DeepSpeech</title>
+      <link>https://arcogroup.bitbucket.io/shapes/speech_recognition/</link>
+      <pubDate>Wed, 28 Apr 2021 10:28:08 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/speech_recognition/</guid>
+      <description>Overview DeepSpeech is a speech recognition engine developed by Mozilla that uses a model trained by machine learning techniques. This recipe will explain how to make use of this tool for speech recognition.
+Ingredients Linux environment (tested on Ubuntu 20.04 LTS x64) APT dependencies: docker (&amp;gt;= 20.10.2), python3 (&amp;gt;= 3.7), venv The speech recognition repository available in this link Setup First, clone the repository provided in the Ingredients section. Once cloned you must copy the audios, in .</description>
+    </item>
+    
+    <item>
+      <title>Monitoring System</title>
+      <link>https://arcogroup.bitbucket.io/shapes/zigbee2mqtt/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/zigbee2mqtt/</guid>
+      <description>Overview Zigbee2mqtt is an open-source project that enables the interconnection of different-brand devices with Zigbee connectivity. It can also be integrated with Home Assistant thanks to the bidirectional message relay from the network to MQTT. Because neither our Raspberry Pi nor our laptop has a ZigBee interface, we additionally need a zigbee adapter, this is the zig-a-zig-ah! (zzh!).
+Ingredients In order to follow this recipe you will need:
+A suported Zigbee adapter (zzh!</description>
+    </item>
+    
+    <item>
+      <title>Google Assistant on the Voice Bonnet</title>
+      <link>https://arcogroup.bitbucket.io/shapes/google_assistant_on_voice_bonnet/</link>
+      <pubDate>Wed, 20 Jan 2021 10:13:30 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/google_assistant_on_voice_bonnet/</guid>
+      <description>Overview You can set up your own Google Assistant with just a Raspberry Pi and an Adafruit Voice Bonnet. You through setting up the Google Assistant API you can install a few library, enable permissions and get the Google Assistant running on the RPi. Now you can ask Google what you want with the simple push of a button.
+Ingredients In order to follow this recipe you will need:
+A Raspberry Pi 4 or RPi4 A Adafruit Voice Bonnet Two Mono Enclosed Speaker or headphones A Google account Raspberry Pi Setup The first step is perform an update/upgrade and install the cross-platform package manager pip:</description>
+    </item>
+    
+    <item>
+      <title>Integrating Xiaomi Mi Band 4 devices with smart mirror</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</guid>
+      <description>Overview Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a smart mirror, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</description>
+    </item>
+    
+    <item>
+      <title>Fall Detection System</title>
+      <link>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/fall_detection_system/</guid>
+      <description>Overview In ARCO Research Group, in the context of the European project H2020 Shapes, we are working in a set of solutions to encourage the active ageing and improve the health condition at an advanced age. One of these solutions is a fall detection system that will allow us to automatically detect when a person has fell, in order to provide a prompt response. The system here presented could be a very powerful and useful tool, taking into account that falls are the leading cause of accidental death.</description>
+    </item>
+    
+    <item>
+      <title>Library for the control of a MetaMotionR device</title>
+      <link>https://arcogroup.bitbucket.io/api/bosch-sensor/</link>
+      <pubDate>Tue, 16 Jun 2020 23:34:13 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/api/bosch-sensor/</guid>
+      <description>Library for the control of a MetaMotionR device class index: Accelerometer Color ConnectionError Gyroscope MetaMotion MetaMotionDeviceNotFound Mode WrongMetaDeviceModel metamotion API Documentation Class Accelerometer Class for represent an Accelerometer sensor that is part of a MetaMotionR device This class enable the user to request all the data that is provided by this accelerometer sensor
+__init__ def __init__(self, board, freq, motion_samples, motion_threshold, tap_threshold) Method for initialice the accelerometer sensor with the desired parameters.</description>
+    </item>
+    
+    <item>
+      <title>Integrating MbientLab MetaMotionR sensors with Python</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</link>
+      <pubDate>Mon, 30 Mar 2020 23:20:43 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</guid>
+      <description>Overview MbientLab is a manufacture of different wearable devices, an example of these are the Meta sensors family, which is formed by different wearable devices like MetaTracker, MetaMotionC and MetaMotionR. The Meta family devices are formed by different sensors, like Accelerometers, Gyroscopes, Barometes, etc&amp;hellip; In this case, we are going to see how to use a Python library for the MetaMotionR, which enable the user to read the sensors of this device.</description>
+    </item>
+    
+    <item>
+      <title>Amazfit 2 Dynamic Core: Integration with Python</title>
+      <link>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</link>
+      <pubDate>Tue, 28 Jan 2020 09:49:09 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</guid>
+      <description>Overview Under the Amazit branch name, there are a lot of devices. Among them, Xiaomi sells &amp;lsquo;smart&amp;rsquo; shoes (or sneakers) that have a device inside which measures some variables and also counts the steps. The device could be purchased alone, and is known as Amazfit 2 Smart Chip or Dynamic Core. In this recipe, we will use a Python library to connect to that device, and acquire the provided information.</description>
+    </item>
+    
+    <item>
+      <title>Amazfit 2 Chip API Reference</title>
+      <link>https://arcogroup.bitbucket.io/api/amazfit_2_dynamic_core/</link>
+      <pubDate>Fri, 24 Jan 2020 14:55:45 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/api/amazfit_2_dynamic_core/</guid>
+      <description>Amazfit 2 Chip API Reference class index: Core2 amazfit API Documentation Class Core2 This class provides access to the Huami Smart Chip (version 2), which could be found on Amazfit or Xiaomi sneakers. Use this class to discover a new device, connect and pair to it, retrieve device information, orientation, steps, etc.
+For some of the properties, it also supports a push mechanism which allows to receive notifications when the property changes.</description>
+    </item>
+    
+    <item>
+      <title>Cómo crear snapshots de vagrant</title>
+      <link>https://arcogroup.bitbucket.io/recipes/creating_vagrant_snapshots/</link>
+      <pubDate>Fri, 23 Aug 2019 07:52:05 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/creating_vagrant_snapshots/</guid>
+      <description>Ingredientes Esta receta está pensada para ser usada con un demostrador o servicio que está virtualizado usando Vagrant. Partiremos asumiendo que el servicio está correctamente desplegado y funcionando.
+Crear el box de vagrant Para crear el box, solo es necesario ejecutar el siguiente comando:
+console $ vagrant package --output my-application.box Esto generará un fichero con el nombre indicado, que podrá ser usado para crear nuevas instancias de este Vagrant. El fichero contiene el sistema entero tal y como esta en este momento, por lo que quizá ocupe más de 1 GiB (dependiendo del contenido de la VM).</description>
+    </item>
+    
+    <item>
+      <title>Building Packages with Ian</title>
+      <link>https://arcogroup.bitbucket.io/recipes/building_packages_with_ian/</link>
+      <pubDate>Mon, 13 May 2019 10:38:15 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/building_packages_with_ian/</guid>
+      <description>Overview Ian is a very useful tool that facilitates the task of builiding and uploading packages to a repository. Building packages in debian could be a very annoying task, thanks to Ian, you can build your package barely with a few commands.
+Some of the mos relevant commandas that we are going to use are ian create, ian build and ian upload. In this recipe the focus will be put in how to build a package, at the end of the recipe a link you can find a link to a recipe that explain how tu upload a package to the arco repository.</description>
+    </item>
+    
+    <item>
+      <title>Programming IceC in X86</title>
+      <link>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</guid>
+      <description>Overview IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middleware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
+Ingredients In order to follow the next recipe you will need the following requirements:
+The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
+    </item>
+    
+    <item>
+      <title>Make testing with Prego</title>
+      <link>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</link>
+      <pubDate>Thu, 21 Mar 2019 09:39:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</guid>
+      <description>Overview Prego is a library consisting on a set of clases and hamcrest matchers usefull to specify shell command interactions through files, environment variables, network ports.
+The main concept in prego is the Task(). A task is a set of assertions with three different checkers:
+task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
+    </item>
+    
+    <item>
+      <title>Smart Transducer: getting started</title>
+      <link>https://arcogroup.bitbucket.io/recipes/st_getting_started/</link>
+      <pubDate>Tue, 05 Mar 2019 16:20:02 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/st_getting_started/</guid>
+      <description>Overview Smart-Transducer is a platform for building Smart Home solutions the easy way. It uses very simple interfaces, with a push model, to acquire sensor information and also to change the state of actuators. This recipe will analyze those interfaces and how to use them.
+Ingredients In order to follow this recipe, you will need to satisfy the following requirements:
+The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
+    </item>
+    
+    <item>
+      <title>Cómo imprimir un PCB con una máquina LPKF</title>
+      <link>https://arcogroup.bitbucket.io/recipes/print_pcb_with_lpkf/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/print_pcb_with_lpkf/</guid>
+      <description>Introducción Las máquinas de prototipado para Printed Circuit Board (PCB), como las fabricadas por la empresa LPKF, permiten al usuario la impresión física de una placa previamente diseñada, siendo la solución predominante en la creación de prototipos. Estas máquinas imprimen el footprint de un diseño en una placa recubierta de cobre, creando los pads y aislando las pistas del resto del cobre.
+Para realizar el proceso de impresión se debe hacer uso de las siguientes herramientas:</description>
+    </item>
+    
+    <item>
+      <title>Mijia Smart Home API reference</title>
+      <link>https://arcogroup.bitbucket.io/api/mijia_smart_home/</link>
+      <pubDate>Wed, 27 Feb 2019 08:58:56 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/api/mijia_smart_home/</guid>
+      <description>Mijia Smart Home API reference class index: LumiGateway CubeAqgl01 Magnet Motion Plug Switch WeatherV1 mijia API Documentation Class LumiGateway This class is used to access a Lumi Gateway device (provided by Xiaomi / Aqara). It will automatically try to discover devices on your network, using the Lumi LAN protocol. It installs a thread to listen for incomming events, and also allows you to change the device light color.
+illumination [read only property] Stores the Gateway&amp;rsquo;s provided value for its light sensor.</description>
+    </item>
+    
+    <item>
+      <title>Integrating Xiaomi Devices</title>
+      <link>https://arcogroup.bitbucket.io/recipes/integrating_xiaomi_devices/</link>
+      <pubDate>Wed, 20 Feb 2019 08:05:08 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/integrating_xiaomi_devices/</guid>
+      <description>Overview Xiaomi (or Aqara or Mijia) has a family of products intended to be part of a Smart Home environment that everyone can install and use. They are beautiful and simple, but the associated cloud app sometimes does not fullfill our requirements (for instance, cloudless control).
+Thus, here we present a Python library that you could use to interact with those devices, changing its state and receiving events from their sensors.</description>
+    </item>
+    
+    <item>
+      <title>Cómo crear documentación</title>
+      <link>https://arcogroup.bitbucket.io/recipes/creating_arco_docs/</link>
+      <pubDate>Mon, 18 Feb 2019 14:25:28 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/creating_arco_docs/</guid>
+      <description>Introducción La documentación del grupo Arco se genera mediante una herramienta de gestion de sitios estáticos, llamada Hugo, y se mantiene en una serie de repositorios. Para añadir o editar cualquier contenido, se ha de conocer esta estructura, y se deben utilizar las herramientas adecuadas.
+El objetivo de esta receta es proporcionar una visión global, y algunos mecanismos para llevar a cabo la tarea de documentar. Si necesitas más información, puedes visitar la página de documentación de Hugo.</description>
+    </item>
+    
+    <item>
+      <title>Search Index</title>
+      <link>https://arcogroup.bitbucket.io/index.json</link>
+      <pubDate>Fri, 15 Feb 2019 08:43:07 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/index.json</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>New IDM documentation site!</title>
+      <link>https://arcogroup.bitbucket.io/idm/news/new-documentation-site/</link>
+      <pubDate>Thu, 06 Jul 2017 10:50:27 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/idm/news/new-documentation-site/</guid>
+      <description>At last, we have joined efforts and made a new site for maintaining the IDM documentation. Of course, feel free to contact us if you have any questions. Hope you enjoy it!</description>
+    </item>
+    
+    <item>
+      <title>How-to install IDM</title>
+      <link>https://arcogroup.bitbucket.io/idm/examples/install/</link>
+      <pubDate>Wed, 05 Jul 2017 14:48:22 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/idm/examples/install/</guid>
+      <description>IDM installation Note: this post will show you how to install IDM on a Debian based machine (like Ubuntu). The following instructions were tested on Debian 9.0 (stretch) y Ubuntu 17.04 (zesty). If you use Vagrant, you can download our VagrantFile for both setups.
+Setting up Debian repositories IDM is located on ARCO&amp;rsquo;s pike repository. To install it, run the following command:
+console $ wget -qO- &amp;#39;http://pike.esi.uclm.es/add-pike-repo.sh&amp;#39; | sudo sh Installing ZeroC Ice for Python3 With a fresh installation of Debian 9.</description>
+    </item>
+    
+  </channel>
+</rss>

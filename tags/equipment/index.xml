@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>equipment on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/equipment/</link>
+    <description>Recent content in equipment on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Mar 2019 10:49:04 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/equipment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cómo imprimir un PCB con una máquina LPKF</title>
+      <link>https://arcogroup.bitbucket.io/recipes/print_pcb_with_lpkf/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/print_pcb_with_lpkf/</guid>
+      <description>Introducción Las máquinas de prototipado para Printed Circuit Board (PCB), como las fabricadas por la empresa LPKF, permiten al usuario la impresión física de una placa previamente diseñada, siendo la solución predominante en la creación de prototipos. Estas máquinas imprimen el footprint de un diseño en una placa recubierta de cobre, creando los pads y aislando las pistas del resto del cobre.
+Para realizar el proceso de impresión se debe hacer uso de las siguientes herramientas:</description>
+    </item>
+    
+  </channel>
+</rss>

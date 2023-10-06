@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>domotics on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/domotics/</link>
+    <description>Recent content in domotics on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Mar 2019 16:20:02 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/domotics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Smart Transducer: getting started</title>
+      <link>https://arcogroup.bitbucket.io/recipes/st_getting_started/</link>
+      <pubDate>Tue, 05 Mar 2019 16:20:02 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/st_getting_started/</guid>
+      <description>Overview Smart-Transducer is a platform for building Smart Home solutions the easy way. It uses very simple interfaces, with a push model, to acquire sensor information and also to change the state of actuators. This recipe will analyze those interfaces and how to use them.
+Ingredients In order to follow this recipe, you will need to satisfy the following requirements:
+The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
+    </item>
+    
+  </channel>
+</rss>

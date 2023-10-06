@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/shapes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/shapes/images/shapes-logo.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/shapes" style="color: inherit">Shapes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Fall Detection System</h1>
+<nav id="TableOfContents"></nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p>In ARCO Research Group, in the context of the European project <strong>H2020 Shapes</strong>, we are working in a set of solutions to
+encourage the active ageing and improve the health condition at an advanced age. One of these solutions is a fall detection
+system that will allow us to automatically detect when a person has fell, in order to provide a prompt response. The
+system here presented could be a very powerful and useful tool, taking into account that falls are the leading cause of
+accidental death.</p>
+<!-- raw HTML omitted -->
+<pre><code>  Warning!
+</code></pre>
+<!-- raw HTML omitted -->
+<h1 id="fundamentals">Fundamentals</h1>
+<p>In order to build this system an <code>Intertial Measure Unit (IMU)</code> will be used, specifically a <strong>MetamotionR</strong> sensor, which was already presented
+in our preovious <a href="https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/">recipe</a>,
+where we explained how to use our library to extract different data from it. This IMU can give us information about
+the movement with two 3-AXIS sensor, an accelerometer and a gyroscope, but the raw data by itself does not give meaningful information and
+for this reason we have to preprocess it to get the intended information. This sensor also counts with a magnetometer, that can be
+useful to calculate the orientation of the sensor, considering the earth&rsquo;s magnetic field. In our case we have decided to  place the
+sensor in the user&rsquo;s waist, because it is the center of gravity of a person, and it is sensitive to abrupt changes in the measurements
+of the IMU when a fall occurs. You can see underneath the sensor and where it has been placed.</p>
+<p>
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/fall_detection_system/sensor-waist.jpg' width='500' height='300'/>
+
+
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>We have developed an algorithm which is a mixture of the two types of algorithms used for fall detection, <strong>Threshold algorithm</strong> and
+<strong>Machine Learning Algorithm</strong>. The thresholds algorithm are mainly used in low performance devices. Our threshold algorithm is
+a <strong>Finite State Machine</strong> that check if the inertial measures (mainly acceleration) exceed a threshold under certain circumstances,
+if this requisite is achieved, then a series of features is extracted from the raw data in a window os 1 second. With the previous
+features, a model is trained to detect whether this can be considered a fall (in our case we are using <strong>SVM</strong>), so introducing the features extracted
+to our model we can know if they correspond to a fall. Why do we need a model? Well, this is a good question, and all is about the
+<code>Activities of Daily Living (ADL)</code>.</p>
+<p>Along the day, we carry out many different activites that can be tracked by our imus, if we only use a threshold algorithm it is possible
+that a lot of activites that do not involve a fall can overpass the selected threshold, leading to a false positive. To avoid this
+scenarios, a model previously trained with labeled data can help us to reduce this false-positive case. At the same time, the threshold
+algoritm can act as a filter, in order to avoid a frequent extraction of features and evaluations by the model.</p>
+<p>In the data collection, the most important ADL identified that can cause a false positive are the following:</p>
+<ul>
+<li>Hitting the sensor</li>
+<li>Jumping</li>
+<li>Running</li>
+<li>Sitting in a chair or a sofa</li>
+</ul>
+<p>To train the model, we have collected data from the previous ADLs and the following falls:</p>
+<ul>
+<li>Backward fall</li>
+<li>Left-side fall</li>
+<li>Right-side fall</li>
+<li>Front fall</li>
+</ul>
+<p>All the falls have been made using a mattress, you may think that using a mattress could alter the data, but not using it would
+also alter it, because pretend falls would be performed with fear. We concluded that the best approach was to use a mattress because
+the data is less altered due to more natural falls.</p>
+<h1 id="training-model">Training model</h1>
+<p>At this point, we are using only one subject for both training and testing. The environment where the data has being collected was
+the ARCO Research Group&rsquo;s lab, located in the Technology and System Information Institute (ITSI). Following you can see the
+mattress used for the falls.</p>
+<p>
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/fall_detection_system/mattress.jpg' width='450' height='450'/>
+
+
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>The activities carried out in the collection are these:</p>
+<ul>
+<li>10x Hitting the sensor</li>
+<li>10x Jumping</li>
+<li>10x Running</li>
+<li>10x Sitting on a chair or a sofa</li>
+<li>5x Backward fall</li>
+<li>5x Left-side fall</li>
+<li>5x Right-side fall</li>
+<li>5x Front fall</li>
+</ul>
+<p>With this data, we have trained the SVM model that is going to be used for testing purpose.</p>
+<h1 id="testing-algorithm">Testing algorithm</h1>
+<p>For testing purpose, training activities have been repeated in the following way:</p>
+<ul>
+<li>3x Hitting the sensor</li>
+<li>3x Jumping</li>
+<li>3x Running</li>
+<li>3x Sitting on a chair or a sofa</li>
+<li>3x Backward fall</li>
+<li>3x Left-side fall</li>
+<li>3x Right-side fall</li>
+<li>3x Front fall</li>
+</ul>
+<p>In the next table you can see the results:</p>
+
+
+
+
+
+<table class="table table-dark table-striped table-bordered">
+<thead>
+<tr>
+<th style="text-align:left">Exercise</th>
+<th style="text-align:center">True Positive</th>
+<th style="text-align:center">True Negative</th>
+<th style="text-align:center">False Positive</th>
+<th style="text-align:center">False Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Hitting the sensor</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Jumping</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Running</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Sitting on a chair</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Front fall</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Left-side fall</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Right-side fall</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">Backward fall</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+
+<p>As you can see, almost all the results are the expected, with the exception of one backward fall, which produce
+a wrong result. It has to be noted that the tests were made with the same subject used for training the model. To summarize,
+our system with the tests made has a reliability of <strong>95,83%</strong>. In future works, we are going to collect data from more
+subjects, create a more complete battery of tests, and finally deploy this solutions in a real environment, monitoring
+the residents from the nursing home El Salvador in order to test our system.</p>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

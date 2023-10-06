@@ -1,0 +1,484 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/shapes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/shapes/images/shapes-logo.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/shapes" style="color: inherit">Shapes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Integrating Xiaomi Mi Band 4 devices with smart mirror</h1>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#ingredients">Ingredients</a></li>
+    <li><a href="#configuring-miband-dc">Configuring <code>miband-dc</code></a>
+      <ul>
+        <li><a href="#database">Database</a></li>
+        <li><a href="#devices">Devices</a></li>
+        <li><a href="#restart-service">Restart service</a></li>
+      </ul>
+    </li>
+    <li><a href="#configuring-miband-grafana">Configuring <code>miband-grafana</code></a></li>
+    <li><a href="#setting-up-the-smart-mirror">Setting up the smart mirror</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a>
+      <ul>
+        <li><a href="#grafana-is-not-installable">Grafana is not installable</a></li>
+        <li><a href="#grafana-service-is-not-running-after-provisioning">Grafana service is not running after provisioning</a></li>
+        <li><a href="#miband-dc-no-detection-of-devices">miband-dc: No detection of devices</a></li>
+        <li><a href="#miband-dc-are-you-root-error">miband-dc: &lsquo;Are you root?&rsquo; error</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#appendix-1-configuration-for-local-database">Appendix 1. Configuration for local database</a></li>
+  </ul>
+</nav>
+
+<div class="recipe-content">
+  <h2 id="overview">Overview</h2>
+<p>Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a <em>smart mirror</em>, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</p>
+<h2 id="ingredients">Ingredients</h2>
+<p>In order to follow this recipe you will need:</p>
+<ul>
+<li>A Xiaomi Mi Band 4 device or <strong>MB4</strong>.</li>
+<li>A Raspberry Pi 4 or <strong>RPi4</strong>.</li>
+<li>A PostgreSQL database with remote connections allowed. It could be located on the <em>cloud</em> or run locally. See <a href="#appendix-1-configuration-for-local-database">Appendix 1: Configuration for local database</a>.</li>
+<li>The <code>miband-dc</code> package on your RPi4, which is our data collector, available in <a href="https://uclm-arco.github.io/debian/">ARCO package repository</a>.</li>
+<li>The <code>miband-grafana</code> package on your PC, which will configure Grafana, also available in <a href="https://uclm-arco.github.io/debian/">ARCO package repository</a>.</li>
+<li>Basic knowledge of <code>linux</code>.</li>
+</ul>
+<h2 id="configuring-miband-dc">Configuring <code>miband-dc</code></h2>
+<p>The data collector, or <code>miband-dc</code>, is a service running <em>always</em> in our device with <code>systemd</code>, we can see its status with the following command:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/$ systemctl status miband-dc.service
+● miband-dc.service - miband-dc service
+     Loaded: loaded (/lib/systemd/system/miband-dc.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2020-12-02 19:08:34 CET; 4s ago
+   Main PID: 22377 (miband-dc)
+      Tasks: 3 (limit: 9362)
+     Memory: 12.6M
+     CGroup: /system.slice/miband-dc.service
+             └─22377 /usr/bin/python3 /usr/bin/miband-dc -d devices.csv -c settings.json
+
+dic 02 19:08:34 raspberry systemd[1]: Started miband-dc service.</pre>
+</div>
+<p>But it needs configuration to work properly.</p>
+<h3 id="database">Database</h3>
+<p>The service needs a database to store the collected data. It reads the connection parameters from the file <code>/etc/miband-dc/settings.json</code>. An example is:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/shapes/code/integrating_miband_with_smart_mirror/settings.json"
+	     title="Click to download this code!">settings.json</a>
+  </div>
+  <pre><code class="language-">{
+    &#34;db_name&#34;: &#34;user-stadistics&#34;,
+    &#34;db_user&#34;: &#34;miband-dc&#34;,
+    &#34;db_passwd&#34;: &#34;mysecret&#34;,
+    &#34;db_host&#34;: &#34;postgresql.on.cloud.com&#34;,
+    &#34;db_port&#34;: 5432
+}</code></pre>
+</div>
+<p>It is really important that the database user OWNS the database, so it has privileges to create a new table, if needed, and can perform any operation in it.</p>
+<h3 id="devices">Devices</h3>
+<p>First, the MB4 has to be linked to an account at MiFit App (available on <a href="https://play.google.com/store/apps/details?id=com.xiaomi.hm.health&amp;hl=es&amp;gl=US">Google Play Store</a> and <a href="https://apps.apple.com/es/app/mi-fit/id938688461">Apple Store</a>). Register the MB4 following the MiFit instructions. While you are there, enable <em>continous heart rate monitoring</em>:</p>
+<ol>
+<li>Go to link device settings and select &lsquo;heart rate monitoring&rsquo;.</li>
+<li>Set monitoring method to &lsquo;Automatic heart rate monitoring and sleep assistant&rsquo;.</li>
+<li>Enable activity monitoring.</li>
+</ol>
+<p>
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/integrating_miband_with_smart_mirror/mifit_screenshot1.jpg' width='30%' height=''/>
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/integrating_miband_with_smart_mirror/mifit_screenshot2.jpg' width='30%' height=''/>
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/integrating_miband_with_smart_mirror/mifit_screenshot3.jpg' width='30%' height=''/>
+
+</p>
+<p>When finished, turn off your smartphone Bluetooth and do not turn it back while <code>miband-dc</code> is running, as the service will not work properly. Then, store the MB4 information in <code>/etc/miband-dc/devices.csv</code> like:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/shapes/code/integrating_miband_with_smart_mirror/devices.csv"
+	     title="Click to download this code!">devices.csv</a>
+  </div>
+  <pre><code class="language-"># id | mac | token
+1 | E3:49:01:ED:00:A6 | abc123DEF456ghi789JKL3mnsOPQrst2</code></pre>
+</div>
+<p>The device token can be obtained by using <a href="https://github.com/argrento/huami-token">Huami token script</a> with the used account in MiFit credentials. This works for Amazfit accounts, so if you are not sure what type of account you have, we encourage you to create a new one from within MiFit app. An example is:
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/$ python3 huami_token.py -m amazfit -e pi@raspberry.com -p mypassword -b
+Getting access token with amazfit login method...
+Token: [&#39;abcDEFghiJKLmnsOPQrst&#39;]
+Logging in...
+Logged in! User id: 0123456789
+Getting linked wearables...
+&#43;------------------------------------------------------------------------&#43;
+|        MAC        |                      auth_key                      |
+|-------------------&#43;----------------------------------------------------|
+| E3:49:01:ED:00:A6 |         0xabc123DEF456ghi789JKL3mnsOPQrst2         |  &lt;------ Do not copy the &#39;0x&#39;
+&#43;------------------------------------------------------------------------&#43;
+
+Logged out.</pre>
+</div></p>
+<p>It is important to not reset nor unlink the MB4 from your account. If so, just repeat the steps of this section.</p>
+<h3 id="restart-service">Restart service</h3>
+<p>After all wanted modifications, restart the service and check its status:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/$ sudo systemctl restart miband-dc.service
+pi@raspberry:~/$ systemctl status miband-dc.service
+● miband-dc.service - miband-dc service
+     Loaded: loaded (/lib/systemd/system/miband-dc.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2020-12-02 19:14:47 CET; 7s ago
+   Main PID: 23417 (miband-dc)
+      Tasks: 3 (limit: 9362)
+     Memory: 12.6M
+     CGroup: /system.slice/miband-dc.service
+             └─23417 /usr/bin/python3 /usr/bin/miband-dc -d devices.csv -c settings.json
+
+dic 02 19:14:47 raspberry bash[23417]: INFO:mi band 1: init dev, mac: E3:49:01:ED:00:A6, static-id: None
+dic 02 19:14:47 raspberry bash[23417]: DEBUG:TaskRunner: remaining tasks: 0
+dic 02 19:14:47 raspberry bash[23417]: INFO:TaskRunner: run task: &lt;Task: DiscoverTask&gt;
+dic 02 19:14:47 raspberry bash[23417]: INFO:DiscoverTask: start discovery process...
+dic 02 19:14:54 raspberry bash[23417]: INFO:DiscoverTask: - discovered 1 devices
+dic 02 19:14:54 raspberry bash[23417]: INFO:DiscoverTask: - got device: &lt;MiBandDev, mac: E3:49:01:ED:00:A6, status: online&gt;
+dic 02 19:14:54 raspberry bash[23417]: DEBUG:TaskRunner: remaining tasks: 0
+dic 02 19:14:55 raspberry bash[23417]: INFO:TaskRunner: run task: &lt;Task: RunFunctionTask-update_static&gt;
+dic 02 19:14:55 raspberry bash[23417]: INFO:mi band 1: connecting to &#39;E3:49:01:ED:00:A6&#39;...</pre>
+</div>
+<p>With the service running, the daemon is storing the MB4 data on the database provided.</p>
+<h2 id="configuring-miband-grafana">Configuring <code>miband-grafana</code></h2>
+<p>This package exists to automate the Grafana provision with the data stored by <code>miband-dc</code>. In order to create the correct files, <code>miband-grafana</code> must know the connection parameters of the database, so we must edit its configuration file with <code>sudo miband-grafana -e</code>. A configuration can be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/shapes/code/integrating_miband_with_smart_mirror/configuration.conf"
+	     title="Click to download this code!">configuration.conf</a>
+  </div>
+  <pre><code class="language-">DBNAME=user-stadistics
+DBUSER=grafana
+DBPASSWORD=mysecret
+DBHOST=postgresql.on.cloud.com
+DBPORT=5432</code></pre>
+</div>
+<p>It is really important that the database user has <strong>only</strong> CONNECT and SELECT privileges, because the queries executed by Grafana cannot be filtered so any user logged on Grafana UI with admin rights could manipulate the database.</p>
+<p>Then execute:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+user@pc:~/$ sudo miband-grafana -u</pre>
+</div>
+<p>This will provision our local Grafana instance. If we check <a href="http://localhost:3000">http://localhost:3000</a> we will see Grafana UI, and following on the side menu <em>Dashboards &gt; Manage</em> we can see our provisioned dashboards:</p>
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/integrating_miband_with_smart_mirror/grafanaui-dashboards.png' width='' height=''/>
+
+
+<p>To see what files where provisioned and the generated dashboards information use:
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+user@pc:~/$ sudo miband-grafana -s
+INFO: Datasource provider file at /etc/grafana/provisioning/datasources/miband-grafana.yaml
+INFO: Dashboard provider file at /etc/grafana/provisioning/dashboards/miband-grafana.yaml
+INFO: Found dashboard definition at /var/lib/grafana/dashboards/miband-grafana_dev1.json:
+INFO:   Name: mi-band-data-user-1
+INFO:   UID: c9b38467
+INFO: Available panels:
+INFO:   ID: 11  Description: Steps per day
+INFO:   ID: 12  Description: Steps today
+INFO:   ID: 21  Description: Calories per day
+INFO:   ID: 22  Description: Calories today
+INFO:   ID: 31  Description: Heart rate</pre>
+</div></p>
+<p><strong>NOTE:</strong> If you want grafana to be started on boot, execute <code>sudo systemctl enable grafana-server.service</code>.</p>
+<h2 id="setting-up-the-smart-mirror">Setting up the smart mirror</h2>
+<p>To transform our RPi4 in a smart mirror we will use <a href="https://magicmirror.builders/">Magic Mirror</a>. Following its <a href="https://docs.magicmirror.builders/getting-started/installation.html">installation instructions</a>, execute:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+pi@raspberry:~/$ sudo apt install -y nodejs
+pi@raspberry:~/$ git clone https://github.com/MichMich/MagicMirror
+pi@raspberry:~/$ cd MagicMirror
+pi@raspberry:~/MagicMirror/$ npm install
+pi@raspberry:~/MagicMirror/$ cp config/config.js.sample config/config.js</pre>
+</div>
+<p>Once this is done, it is time to add our Grafana module for Magic Mirror, called <a href="https://bitbucket.org/arco_group/mmm-grafanaembed">MMM-GrafanaEmbed</a>:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/MagicMirror/$ cd modules
+pi@raspberry:~/MagicMirror/modules/$ git clone https://bitbucket.org/arco_group/mmm-grafanaembed.git MMM-GrafanaEmbed</pre>
+</div>
+<p>It is really important that the final folder is called <strong>MMM-GrafanaEmbed</strong>, respecting the capital letters.</p>
+<p>Finally, we change Magic Mirror configuration <code>/MagicMirror/config/config.js</code> adding MMM-GrafanaEmbed parameters on <code>modules</code> list. For example:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.js
+    
+  </div>
+  
+  <pre><code class='language-js'>
+modules: [
+    // Rest of modules configuration
+    {
+        module: &#39;MMM-GrafanaEmbed&#39;,
+        position: &#39;bottom_center&#39;,
+        config: {
+            host: &#34;192.168.0.22&#34;,   // Our PC IP address
+            dash_id: &#39;c9b38467&#39;,    // Dashboard uid gotten from miband-grafana -s
+            dash_name: &#39;mi-band-data-user-1&#39;,    // Dashboard name gotten from miband-grafana -s
+            panels: [11]    // Panel ids for number of steps gotten from miband-grafana -s
+        }
+    }
+]</code></pre>
+</div>
+<p>Then we run the following command and we will bring our Grafana panel to Magic Mirror:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+pi@raspberry:~/MagicMirror/$ npm run start</pre>
+</div>
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+<img src='/shapes/images/integrating_miband_with_smart_mirror/magicmirror-configured.png' width='' height=''/>
+
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="grafana-is-not-installable">Grafana is not installable</h3>
+<p>Using the <code>apt</code> program, it can occur that Grafana package is not installable. This is because <code>apt</code> cannot find the <strong>source package</strong> within its sources lists. To solve this problem, execute the following commands:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+user@pc:~/$ sudo apt-get install -y apt-transport-https software-properties-common wget
+user@pc:~/$ wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+user@pc:~/$ echo &#34;deb https://packages.grafana.com/oss/deb stable main&#34; | sudo tee -a /etc/apt/sources.list.d/grafana.list
+user@pc:~/$ sudo apt-get update</pre>
+</div>
+<p>Now you can install <code>miband-grafana</code> normally, as <code>apt</code> can find Grafana package now.</p>
+<h3 id="grafana-service-is-not-running-after-provisioning">Grafana service is not running after provisioning</h3>
+<p>Sometimes, after we run <code>miband-grafana -u</code>, the Grafana service, <code>grafana-server</code>, stops running and its log does not offer any relevant information about what went wrong with the provision. Do not modify any of the generated files by <code>miband-grafana</code>, they are properly tested, so the problem is with Grafana instance. For the time being, reinstalling Grafana works. So execute:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+user@pc:~/$ sudo apt purge grafana                      // Warning: This uninstalls miband-grafana package
+user@pc:~/$ sudo rm -drf /etc/grafana /var/lib/grafana  // Dpkg do not remove those if there were custom files on them, so do it manually
+user@pc:~/$ sudo apt install miband-grafana             // Reinstall miband-grafana and grafana
+user@pc:~/$ sudo miband-grafana -u                      // Try again!</pre>
+</div>
+<h3 id="miband-dc-no-detection-of-devices">miband-dc: No detection of devices</h3>
+<p>There are some issues with the Bluetooth service that we are not capable of locate yet. <code>miband-dc</code> is programmed to auto-restart the RPi4 Bluetooth service when it does not detect <strong>any</strong> configured device (the ones specified at <code>devices.csv</code>) within 15 minutes.</p>
+<p>If it still does not detect your device, you must <strong>restart</strong> the Bluetooth adaptor. You can do it using the UI, selecting the proper option at the Bluetooth icon up to the right of your screen, or via command-line with <code>sudo hciconfig hci0 reset</code>.</p>
+<h3 id="miband-dc-are-you-root-error">miband-dc: &lsquo;Are you root?&rsquo; error</h3>
+<p><code>miband-dc</code> is running with admin privileges by <code>systemctl</code>, so <strong>it is</strong> running as root. The problem seems to be related with the Bluetooth adaptor, so a temporary solution is to restart the Bluetooth adaptor, just as is explained in the previous section.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://grafana.com/">Grafana</a></li>
+<li><a href="https://magicmirror.builders/">Magic Mirror</a></li>
+<li><code>miband-dc</code>(1)</li>
+<li><code>miband-grafana</code>(1)</li>
+<li><a href="https://bitbucket.org/arco_group/mmm-grafanaembed/src/main/README.md">MMM-GrafanaEmbed</a></li>
+</ul>
+<h2 id="appendix-1-configuration-for-local-database">Appendix 1. Configuration for local database</h2>
+<p>If we have installed PostgreSQL locally, either in our RPi4 or in our PC, we must ensure they are in the same network or both hosts have public IP addresses. In these scenarios, either Grafana instance, in our PC, or <code>miband-dc</code>, in our RPI4, will have to access the database, so we must change PostgreSQL configuration to allow remote connections.</p>
+<p>First, we will change the value of <code>listen_addresses</code> to <strong>&rsquo;*&rsquo;</strong> in the file <code>postgresql.conf</code>. If we execute <code>SHOW config_file</code> in our PostgreSQL instance we will know its location. For example:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>
+user@pc:~/$ sudo su postgres -c &#34;psql -c &#39;SHOW config_file&#39;&#34;
+               config_file               
+-----------------------------------------
+ /etc/postgresql/12/main/postgresql.conf
+(1 row)
+
+user@pc:~/$ sudo grep -n listen_addresses /etc/postgresql/12/main/postgresql.conf 
+59:#listen_addresses = &#39;localhost&#39;              # what IP address(es) to listen on;</pre>
+</div>
+<p>We will change, in the line 59, &rsquo;localhost&rsquo; for &lsquo;*&rsquo; and uncomment the line.</p>
+<p>Next we will open the file <code>pg_hba.conf</code>, whose path is specified in <code>postgresql.conf</code> with the <code>hba_file</code> parameter), and add the next line:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/shapes/code/integrating_miband_with_smart_mirror/pg_hba.conf"
+	     title="Click to download this code!">pg_hba.conf</a>
+  </div>
+  <pre><code class="language-"># ORIGINAL CONFIGURATION - DO NOT DELETE
+# [...]
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    database        user            samenet                 md5</code></pre>
+</div>
+<p>Replace the parameter <strong>database</strong> with the name of the database, <code>user-stadistics</code> in this recipe.</p>
+<p>In case your database is hosted by your RPi4, the remote <strong>user</strong> will be the one used by the Grafana instance, <code>grafana</code> in this recipe. If this host is not in the same net as your RPi4, replace <strong>samenet</strong> parameter with the public IP address of the Grafana host.</p>
+<p>If that was not the case and the database is located in your PC, the remote <strong>user</strong> will be the one used by <code>miband-dc</code> program running on the RPi4, <code>miband-dc</code> in this recipe. If this host is not in the same net as your PC, replace <strong>samenet</strong> parameter with the public IP address of the <code>miband-dc</code> host.</p>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

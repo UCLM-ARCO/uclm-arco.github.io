@@ -1,0 +1,19 @@
+h1 {
+    font-size: 2rem;
+}
+
+.recipe-content > h1 {
+  font-size: 1.7rem;
+}
+
+.recipe-content > h2 {
+  font-size: 1.4rem;
+}
+
+.recipe-content > h3 {
+  font-size: 1.1rem;
+}
+
+.recipe-content img {
+  width: 100%
+}

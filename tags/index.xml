@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/</link>
+    <description>Recent content in Tags on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 29 May 2022 10:53:24 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>development</title>
+      <link>https://arcogroup.bitbucket.io/tags/development/</link>
+      <pubDate>Sun, 29 May 2022 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>module</title>
+      <link>https://arcogroup.bitbucket.io/tags/module/</link>
+      <pubDate>Sun, 29 May 2022 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/module/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>phyxio</title>
+      <link>https://arcogroup.bitbucket.io/tags/phyxio/</link>
+      <pubDate>Sun, 29 May 2022 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/phyxio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>magic mirror</title>
+      <link>https://arcogroup.bitbucket.io/tags/magic-mirror/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/magic-mirror/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>miband4</title>
+      <link>https://arcogroup.bitbucket.io/tags/miband4/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/miband4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>xiaomi</title>
+      <link>https://arcogroup.bitbucket.io/tags/xiaomi/</link>
+      <pubDate>Wed, 02 Jun 2021 09:14:01 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/xiaomi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>deepspeech</title>
+      <link>https://arcogroup.bitbucket.io/tags/deepspeech/</link>
+      <pubDate>Wed, 28 Apr 2021 10:28:08 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/deepspeech/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>speech to text</title>
+      <link>https://arcogroup.bitbucket.io/tags/speech-to-text/</link>
+      <pubDate>Wed, 28 Apr 2021 10:28:08 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/speech-to-text/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>voice assistant</title>
+      <link>https://arcogroup.bitbucket.io/tags/voice-assistant/</link>
+      <pubDate>Wed, 28 Apr 2021 10:28:08 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/voice-assistant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>grafana</title>
+      <link>https://arcogroup.bitbucket.io/tags/grafana/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/grafana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>influxdb</title>
+      <link>https://arcogroup.bitbucket.io/tags/influxdb/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/influxdb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>monitoring</title>
+      <link>https://arcogroup.bitbucket.io/tags/monitoring/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>smart sensors</title>
+      <link>https://arcogroup.bitbucket.io/tags/smart-sensors/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/smart-sensors/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>telegraf</title>
+      <link>https://arcogroup.bitbucket.io/tags/telegraf/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/telegraf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zigbee2mqtt</title>
+      <link>https://arcogroup.bitbucket.io/tags/zigbee2mqtt/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/zigbee2mqtt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zzh!</title>
+      <link>https://arcogroup.bitbucket.io/tags/zzh/</link>
+      <pubDate>Mon, 08 Feb 2021 10:25:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/zzh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bluetooth</title>
+      <link>https://arcogroup.bitbucket.io/tags/bluetooth/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/bluetooth/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://arcogroup.bitbucket.io/tags/python/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>active ageing</title>
+      <link>https://arcogroup.bitbucket.io/tags/active-ageing/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/active-ageing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BLE</title>
+      <link>https://arcogroup.bitbucket.io/tags/ble/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/ble/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fall detection</title>
+      <link>https://arcogroup.bitbucket.io/tags/fall-detection/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/fall-detection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>imu</title>
+      <link>https://arcogroup.bitbucket.io/tags/imu/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/imu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>https://arcogroup.bitbucket.io/tags/machine-learning/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mbientlab</title>
+      <link>https://arcogroup.bitbucket.io/tags/mbientlab/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/mbientlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sensor</title>
+      <link>https://arcogroup.bitbucket.io/tags/sensor/</link>
+      <pubDate>Mon, 07 Dec 2020 10:53:24 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/sensor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bosch</title>
+      <link>https://arcogroup.bitbucket.io/tags/bosch/</link>
+      <pubDate>Mon, 30 Mar 2020 23:20:43 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/bosch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>amazfit</title>
+      <link>https://arcogroup.bitbucket.io/tags/amazfit/</link>
+      <pubDate>Tue, 28 Jan 2020 09:49:09 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/amazfit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>devops</title>
+      <link>https://arcogroup.bitbucket.io/tags/devops/</link>
+      <pubDate>Fri, 23 Aug 2019 07:52:05 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>recipe</title>
+      <link>https://arcogroup.bitbucket.io/tags/recipe/</link>
+      <pubDate>Fri, 23 Aug 2019 07:52:05 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/recipe/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vagrant</title>
+      <link>https://arcogroup.bitbucket.io/tags/vagrant/</link>
+      <pubDate>Fri, 23 Aug 2019 07:52:05 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/vagrant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>debian</title>
+      <link>https://arcogroup.bitbucket.io/tags/debian/</link>
+      <pubDate>Mon, 13 May 2019 10:38:15 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/debian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ian</title>
+      <link>https://arcogroup.bitbucket.io/tags/ian/</link>
+      <pubDate>Mon, 13 May 2019 10:38:15 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/ian/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>packages</title>
+      <link>https://arcogroup.bitbucket.io/tags/packages/</link>
+      <pubDate>Mon, 13 May 2019 10:38:15 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/packages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C</title>
+      <link>https://arcogroup.bitbucket.io/tags/c/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>icec</title>
+      <link>https://arcogroup.bitbucket.io/tags/icec/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/icec/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>make</title>
+      <link>https://arcogroup.bitbucket.io/tags/make/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/make/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>x86</title>
+      <link>https://arcogroup.bitbucket.io/tags/x86/</link>
+      <pubDate>Fri, 22 Mar 2019 13:08:00 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/x86/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>integration</title>
+      <link>https://arcogroup.bitbucket.io/tags/integration/</link>
+      <pubDate>Thu, 21 Mar 2019 09:39:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/integration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prego</title>
+      <link>https://arcogroup.bitbucket.io/tags/prego/</link>
+      <pubDate>Thu, 21 Mar 2019 09:39:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/prego/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
+      <link>https://arcogroup.bitbucket.io/tags/testing/</link>
+      <pubDate>Thu, 21 Mar 2019 09:39:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>domotics</title>
+      <link>https://arcogroup.bitbucket.io/tags/domotics/</link>
+      <pubDate>Tue, 05 Mar 2019 16:20:02 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/domotics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>smart home</title>
+      <link>https://arcogroup.bitbucket.io/tags/smart-home/</link>
+      <pubDate>Tue, 05 Mar 2019 16:20:02 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/smart-home/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>st</title>
+      <link>https://arcogroup.bitbucket.io/tags/st/</link>
+      <pubDate>Tue, 05 Mar 2019 16:20:02 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/st/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>equipment</title>
+      <link>https://arcogroup.bitbucket.io/tags/equipment/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/equipment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hardware</title>
+      <link>https://arcogroup.bitbucket.io/tags/hardware/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/hardware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lpkf</title>
+      <link>https://arcogroup.bitbucket.io/tags/lpkf/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/lpkf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pcb</title>
+      <link>https://arcogroup.bitbucket.io/tags/pcb/</link>
+      <pubDate>Fri, 01 Mar 2019 10:49:04 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/pcb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docs</title>
+      <link>https://arcogroup.bitbucket.io/tags/docs/</link>
+      <pubDate>Mon, 18 Feb 2019 14:25:28 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/docs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://arcogroup.bitbucket.io/tags/hugo/</link>
+      <pubDate>Mon, 18 Feb 2019 14:25:28 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>event</title>
+      <link>https://arcogroup.bitbucket.io/tags/event/</link>
+      <pubDate>Thu, 06 Jul 2017 10:50:27 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/tags/event/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

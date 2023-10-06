@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bluetooth on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/bluetooth/</link>
+    <description>Recent content in bluetooth on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Dec 2020 16:17:39 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/bluetooth/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrating Xiaomi Mi Band 4 devices with smart mirror</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</guid>
+      <description>Overview Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a smart mirror, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</description>
+    </item>
+    
+    <item>
+      <title>Amazfit 2 Dynamic Core: Integration with Python</title>
+      <link>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</link>
+      <pubDate>Tue, 28 Jan 2020 09:49:09 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</guid>
+      <description>Overview Under the Amazit branch name, there are a lot of devices. Among them, Xiaomi sells &amp;lsquo;smart&amp;rsquo; shoes (or sneakers) that have a device inside which measures some variables and also counts the steps. The device could be purchased alone, and is known as Amazfit 2 Smart Chip or Dynamic Core. In this recipe, we will use a Python library to connect to that device, and acquire the provided information.</description>
+    </item>
+    
+  </channel>
+</rss>

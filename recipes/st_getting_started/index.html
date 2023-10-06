@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/recipes/css/style.css">
+
+<div class="box">
+  <a href="/">
+    <img src="/images/arco-logo-128.png"
+         style="padding: 0 25px" />
+  </a>
+  <h1 style="display: inline; font-weight: bold; font-size: 2.3em; padding-top: 10px">
+    <a href="/recipes" style="color: inherit">Arco Recipes</a>
+  </h1>
+</div>
+
+<hr style="border: 1px solid #333333">
+
+
+<h1>Smart Transducer: getting started</h1>
+<nav id="TableOfContents"></nav>
+
+<div class="recipe-content">
+  <h1 id="overview">Overview</h1>
+<p>Smart-Transducer is a <strong>platform</strong> for building <em>Smart Home</em> solutions the easy way. It uses very simple interfaces, with a <code>push</code> model, to <strong>acquire</strong> sensor information and also to <strong>change</strong> the state of actuators. This recipe will analyze <strong>those interfaces</strong> and how to use them.</p>
+<h1 id="ingredients">Ingredients</h1>
+<p>In order to follow this recipe, you will need to satisfy the following <strong>requirements</strong>:</p>
+<ul>
+<li>The <code>smart-transducer</code> package, available at <a href="http://pike.esi.uclm.es/">Pike</a>&rsquo;s repository.</li>
+<li><strong>Python</strong> skills (search in <a href="https://www.python.org/">python.org</a> for tutorials if needed).</li>
+<li>Basic understanding of the <a href="https://zeroc.com/products/ice">ZeroC</a> Ice midleware.</li>
+<li>Debian/Ubuntu <strong>Linux</strong> and a terminal.</li>
+</ul>
+<p>If you <strong>already added</strong> the Pike repository to your system, then just install <code>smart-transducer</code>:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ sudo apt install smart-transducer</pre>
+</div>
+<h1 id="st-description"><code>ST</code> description</h1>
+<p>The <code>ST</code> module provides a set of <strong>interfaces</strong>, written in <a href="https://doc.zeroc.com/ice/3.7/the-slice-language">ZeroC Slice IDL</a>, specifically designed to be <strong>simple</strong>, and aimed to build sensors and actuators for a smart environment.</p>
+<p>The <strong>definition</strong> of the module is as follows:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/st_getting_started/st.ice"
+	     title="Click to download this code!">st.ice</a>
+  </div>
+  <pre><code class="language-">module st {
+
+  // basic types
+  interface IBool    { void set(bool v, string sourceAddr); };
+  interface IByte    { void set(byte v, string sourceAddr); };
+  interface IFloat   { void set(float v, string sourceAddr); };
+  interface IString  { void set(string v, string sourceAddr); };
+
+  // observable pattern
+  interface Linkable { void linkto(string observerAddr); };
+};</code></pre>
+</div>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>It has an interface for every <strong>basic type</strong> (<code>bool</code>, <code>byte</code>, <code>float</code>, <code>string</code>&hellip;), with a single method, <code>set</code>, which accepts two arguments:</p>
+<ul>
+<li><code>value</code>, of a specific type (determined by the interface).</li>
+<li><code>sourceAddr</code>, a string with the source address of the <strong>caller</strong>.</li>
+</ul>
+<p>These interfaces could be <strong>implemented by actuators</strong> and <strong>used by sensors</strong>. For instance, a door controller would implement the <code>IBool</code> interface to lock/unlock the door. Or a temperature sensor could use the <code>IFloat</code> interface to <strong>publish</strong> its temperature to some subscriber.</p>
+<p>The last interface, <code>Linkable</code> is used to <em>register</em> an observer to some <em>observable</em> object. For instance, the temperature sensor could implement this interface, so when a service wants to <strong>receive the temperature</strong>, it could call to <code>linkto()</code> with a proxy (or a valid IDM address) to a servant that implements the <strong>same interface</strong> that the temperature sensor uses (in the former example, <code>IFloat</code>). The sensor usually will <strong>store that proxy</strong>, and whenever it wants to publish the temperature, it calls the <code>set()</code> method on it.</p>
+<p>Let&rsquo;s use them on a <strong>very simple</strong> example.</p>
+<h1 id="a-not-so-minimal-service">A (not-so) minimal service</h1>
+<p>Imagine that you want to create a <strong>clock service</strong>. It has a method that allows the user to <strong>change</strong> the current time, and it also <strong>publishes</strong> the updated time every five seconds.</p>
+<p>This clock service will implement the interface <code>IString</code> to set the current hour. Also, it implements the <code>Linkable</code> interface, so other services could attach their observers. And it will use the same interface <code>IString</code> to publish the updated time.</p>
+<p>So, first, let&rsquo;s create a <strong>custom interface</strong> that inherits <code>IString</code> and <code>Linkable</code>. This way, we may have only one servant. The slice would be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/st_getting_started/clock.ice"
+	     title="Click to download this code!">clock.ice</a>
+  </div>
+  <pre><code class="language-">#include &lt;st.ice&gt;
+
+module recipe {
+    interface Clock extends st::IString, st::Linkable {};
+};</code></pre>
+</div>
+<p>Now, we can implement the servant. The method <code>IString.set()</code> will be used to set the current time, so the given value must have <strong>some format</strong>. Let&rsquo;s assume that it will be in the form &ldquo;hh:mm:ss&rdquo;, where <em>hh</em> is the hour in 24 hours format, <em>mm</em> is the minute and <em>ss</em> is the second. The code may be:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>def set(self, value, source=None, current=None):
+    self.seconds = sum(
+        x * int(t) for x, t in zip([3600, 60, 1], value.split(&#34;:&#34;))
+    )
+    if source is not None:
+        print(&#34;time set to &#39;{}&#39; by {}&#34;.format(value, source))</code></pre>
+</div>
+<p>On the other hand, the method <code>Linkable.linkto()</code> will provide the (stringfied) <strong>proxy</strong> to some object that will implement the <code>IString</code> interface, so we <strong>store</strong> it for later use:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>def linkto(self, observer, current):
+    ic = current.adapter.getCommunicator()
+    prx = ic.stringToProxy(observer)
+    self.observer = st.IStringPrx.uncheckedCast(prx)
+    print(&#34;new observer set: &#39;{}&#39;&#34;.format(str(prx)))</code></pre>
+</div>
+<p>The last part is to create the <strong>server</strong> that will hold the <strong>adapter</strong>, instantiate this servant, and register it on the adapter. It will also run the <strong>event loop</strong>: once every five seconds, it will call a method on the servant to <strong>publish</strong> the time to its observer (if any). The whole <code>clock-server.py</code> code is:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/st_getting_started/clock-server.py"
+	     title="Click to download this code!">clock-server.py</a>
+  </div>
+  <pre><code class="language-">#!/usr/bin/python3
+
+import sys
+import Ice
+import time
+from datetime import datetime, timedelta
+
+Ice.loadSlice(&#34;clock.ice -I. --all&#34;)
+import st
+import recipe
+
+
+class ClockI(recipe.Clock):
+    def __init__(self):
+        self.observer = None
+        self.set(time.strftime(&#34;%H:%M:%S&#34;))
+
+    def set(self, value, source=None, current=None):
+        self.seconds = sum(
+            x * int(t) for x, t in zip([3600, 60, 1], value.split(&#34;:&#34;))
+        )
+        if source is not None:
+            print(&#34;time set to &#39;{}&#39; by {}&#34;.format(value, source))
+
+    def linkto(self, observer, current):
+        ic = current.adapter.getCommunicator()
+        prx = ic.stringToProxy(observer)
+        self.observer = st.IStringPrx.uncheckedCast(prx)
+        print(&#34;new observer set: &#39;{}&#39;&#34;.format(str(prx)))
+
+    def publish_time(self, elapsed):
+        if self.observer is None:
+            return
+
+        self.seconds &#43;= elapsed
+        dt = datetime(1, 1, 1) &#43; timedelta(seconds=self.seconds)
+        now = dt.strftime(&#34;%H:%M:%S&#34;)
+
+        self.observer.set(now, &#34;clock&#34;)
+        print(&#34;publish time: &#39;{}&#39;&#34;.format(now))
+
+
+class ClockServer(Ice.Application):
+    def run(self, args):
+        ic = self.communicator()
+        adapter = ic.createObjectAdapterWithEndpoints(
+            &#34;Adapter&#34;, &#34;tcp -h 127.0.0.1 -p 1234&#34;
+        )
+        adapter.activate()
+
+        servant = ClockI()
+        proxy = adapter.add(servant, ic.stringToIdentity(&#34;Clock&#34;))
+        print(&#34;proxy ready: &#39;{}&#39;&#34;.format(proxy))
+
+        last = time.time()
+        while True:
+            try:
+                time.sleep(5)
+                elapsed = int(time.time() - last)
+                last = time.time()
+                servant.publish_time(elapsed)
+            except KeyboardInterrupt:
+                break
+
+
+if __name__ == &#34;__main__&#34;:
+    ClockServer(1).main(sys.argv)</code></pre>
+</div>
+<p>Run it and you should see something like this:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ ./clock-server.py
+proxy ready: &#39;Clock -t -e 1.1:tcp -h 127.0.0.1 -p 1234 -t 60000&#39;</pre>
+</div>
+<h1 id="a-minimal-client">A minimal client</h1>
+<p>You can also write a <strong>custom client</strong>, which in this case is <strong>very straightforward</strong>. Just create the proxy, and call it using the given arguments. It will be used to <strong>change</strong> the clock time, so you must call it using the clock&rsquo;s proxy and the desired time, in the correct format.</p>
+<p>The whole client code may be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/st_getting_started/clock-client.py"
+	     title="Click to download this code!">clock-client.py</a>
+  </div>
+  <pre><code class="language-">#!/usr/bin/python3
+
+import sys
+import Ice
+
+Ice.loadSlice(&#34;clock.ice -I. --all&#34;)
+import recipe
+
+
+class ClockClient(Ice.Application):
+    def run(self, args):
+        if len(args) &lt; 3:
+            print(&#34;Usage: {} &lt;proxy&gt; &lt;hh:mm:ss&gt;&#34;.format(args[0]))
+            return
+
+        ic = self.communicator()
+
+        clock = ic.stringToProxy(args[1])
+        clock = recipe.ClockPrx.uncheckedCast(clock)
+        clock.set(args[2], &#34;time-master&#34;)
+
+
+if __name__ == &#34;__main__&#34;:
+    ClockClient().main(sys.argv)</code></pre>
+</div>
+<p>If you run it, you should see a message on the server telling you that it changed its time:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>client $ ./clock-client.py &#39;Clock -t:tcp -h 127.0.0.1 -p 1234&#39; &#34;23:59:46&#34;
+
+server output:
+[...]
+time set to &#39;23:59:46&#39; by time-master</pre>
+</div>
+<h1 id="a-minimal-observer">A minimal observer</h1>
+<p>In order to receive time publications from the server, we would need an <strong>observer</strong>. It is just a common servant of the proper type (in this case <code>IString</code>) that we will register on the server using the <code>Linkable</code> interface. We don&rsquo;t need to do any special thing in the servant, so:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.py
+    
+  </div>
+  
+  <pre><code class='language-py'>class ClockObserverI(st.IString):
+    def set(self, value, source, current):
+        print(&#34;time event: &#39;{}&#39;, by {}&#34;.format(value, source))</code></pre>
+</div>
+<p>As always, we need to register this servant on an adapter. We then use the resulting proxy as the argument for the <code>linkto</code> method. The whole observer would be:</p>
+
+
+
+
+
+
+<div class="app-skin">
+  <div class="filename">
+    <a download href="/recipes/code/st_getting_started/clock-observer.py"
+	     title="Click to download this code!">clock-observer.py</a>
+  </div>
+  <pre><code class="language-">#!/usr/bin/python3
+
+import sys
+import Ice
+import time
+import sched
+from datetime import datetime, timedelta
+
+Ice.loadSlice(&#34;clock.ice -I. --all&#34;)
+import st
+import recipe
+
+
+class ClockObserverI(st.IString):
+    def set(self, value, source, current):
+        print(&#34;time event: &#39;{}&#39;, by {}&#34;.format(value, source))
+
+
+class ClockObserver(Ice.Application):
+    def run(self, args):
+        if len(args) &lt; 2:
+            print(&#34;Usage: {} &lt;clock-server&gt;&#34;.format(args[0]))
+            return
+
+        ic = self.communicator()
+        adapter = ic.createObjectAdapterWithEndpoints(
+            &#34;Adapter&#34;, &#34;tcp -h 127.0.0.1 -p 1235&#34;
+        )
+        adapter.activate()
+
+        servant = ClockObserverI()
+        proxy = adapter.add(servant, ic.stringToIdentity(&#34;Clock&#34;))
+        print(&#34;Proxy ready: &#39;{}&#39;&#34;.format(proxy))
+
+        server = ic.stringToProxy(args[1])
+        server = st.LinkablePrx.uncheckedCast(server)
+        server.linkto(str(proxy))
+        print(&#34;Subscribed to clock, waiting events...&#34;)
+
+        self.shutdownOnInterrupt()
+        ic.waitForShutdown()
+
+
+if __name__ == &#34;__main__&#34;:
+    ClockObserver().main(sys.argv)</code></pre>
+</div>
+<p><strong>Run</strong> the observer and it should start receiving new events:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ ./clock-observer.py &#39;Clock -t:tcp -h 127.0.0.1 -p 1234&#39;
+Proxy ready: &#39;Clock -t -e 1.1:tcp -h 127.0.0.1 -p 1235 -t 60000&#39;
+Subscribed to clock, waiting events...
+time event: &#39;23:59:51&#39;, by clock
+time event: &#39;23:59:56&#39;, by clock
+[...]
+
+server output:
+[...]
+new observer set: &#39;Clock -t -e 1.1:tcp -h 127.0.0.1 -p 1235 -t 60000&#39;
+publish time: &#39;23:59:51&#39;
+publish time: &#39;23:59:56&#39;
+[...]</pre>
+</div>
+<h1 id="using-the-st-client-tool">Using the <code>st-client</code> tool</h1>
+<p>To invoke any <code>st</code> interface, you can use the <code>st-client</code> tool, provided in the <code>smart-transducer</code> package. So, to change the clock time, just call it with the proxy and the desired value (run <code>st-client -h</code> for more options):</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>$ st-client -t string -p &#34;Clock -t:tcp -h 127.0.0.1 -p 1234&#34; &#34;12:23:34&#34;</pre>
+</div>
+
+</div>
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+

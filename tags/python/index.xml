@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Arco Research &amp; Documentation</title>
+    <link>https://arcogroup.bitbucket.io/tags/python/</link>
+    <description>Recent content in python on Arco Research &amp; Documentation</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Dec 2020 16:17:39 +0100</lastBuildDate><atom:link href="https://arcogroup.bitbucket.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrating Xiaomi Mi Band 4 devices with smart mirror</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</link>
+      <pubDate>Mon, 14 Dec 2020 16:17:39 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_miband_with_smart_mirror/</guid>
+      <description>Overview Mi Band 4 is the most popular and best-selling smart band of the famous IT company Xiaomi. It provides several information about our physical activity like number of steps or heart rate. This device is linked with our smartphone, which access to its data using Bluetooth LE. Using this mechanism, and with a Raspberry Pi transformed into a smart mirror, we can monitorize this information and present it with graphs and other intuitive forms of displaying its progression through time.</description>
+    </item>
+    
+    <item>
+      <title>Integrating MbientLab MetaMotionR sensors with Python</title>
+      <link>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</link>
+      <pubDate>Mon, 30 Mar 2020 23:20:43 +0200</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/shapes/integrating_metamotionr_with_python/</guid>
+      <description>Overview MbientLab is a manufacture of different wearable devices, an example of these are the Meta sensors family, which is formed by different wearable devices like MetaTracker, MetaMotionC and MetaMotionR. The Meta family devices are formed by different sensors, like Accelerometers, Gyroscopes, Barometes, etc&amp;hellip; In this case, we are going to see how to use a Python library for the MetaMotionR, which enable the user to read the sensors of this device.</description>
+    </item>
+    
+    <item>
+      <title>Amazfit 2 Dynamic Core: Integration with Python</title>
+      <link>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</link>
+      <pubDate>Tue, 28 Jan 2020 09:49:09 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/amazfit_2_integration_with_python/</guid>
+      <description>Overview Under the Amazit branch name, there are a lot of devices. Among them, Xiaomi sells &amp;lsquo;smart&amp;rsquo; shoes (or sneakers) that have a device inside which measures some variables and also counts the steps. The device could be purchased alone, and is known as Amazfit 2 Smart Chip or Dynamic Core. In this recipe, we will use a Python library to connect to that device, and acquire the provided information.</description>
+    </item>
+    
+    <item>
+      <title>Make testing with Prego</title>
+      <link>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</link>
+      <pubDate>Thu, 21 Mar 2019 09:39:16 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</guid>
+      <description>Overview Prego is a library consisting on a set of clases and hamcrest matchers usefull to specify shell command interactions through files, environment variables, network ports.
+The main concept in prego is the Task(). A task is a set of assertions with three different checkers:
+task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
+    </item>
+    
+    <item>
+      <title>Integrating Xiaomi Devices</title>
+      <link>https://arcogroup.bitbucket.io/recipes/integrating_xiaomi_devices/</link>
+      <pubDate>Wed, 20 Feb 2019 08:05:08 +0100</pubDate>
+      
+      <guid>https://arcogroup.bitbucket.io/recipes/integrating_xiaomi_devices/</guid>
+      <description>Overview Xiaomi (or Aqara or Mijia) has a family of products intended to be part of a Smart Home environment that everyone can install and use. They are beautiful and simple, but the associated cloud app sometimes does not fullfill our requirements (for instance, cloudless control).
+Thus, here we present a Python library that you could use to interact with those devices, changing its state and receiving events from their sensors.</description>
+    </item>
+    
+  </channel>
+</rss>

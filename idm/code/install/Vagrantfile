@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+$bootstrap = <<SCRIPT
+wget -O- http://pike.esi.uclm.es/arco/key.asc | sudo apt-key add -
+echo "deb http://pike.esi.uclm.es/arco sid main" > /tmp/pike.list
+sudo mv /tmp/pike.list /etc/apt/sources.list.d/
+
+sudo apt-get update
+sudo apt-get install -y python3-zeroc-ice idm
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "debian" do |debian|
+    debian.vm.box = "debian/stretch64"
+    debian.vm.provision "shell", inline: $bootstrap
+  end
+
+  config.vm.define "ubuntu" do |ubuntu|
+    ubuntu.vm.box = "ubuntu/zesty64"
+    ubuntu.vm.provision "shell", inline: $bootstrap
+  end
+
+end

@@ -1,0 +1,1143 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Arco Research &amp; Documentation</title>
+  <meta charset='utf-8'>
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/highlight-default.css">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="icon" type="image/png"  href="/images/icon.png">
+</head>
+
+<body>
+  <div id="content" class="container" style="padding-top: 15px">
+
+
+<link rel="stylesheet" href="/cittavr/css/style.css">
+
+<h1>CittaVR User Manual</h1>
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#setting-net-framework">Setting .NET framework</a></li>
+    <li><a href="#open-c-project">Open C# project</a></li>
+    <li><a href="#setup-of-idm-router">Setup of IDM router</a></li>
+    <li><a href="#add-cittavr-config-file">Add CittaVR config file</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#model-in-blender">Model in Blender</a></li>
+    <li><a href="#creating-the-prefab">Creating the prefab</a></li>
+    <li><a href="#companion-c-script">Companion C# script</a></li>
+    <li><a href="#exporting-your-asset">Exporting your asset</a></li>
+  </ul>
+</nav>
+<p style="padding: 10px 20px; color: gray">
+  CittaVR for Unity is a framework that allows you to create <b>virtual twins</b> for real environments
+</p>
+
+<h1 id="introduction">Introduction</h1>
+<p>CittaVR for Unity is a Unity framework that allows you to create
+<strong>virtual twins</strong> for real environments, to <strong>manipulate or sense</strong>
+the state and status of your sensors and actuators.</p>
+<p>It is available for (and compatible with) both Linux and Windows
+platforms, but this manual focuses only on the <strong>Unity Editor</strong> for
+GNU/Linux systems. On the other hand, as always with Unity, you can
+create your models using the same editor (with
+<a href="https://unity3d.com/es/unity/features/worldbuilding/probuilder">ProBuilder</a>),
+or an external tool, like <a href="https://www.blender.org/">Blender</a>.</p>
+<p>Let&rsquo;s begin with the installation.</p>
+<h1 id="installation-of-unity-on-linux">Installation of Unity on Linux</h1>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>To <strong>download</strong> the most recent version of the Editor (or any older one), you
+should use the <strong>Unity Hub</strong>, which could be found here:</p>
+<ul>
+<li><a href="https://unity3d.com/es/get-unity/download">Download Unity</a></li>
+</ul>
+<p>Mark it as <strong>executable</strong> and run it (you could, of course, do it from the GUI):</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>chmod a&#43;x UnityHub.AppImage
+./UnityHub.AppImage</pre>
+</div>
+<p>Once you start the Hub, you could go to the <strong>Installs</strong> tab and add the version
+you prefer:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity-hub-add-version.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity Hub: adding a Unity version</p>
+  </div>
+  
+</div>
+
+
+<p>Also, you will need an external tool for editing the source code (in
+C#). You may use whatever you want (like Emacs or Atom), but the
+recommended IDE (and what has better integration) is <a href="https://code.visualstudio.com/">Visual Studio
+Code</a>. You can just grab the <code>.deb</code>
+package and install it like any other Debian package.</p>
+<p>Now, you are <strong>ready to start</strong> a new Unity project and add support for CittaVR
+to it. Let&rsquo;s see how.</p>
+<h1 id="creating-a-new-project">Creating a new project</h1>
+<p>This step is very straightforward: just open the Unity Hub (if you closed it)
+and go to the <strong>Projects</strong> tab. Click on the <strong>New</strong> button. Select the project
+type, its location and also the name:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity-hub-new-project.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity Hub: creating a new project</p>
+  </div>
+  
+</div>
+
+
+<p>Press on <code>Create</code> and wait. It <strong>will take some time</strong> to
+compile the minimum assets included by default on every new
+project. Just wait until it finishes and shows the Unity Editor with
+your newly created project.</p>
+<h2 id="setting-net-framework">Setting .NET framework</h2>
+<p>First thing you should do is to <strong>change your project settings</strong>, because by
+default, it uses <em>.NET Standard 2.0</em>, which is not yet fully compatible with
+ZeroC Ice and other libraries.</p>
+<p>So, go to <code>Edit &gt; Project Settings &gt; Player</code>. This will open a new <em>inspector</em>
+window with some of your project settings. Open the section called <code>Other Settings</code> and find the <code>API Compatibility Level</code>, as seen in the following
+picture:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20net%20version.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: change the .NET version</p>
+  </div>
+  
+</div>
+
+
+<p>Set it to <code>.NET 4.x</code> and close the inspector. It will <strong>compile again</strong> all your
+assets using the new framework version, so please wait.</p>
+<h2 id="open-c-project">Open C# project</h2>
+<p>Now is a good time to <strong>check your IDE integration</strong> (if you want to use an IDE,
+anyway). To configure the recommended settings, got to <code>Edit &gt; Preferences</code>. In
+the tab <code>External Tools</code>, change the property <code>External Script Editor</code> to
+&ldquo;<em>Visual Studio Code Insiders</em>&rdquo; (click on <em>Browse</em> if needed). You can see this
+dialog in the following screenshot:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20external%20editor%20setting.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: external source editor setting</p>
+  </div>
+  
+</div>
+
+
+<p>And to open the C# project, just right click on an empty space of
+your Aassets folder, and click on <code>Open C# Project</code>:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index//unity%20-%20open%20cs%20project.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: open C# project with your IDE</p>
+  </div>
+  
+</div>
+
+
+<p>If you now see VS Code open, and <strong>loaded with your Unity project</strong>,
+well done! You are ready for rock &rsquo;n roll! ;)</p>
+<h2 id="setup-of-idm-router">Setup of IDM router</h2>
+<p>CittaVR may use IDM as its internal middleware for communicating with external
+objects and to receive incoming invocations. So, if you want to enable the IDM
+support, first thing you should do is to <strong>setup an IDM Router</strong> (in case you
+don&rsquo;t have already one). Don&rsquo;t worry, its pretty easy. Just make sure you
+<strong>installed</strong> the IDM Debian package (or do it now!) and create a new
+configuration file for it (call it <code>router.config</code>). I usually put it on the
+<code>Assets</code> folder:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/vscode%20-%20router%20config.png' />
+  
+  <div class="polaroid-caption">
+    <p>VS Code: create the IDM router config file</p>
+  </div>
+  
+</div>
+
+
+<p>Next, add the following <strong>properties</strong> (and adjust them to suit your
+needs):</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      router.config
+    
+  </div>
+  
+  <pre><code class='language-ini'>Router.Adapter.Endpoints = tcp -h 127.0.0.1 -p 6140
+Router.Table.Path = router.table
+Router.Ids = 0A01C17400000001</code></pre>
+</div>
+<p>To <strong>launch the router</strong>, just use this configuration file:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>idm-router --Ice.Config=router.config</pre>
+</div>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/vscode%20-%20running%20idm%20router.png' />
+  
+  <div class="polaroid-caption">
+    <p>IDM: running the router with your settings</p>
+  </div>
+  
+</div>
+
+
+<h2 id="add-cittavr-config-file">Add CittaVR config file</h2>
+<p>CittaVR uses a configuration file to store some of its settings (in particular,
+<strong>where</strong> is the IDM router you want to use, if any). So, let&rsquo;s <strong>create</strong> a
+CittaVR configuration file. The file must be located in the
+<code>Assets/StreamingAssets</code> folder (we use this location in order to ensure that
+Unity will bundle them when building), and be called <code>cittavr.config</code>. You
+may specify the following properties:</p>
+<ul>
+<li>
+<p><strong><code>IDM.Router.Proxy</code></strong>, which is clearly the proxy of your IDM router. If you
+used the previous configuration file, this value would be <code>0A01C17400000001 -t -e 1.0:tcp -h 127.0.0.1 -p 6140</code>. <strong>Note:</strong> if you are contacting with
+<strong>IceC</strong> devices, remember that you <strong>must</strong> add <code>-e 1.0</code> here.</p>
+</li>
+<li>
+<p><strong><code>CittaVR.Adapter.Endpoints</code></strong>, as CittaVR will expose <strong>virtual objects</strong> to
+the real world, you will need to specify <strong>the endpoints</strong> where they should
+be contacted. These virtual objects will be <strong>registered</strong> on the given IDM
+router, so these endpoints <strong>must</strong> be reachable by the router.</p>
+</li>
+<li>
+<p><strong><code>CittaVR.Id</code></strong>, as we will see later, CittaVR provides an object to
+<strong>dynamically instantiate</strong> new objects. This is the identity of this object.
+You should put here something in the <strong>same domain</strong> as your router (in this
+example, something like <code>0A01C17400000001</code>), and make sure that there are
+<strong>enough free addresses</strong> starting from this one, as the new dynamic objects
+will be using them.</p>
+</li>
+</ul>
+<p>The following is a <strong>full configuration</strong> file, which uses the previously
+defined router:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      cittavr.config
+    
+  </div>
+  
+  <pre><code class='language-ini'>IDM.Router.Proxy = 0A01C17400000001 -t -e 1.0:tcp -h 127.0.0.1 -p 6140
+CittaVR.Adapter.Endpoints = tcp -h 127.0.0.1 -p 9001
+CittaVR.Id = 0A01C17400000002</code></pre>
+</div>
+<h1 id="installing-zeroc-ice-for-unity">Installing ZeroC Ice for Unity</h1>
+<p>As you may already know, CittaVR <strong>uses ZeroC Ice</strong>, so before
+anything else, you must install it. ZeroC provides its libraries and
+tools for C# using the <a href="https://www.nuget.org/">NuGet repositories</a>,
+and there is a <strong>plugin</strong> to add support for NuGet to Unity, so this is
+what you need to install.</p>
+<p>First, <strong>download the plugin</strong> in the following site (is an asset in the form
+of <code>.unitypackage</code>):</p>
+<ul>
+<li><a href="https://github.com/GlitchEnzo/NuGetForUnity/releases">NuGetForUnity github releases</a></li>
+</ul>
+<p>In my case, I downloaded the 2.0 version. Then, you can <strong>import it</strong>: right
+click on Assets folder and select <code>Import Package &gt; Custom Package...</code>:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity-import-custom-package.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: import custom package</p>
+  </div>
+  
+</div>
+
+
+<p>Select the file you downloaded and click on Open. It will show you a window with
+the assets to import. Select all and press <code>Import</code>. It may take a while, so be
+patient. Once finished, you should see a new <strong>menu entry</strong>:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20nuget%20menu%20entry.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: NuGet correctly installed and compiled</p>
+  </div>
+  
+</div>
+
+
+<p>Ok. Go to <code>NuGet &gt; Manage NuGet Packages</code>. It will open a new tab that
+allows you to install new packages. It may open as a <strong>floating
+window</strong>, so feel free to drag it where the other tabs are, to expand
+it. Now, press on <code>Search</code> and find the package called
+<code>zeroc.ice.net</code>:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/nuget%20-%20zeroc%20ice%20net.png' />
+  
+  <div class="polaroid-caption">
+    <p>NuGet: installing ZeroC package</p>
+  </div>
+  
+</div>
+
+
+<p>Press on <strong>install</strong> and let it finish. When done, you are ready to
+include the CittaVR packages!</p>
+<h1 id="adding-cittavr-assets">Adding CittaVR assets</h1>
+<p>Until now, we only <strong>set up</strong> the environment to work with CittaVR,
+but we didn&rsquo;t install it. Now is the time. CittaVR has many
+components: a <strong>Debian package</strong> with scripts to communicate with the
+internal manager to instantiate new objects and <strong>two Unity packages</strong>,
+one for the core and another with common assets.</p>
+<p>The <strong>Debian package</strong> could be installed using the
+<a href="http://pike.esi.uclm.es/">Pike repository</a> (visit the link for
+instructions), just like any other package:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>sudo apt install cittavr-unity</pre>
+</div>
+<p>The <strong>Unity packages</strong> could be downloaded from <a href="https://bitbucket.org/arco_group/cittavr-unity">CittaVR
+repository</a>, under the
+<code>Downloads</code> section. For convenience, I put here the links to the
+<strong>latest versions</strong>, just click to download and save them.</p>
+<ul>
+<li><a href="https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-core-20200217.unitypackage">CittaVR Core - Unity
+package</a></li>
+<li><a href="https://bitbucket.org/arco_group/cittavr-unity/downloads/cittavr-assets-20200217.unitypackage">CittaVR Assets - Unity
+package</a></li>
+</ul>
+<p>Now, you can import both packages into your project, using the same procedure as
+before, ot just <strong>drag and drop</strong> the package inside the Assets folder of your
+Unity Editor. Add first the <strong>CittaVR Core</strong> package:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20install%20core.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: installing CittaVR Core</p>
+  </div>
+  
+</div>
+
+
+<p>On drop, it will show a new window to select what components you want to
+include. Confirm that <strong>all is selected</strong> and press on import. Repeat the <strong>same
+process</strong> to include the package &lsquo;<em>CittaVR Assets</em>&rsquo; you downloaded earlier.</p>
+<p>The final step to conclude your setup is <strong>adding</strong> to your scene an
+instance of the <strong>CittaVRApp prefab</strong>, which is needed to initialize
+all the internal runtime of CittaVR. Go to <code>Assets &gt; CittaVR</code> folder
+inside your project tab on the Unity Editor. There you should find a
+<a href="https://docs.unity3d.com/Manual/Prefabs.html">prefab</a> called
+<code>CittaVRApp</code> (the blue 3D box), drag it and drop into your <em>Hierarchy</em>
+tab (and save the scene!).</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20add%20cittavr%20prefab.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: adding the CittaVR prefab</p>
+  </div>
+  
+</div>
+
+
+<p>Now, you can press <strong>play</strong> on Unity, and (if everything went ok),
+your CittaVR manager should have <strong>registered</strong> correctly on the given
+IDM router. You may see messages like these:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/idm%20-%20adv%20of%20cittavr.png' />
+  
+  <div class="polaroid-caption">
+    <p>IDM: CittaVR manager advertisement</p>
+  </div>
+  
+</div>
+
+
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20start%20of%20cittavr.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: starting messages of CittaVR</p>
+  </div>
+  
+</div>
+
+
+<p>Press stop, we are going to <strong>add some objects</strong> to the scene!</p>
+<h1 id="static-instantiating">Static instantiating</h1>
+<p>In the folder <code>Assets &gt; Resources &gt; CittaVR</code> you will find some more
+prefabs. These are the objects that come <strong>bundled with CittaVR</strong>. Of
+course, you are not limited to use only these, later we will
+see how to create new ones, but as a starting point they will do.</p>
+<p>Depending on the version you downloaded, there will be more or less
+available assets. As of writing this document, there were: a <em>street
+lamp</em>, a <em>traffic lights</em> and a <em>proximity sensor</em>. Let&rsquo;s <strong>add the
+street lamp</strong> first.</p>
+<p>The process is <strong>exactly the same</strong> used to add the <code>CittaVRApp</code>: just
+<strong>grab</strong> the <code>StreetLamp</code> prefab and <strong>put</strong> it on your scene,
+wherever you want. After that, you may see something like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20street%20lamp%20added.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: adding a new StreetLamp asset</p>
+  </div>
+  
+</div>
+
+
+<p>Well, OK. Maybe I&rsquo;ve changed some <em>little</em> things (I&rsquo;ve added a plane as a
+floor, reduced the light intensity and switched on the Street Lamp), but you get
+the idea, <strong>there is a street lamp</strong> on my scene, as should be in yours! Now,
+you can press <strong>play</strong> again and your street lamp will be ready for action. You
+may see a warning message like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20error%20no%20idm%20address.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: running without IDM address</p>
+  </div>
+  
+</div>
+
+
+<p>The reason is that you <strong>didn&rsquo;t set</strong> a valid IDM address for this object. In
+order to be reachable, or to know the source of a virtual event, every object in
+CittaVR <strong>should have</strong> an IDM <strong>address</strong>. If you don&rsquo;t set it, CittaVR will
+automatically choose one from the address pool (in this case, the next free
+address: <code>0A01C17400000003</code>. If you want to set it, go to the object inspector
+(right side in the above picture), and find the <code>Street Lamp (Script)</code>
+component. There, you should see two properties:</p>
+<ul>
+<li><strong><code>IDM Address</code></strong>, which is the field we need to change, the address
+of this object for everyone else (including the outside world!)</li>
+<li><strong><code>Citisim ID</code></strong>, this is an internal identifier, used for dynamic
+instantiating, don&rsquo;t to worry about it now.</li>
+</ul>
+<p>So, to change the <strong>IDM Address</strong> field, add a valid address, in the same domain
+that your router, like <code>0A01C17400101234</code>. Then, if you press <strong>play</strong> again,
+you will get rid of that warning. One way or the other, the object should have
+been <strong>advertised</strong> on your IDM router, like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/idm%20-%20adv%20of%20street%20lamp.png' />
+  
+  <div class="polaroid-caption">
+    <p>IDM: advertisement of the new Street Lamp</p>
+  </div>
+  
+</div>
+
+
+<p>Now, you can <strong>change its status</strong> from inside and outside Unity. From inside,
+just <strong>click</strong> on the street lamp head, and it should toggle the lamp status. To
+change it from outside, you must know that this lamp implements the <em>Smart
+Transducer</em> interface <code>st::IBool</code>, so you need a client that uses this
+interface. For instance, the Debian package <code>smart-transducer</code> provides a
+<strong>command line tool</strong> that could be used for this purpose. To reach the object
+<strong>directly</strong>, use the proxy that you saw on the advertisement:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>st-client -t bool -p &#34;0A01C17400101234 -t:tcp -h 127.0.0.1 -p 9001&#34; 1
+st-client -t bool -p &#34;0A01C17400101234 -t:tcp -h 127.0.0.1 -p 9001&#34; 0</pre>
+</div>
+<p>But, if you want to <strong>use IDM</strong> (which is, by the way, the <strong>proper</strong>
+method), you will use the router&rsquo;s endpoints and the object&rsquo;s address,
+like this:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>st-client -t bool -p &#34;0A01C17400101234 -t:tcp -h 127.0.0.1 -p 6140&#34; 1
+st-client -t bool -p &#34;0A01C17400101234 -t:tcp -h 127.0.0.1 -p 6140&#34; 0</pre>
+</div>
+<p>In this case, you will also see how the <strong>router forwards</strong> these
+messages to the proper destination:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/idm%20-%20forwarding.png' />
+  
+  <div class="polaroid-caption">
+    <p>IDM: forwarding messages to the lamp</p>
+  </div>
+  
+</div>
+
+
+<p>What is more, this object also implements the interface <code>st::Linkable</code>, so you
+can set another object as its <strong>observer</strong> (or link), and when the lamp changes
+its state, it will <strong>notify</strong> the new state to this observer. Also, this lamp
+could be the observer of some other object. <strong>Let&rsquo;s do it!</strong></p>
+<h1 id="dynamic-instantation">Dynamic instantation</h1>
+<p>We will use one of the other prefabs that come with CittaVR Assets: the
+<strong>proximity sensor</strong>. The scene could be the following:</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>So, we need a proximity sensor that <strong>detects</strong> a new car, and then <strong>switches
+on</strong> the street lamp. This sensor implements the interface <code>st::Linkable</code>, and
+sends events using <code>st::IBool</code>, which is the same interface implemented by the
+<em>StreetLamp</em> object. We can just connect one to the other.</p>
+<p>If you go to the <code>Assets &gt; Resources &gt; CittaVR</code>, there should be a
+<code>ProximitySensor</code> prefab. You could just add it to your scene, as we
+did earlier, but we want to do it <strong>differently, in a dynamic way</strong>
+(i.e: having the whole scene <strong>running</strong>).</p>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>To achieve this, first thing you need to do is to press <strong>play</strong> on the Unity
+editor, as we need the <em>CittaVRApp</em> running. Then, open a terminal window, and
+use the <code>cittavr</code> companion <strong>tool</strong> to add the asset. You need to specify your
+<strong>project folder</strong> (the Unity project root folder), the <strong>name</strong> of the asset
+and the <strong>position</strong> in the scene to place it. For instance:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>cittavr . --add-asset CittaVR/ProximitySensor --pos 0 3.5 0 90</pre>
+</div>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>Of course, you can use the supplied <strong>Ice interface</strong> directly from your program
+to achieve the same result. In any case, the proximity sensor should be
+displayed like a <strong>red box</strong> (you will see it in the game tab and also in the
+scene editor tab):</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20proximity%20sensor.png' />
+  
+  <div class="polaroid-caption">
+    <p>Proximity Sensor: normal appearance</p>
+  </div>
+  
+</div>
+
+
+<p>You may don&rsquo;t want to see this red box, so just uncheck the <code>Mesh Renderer</code>
+option of the proximity sensor prefab (remember, if you want to make this change
+permanent, add the prefab to the scene statically):</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20disable%20render%20proximity%20sensor.png' />
+  
+  <div class="polaroid-caption">
+    <p>Proximity Sensor: disabling the red box</p>
+  </div>
+  
+</div>
+
+
+<p>Now, when some object <strong>collides</strong> with this one, it will emit a message to its
+observer (if no observer is set, nothing will be done). Note that the colliding
+object should be a <strong>Rigid Body</strong>, and also have <strong>some type of collider</strong> on
+it. So its time to add the object that will <strong>activate</strong> this sensor, just to
+test if everything works. Press <strong>Stop</strong> on your player, and add a cube or
+something that will collide with your sensor. Now, you can press play, and add
+the proximity sensor again, using the <code>cittavr</code> tool.</p>
+<p>But, if you expect the light to switch on, you will get disappointed! :) Why?
+Because we didn&rsquo;t <strong>connect</strong> both objects (yet). Its a simple step. Open a new
+terminal window, and use a tool called <code>st-link-to</code>, available on the
+<code>smart-transducer</code> Debian package. It needs <strong>two</strong> parameters: first, the proxy
+of <strong>your observable</strong> object (which is the source of the events), and second,
+the IDM address of <strong>the observer</strong> (that is the object that will receive the events).
+In this example, the observable object is the proximity sensor (IDM:
+<code>0A01C17400000003</code>) and the observer is your street lamp (IDM:
+<code>0A01C17400101234</code>).</p>
+<p>So, to <strong>connect both</strong> elements using the router endpoints, run the following
+command:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>st-link-to &#39;0A01C17400000003 -t:tcp -h 127.0.0.1 -p 6140&#39; 0A01C17400101234</pre>
+</div>
+<p>Now, when the sensor <strong>detects some collision</strong>, it will <strong>invoke</strong>
+the street lamp, which will power on. Later, if the sensor <strong>stops
+detecting</strong> the collider, it will <strong>also notify</strong> the lamp, but with a
+delay of 8 seconds (which is the default value of the prefab).</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/test-object-colliding.png' />
+  
+  <div class="polaroid-caption">
+    <p>Test: the yellow cube just collided with the sensor</p>
+  </div>
+  
+</div>
+
+
+<p>The next big thing to achieve is the task of creating <strong>new CittaVR</strong>
+compliant assets. This will be analyzed in the following section.</p>
+<h1 id="creating-a-new-cittavr-asset">Creating a new CittaVR Asset</h1>
+<p>A CittaVR asset is usually a <strong>prefab</strong> which provides the mesh,
+materials, textures, scripts and other components in a single
+unit. Thus, you just need to add it to your scene, and maybe change
+some settings.</p>
+<p>In this section, we will create a <strong>new asset</strong>, step by step. It will
+be a level crossing, and will provide an interface to set its state (up
+or down).</p>
+<h2 id="model-in-blender">Model in Blender</h2>
+<p>Well, this part is very &lsquo;simple&rsquo;: just open Blender and <strong>create the
+model</strong> you wish. Take note that you will import it into Unity, so you
+must know the <strong>limitations and caveats</strong> it has (which will not be
+enumerated here). If your model is simple, you won&rsquo;t have any
+problem. Even some modifiers work out of the box, like basic textures
+do (the UV mappings are also imported correctly). Specific <strong>shaders</strong>
+or node materials are <strong>not supported</strong>, you must create them inside
+Unity.</p>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>For this example, I&rsquo;ve created a <strong>simple barrier</strong>, like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/blender%20-%20basic%20barrier.png' />
+  
+  <div class="polaroid-caption">
+    <p>Blender: a basic train barrier</p>
+  </div>
+  
+</div>
+
+
+<h2 id="creating-the-prefab">Creating the prefab</h2>
+<p>Add your model to the assets folder of your Unity project, and then to
+your scene, to check if <strong>everything is correct</strong>. Adjust your model
+materials, and textures, and add whatever component you need.</p>
+<p>Now, to create your prefab, just <strong>drag the model</strong> you added in your scene
+(which you have modified, adding components, etc.), <strong>drop it</strong> on your
+assets folder and select <code>Original Prefab</code>:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20create%20prefab.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: populating the prefab with your instance</p>
+  </div>
+  
+</div>
+
+
+<p>Now, you have an object which will be the template used to instantiate
+new objects. Note that you still <strong>need to preserve</strong> the original
+model imported from blender, and also the textures and associated
+scripts.</p>
+<h2 id="companion-c-script">Companion C# script</h2>
+<p>Up to now, your asset is not integrated into CittaVR in any way. So,
+<strong>create</strong> a new empty <strong>C# script</strong>, and open it with your editor.</p>
+<p>First of all, you will need to create a new class, that inherits from
+<code>CittaVR.AssetManager</code> (which is a subclass of <code>MonoBehaviour</code>
+). Among other tasks, this class will be used to instantiate your
+<strong>Ice servant</strong>, so you must implement a method called
+<code>create_servant</code>, which has the following signature:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.cs
+    
+  </div>
+  
+  <pre><code class='language-cs'>public abstract Ice.Object create_servant(
+    GameObject obj,
+    ConcurrentQueue&lt;GUITask&gt; task_queue,
+    Ice.ObjectPrx router);</code></pre>
+</div>
+<p>The given parameters are:</p>
+<ul>
+<li><strong><code>GameObject obj</code></strong>: the actual
+<a href="https://docs.unity3d.com/ScriptReference/GameObject.html">GameObject</a>
+to which this script is attached to.</li>
+<li><strong><code>ConcurrentQueue&lt;GUITask&gt; task_queue</code></strong>: this is a queue of
+<code>GUITask</code>, used to execute drawing functions on the GUI thread. If
+your servant wants to modify the scene on runtime, this is the way
+to achieve it.</li>
+<li><strong><code>Ice.ObjectPrx router</code></strong>: the IDM router that you have to use.</li>
+</ul>
+<p>So, on this method, you should <strong>create and return</strong> an instance of your
+servant. For example, this asset will use the <code>st::IBool</code> interface, so I create
+my servant as this:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.cs
+    
+  </div>
+  
+  <pre><code class='language-cs'>class LevelCrossingServant : st.IBoolDisp_ {
+    private static ILogger logger = Debug.unityLogger;
+
+    private GameObject _obj;
+    private ConcurrentQueue&lt;GUITask&gt; _task_queue;
+    private Ice.ObjectPrx _router;
+    private string _observer;
+    private string _source;
+
+    private Transform _barrier;
+    private Quaternion _originalRot;
+
+    public LevelCrossingServant(
+              GameObject obj, ConcurrentQueue&lt;GUITask&gt; task_queue,
+              Ice.ObjectPrx router, string source) {
+
+        this._obj = obj;
+        this._task_queue = task_queue;
+        this._router = router;
+        this._source = source;
+
+        this._barrier = _obj.transform.GetChild(0);
+        this._originalRot = _barrier.rotation;
+    }
+
+    public override void set(bool value, string source, Current current=null) {
+        // enqueue UI update
+        _task_queue.Enqueue((mb) =&gt; {
+             _barrier.rotation =
+                _originalRot * Quaternion.AngleAxis(value ? 90: 0, Vector3. up);
+        });
+    }
+}</code></pre>
+</div>
+<p>Here, I&rsquo;ve implemented the <code>set()</code> method. What it does is to <strong>enqueue an
+operation of update</strong> inside the GUI thread, to just rotate the barrier to one
+side or the other.</p>
+<p>With this class, I&rsquo;ve implemented the <code>create_servant()</code> method as follows:</p>
+<div class="app-skin">
+  <div class="filename">
+    
+      snippet.cs
+    
+  </div>
+  
+  <pre><code class='language-cs'>public class LevelCrossing : CittaVR.AssetManager {
+    private LevelCrossingServant _servant;
+
+    public override Ice.Object create_servant(
+            GameObject obj, ConcurrentQueue&lt;GUITask&gt; task_queue,
+            Ice.ObjectPrx router) {
+
+        _servant = new LevelCrossingServant(
+            obj, task_queue, router, IDMAddress);
+        return _servant;
+    }
+}</code></pre>
+</div>
+<p>Now, of course, don&rsquo;t forget to <strong>add this script</strong> as a component of
+your prefab. And, if you go to the inspector tab, you will see some
+familiar properties on this script: the <strong>IDM Address</strong> and the less
+used <strong>Citisim ID</strong>.</p>
+<p>To test the script, create an <strong>instance</strong> of your prefab, set the IDM address,
+and press play. You should see the advertisement of this object in the router
+output, and also should be able to change its state using the
+<code>st-client</code> again.</p>
+<h2 id="exporting-your-asset">Exporting your asset</h2>
+<p>If you want to use this asset on another project, you should <strong>export
+it</strong> as a Unity Package. There are two ways of doing this: using the
+<strong>contextual menu</strong> of the editor, or by <strong>command line</strong>. I prefer
+the later, because you can put it inside a <code>Makefile</code>, and generate
+the package very easily, but this is a matter of preference.</p>
+<p>Anyway, if you want to export your asset, I recommend you to make <strong>an
+specific folder</strong> for it, and then put every dependency that you want
+to include in your package inside that folder. In our example, it
+should be like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20asset%20hierarchy.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: folders for our asset</p>
+  </div>
+  
+</div>
+
+
+<p>Then, to export it using the editor, just click over that folder, and
+select <code>Export Package</code>. Unity automatically will select all
+dependencies of this asset, which includes CittaVR and many other
+things that you don&rsquo;t want to provide, so in the window that appears,
+uncheck the box <code>Include dependencies</code> (at the bottom):</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/unity%20-%20export%20unselect%20depends.png' />
+  
+  <div class="polaroid-caption">
+    <p>Unity: on export, don&#39;t include dependencies</p>
+  </div>
+  
+</div>
+
+
+<p>Click on <code>Export</code> and save the package wherever you want. It&rsquo;s also a
+good idea to <strong>create a new Unity project</strong> and check that everything
+worked fine.</p>
+<p>If you want to do this process but from the <strong>command line</strong> interface, open a
+terminal and go to your project folder. If you are using the new unity-hub (like
+me), then you may need to create an alias for the binary <code>unity</code> to the location
+you specified on setup. For example, I have all the unity installs in the folder
+<code>~/use/share/unity</code>, so in my example, I will create the following alias:</p>
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>alias unity=&#39;~/usr/share/unity/2019.3.0f6/Editor/Unity&#39;</pre>
+</div>
+<p>Then, to create the package, execute the following command:</p>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<div class="app-skin shell">
+  <div class="filename">console</div>
+  
+  <pre class=shell>unity -quit -nographics -batchmode \
+        -projectPath &#34;$(pwd)&#34; \
+        -exportPackage Assets/LevelCrossing \
+        &#34;$(pwd)/cittavr-level-crossing.unitypackage&#34;</pre>
+</div>
+<h1 id="compiling-slices-with-unity">Compiling Slices with Unity</h1>
+<p>In many cases, you will need to use your own Slice interfaces, to
+provide a custom servant or to implement two or more interfaces in the
+same class. Then, you will need to <strong>compile the slices</strong> to C#, using
+the Slice translators. Again, you have two options: <strong>install the Ice
+3.7</strong> compilers on your system, and compile directly from the command
+line interface, or use the <strong>Slice4Unity</strong> package. Here we will see
+the later method.</p>
+<p>So, go ahead and download the <code>Slice4Unity</code> package:</p>
+<ul>
+<li><a href="https://bitbucket.org/arco_group/slice4unity/downloads/slice4unity-latest.unitypackage">Slice4Unity package from
+bitbucket</a></li>
+</ul>
+<p>And <strong>add it</strong> to your project, as any other asset.</p>
+<!-- raw HTML omitted -->
+<pre><code>  Note:
+</code></pre>
+<!-- raw HTML omitted -->
+<p>After the installation, you can now select any <code>.ice</code> file, and the
+inspector will show you a button to <strong>compile the slice</strong>, like this:</p>
+
+  
+  
+  
+
+
+
+  
+  
+
+
+<div class="polaroid">
+  <img src='/cittavr/images/_index/slice4unity%20-%20compile%20button.png' />
+  
+  <div class="polaroid-caption">
+    <p>Slice4Unity: inspecting an slice file</p>
+  </div>
+  
+</div>
+
+
+<p>When you press the button, it will create a folder called <code>Generated</code> with the
+generated code for that slice interface. Nowadays, there is no other option,
+like support for including other directories, but I&rsquo;m working on it :D</p>
+
+
+
+
+
+
+    </div> 
+
+    <footer class="footer">
+      <div class="container text-center">
+        <a href="http://www.arcoresearch.com">ARCO Research Group</a> |
+        <a href="/">Docs</a>&nbsp; - &nbsp;made with
+        <a href="https://gohugo.io">Hugo</a> ·
+        <a href="http://getbootstrap.com">Bootstrap</a>
+      </div>
+    </footer>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
+
