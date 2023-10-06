@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/idm/examples/install/</guid>
       <description>IDM installation Note: this post will show you how to install IDM on a Debian based machine (like Ubuntu). The following instructions were tested on Debian 9.0 (stretch) y Ubuntu 17.04 (zesty). If you use Vagrant, you can download our VagrantFile for both setups.
 Setting up Debian repositories IDM is located on ARCO&amp;rsquo;s pike repository. To install it, run the following command:
-console $ wget -qO- &amp;#39;http://pike.esi.uclm.es/add-pike-repo.sh&amp;#39; | sudo sh  Installing ZeroC Ice for Python3 With a fresh installation of Debian 9.</description>
+console $ wget -qO- &amp;#39;http://pike.esi.uclm.es/add-pike-repo.sh&amp;#39; | sudo sh Installing ZeroC Ice for Python3 With a fresh installation of Debian 9.</description>
     </item>
     
   </channel>

@@ -14,7 +14,7 @@
       
       <guid>https://arcogroup.bitbucket.io/shapes/speech_recognition/</guid>
       <description>Overview DeepSpeech is a speech recognition engine developed by Mozilla that uses a model trained by machine learning techniques. This recipe will explain how to make use of this tool for speech recognition.
-Ingredients  Linux environment (tested on Ubuntu 20.04 LTS x64) APT dependencies: docker (&amp;gt;= 20.10.2), python3 (&amp;gt;= 3.7), venv The speech recognition repository available in this link  Setup First, clone the repository provided in the Ingredients section.</description>
+Ingredients Linux environment (tested on Ubuntu 20.04 LTS x64) APT dependencies: docker (&amp;gt;= 20.10.2), python3 (&amp;gt;= 3.7), venv The speech recognition repository available in this link Setup First, clone the repository provided in the Ingredients section. Once cloned you must copy the audios, in .</description>
     </item>
     
   </channel>

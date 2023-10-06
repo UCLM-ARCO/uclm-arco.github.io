@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/shapes/zigbee2mqtt/</guid>
       <description>Overview Zigbee2mqtt is an open-source project that enables the interconnection of different-brand devices with Zigbee connectivity. It can also be integrated with Home Assistant thanks to the bidirectional message relay from the network to MQTT. Because neither our Raspberry Pi nor our laptop has a ZigBee interface, we additionally need a zigbee adapter, this is the zig-a-zig-ah! (zzh!).
 Ingredients In order to follow this recipe you will need:
- A suported Zigbee adapter (zzh!</description>
+A suported Zigbee adapter (zzh!</description>
     </item>
     
   </channel>

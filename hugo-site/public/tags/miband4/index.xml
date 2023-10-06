@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/shapes/smartmirror_console_manual/</guid>
       <description>Overview A Smart Mirror can be overloaded with multiple services and utilities to serve different functionalities, but, like any other software product, this have to be shaped into its final user needs. For that, the smartmirror-console comes in handy, as it provides a high-level interface to configure all Smart Mirror packages and services.
 Ingredients The mandatory ingredients to follow this recipe are:
- A PC with a browser installed. A Raspberry Pi 4, or RPi4, either connected to the same network as the PC, or with a public ID address.</description>
+A PC with a browser installed. A Raspberry Pi 4, or RPi4, either connected to the same network as the PC, or with a public ID address.</description>
     </item>
     
     <item>

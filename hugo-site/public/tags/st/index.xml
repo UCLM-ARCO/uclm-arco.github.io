@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/recipes/st_getting_started/</guid>
       <description>Overview Smart-Transducer is a platform for building Smart Home solutions the easy way. It uses very simple interfaces, with a push model, to acquire sensor information and also to change the state of actuators. This recipe will analyze those interfaces and how to use them.
 Ingredients In order to follow this recipe, you will need to satisfy the following requirements:
- The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
+The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
     </item>
     
   </channel>

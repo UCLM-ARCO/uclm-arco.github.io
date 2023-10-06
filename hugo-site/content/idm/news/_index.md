@@ -1,5 +1,0 @@
----
-layout: "news"
-section: "news"
----
-

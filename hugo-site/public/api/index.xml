@@ -13,7 +13,7 @@
       <pubDate>Tue, 16 Jun 2020 23:34:13 +0200</pubDate>
       
       <guid>https://arcogroup.bitbucket.io/api/bosch-sensor/</guid>
-      <description>Library for the control of a MetaMotionR device class index:  Accelerometer Color ConnectionError Gyroscope MetaMotion MetaMotionDeviceNotFound Mode WrongMetaDeviceModel  metamotionAPI Documentation Class Accelerometer Class for represent an Accelerometer sensor that is part of a MetaMotionR device This class enable the user to request all the data that is provided by this accelerometer sensor
+      <description>Library for the control of a MetaMotionR device class index: Accelerometer Color ConnectionError Gyroscope MetaMotion MetaMotionDeviceNotFound Mode WrongMetaDeviceModel metamotion API Documentation Class Accelerometer Class for represent an Accelerometer sensor that is part of a MetaMotionR device This class enable the user to request all the data that is provided by this accelerometer sensor
 __init__ def __init__(self, board, freq, motion_samples, motion_threshold, tap_threshold) Method for initialice the accelerometer sensor with the desired parameters.</description>
     </item>
     
@@ -23,7 +23,7 @@ __init__ def __init__(self, board, freq, motion_samples, motion_threshold, tap_t
       <pubDate>Fri, 24 Jan 2020 14:55:45 +0100</pubDate>
       
       <guid>https://arcogroup.bitbucket.io/api/amazfit_2_dynamic_core/</guid>
-      <description>Amazfit 2 Chip API Reference class index:  Core2  amazfitAPI Documentation Class Core2 This class provides access to the Huami Smart Chip (version 2), which could be found on Amazfit or Xiaomi sneakers. Use this class to discover a new device, connect and pair to it, retrieve device information, orientation, steps, etc.
+      <description>Amazfit 2 Chip API Reference class index: Core2 amazfit API Documentation Class Core2 This class provides access to the Huami Smart Chip (version 2), which could be found on Amazfit or Xiaomi sneakers. Use this class to discover a new device, connect and pair to it, retrieve device information, orientation, steps, etc.
 For some of the properties, it also supports a push mechanism which allows to receive notifications when the property changes.</description>
     </item>
     
@@ -33,7 +33,7 @@ For some of the properties, it also supports a push mechanism which allows to re
       <pubDate>Wed, 27 Feb 2019 08:58:56 +0100</pubDate>
       
       <guid>https://arcogroup.bitbucket.io/api/mijia_smart_home/</guid>
-      <description>Mijia Smart Home API reference class index:  LumiGateway CubeAqgl01 Magnet Motion Plug Switch WeatherV1  mijiaAPI Documentation Class LumiGateway This class is used to access a Lumi Gateway device (provided by Xiaomi / Aqara). It will automatically try to discover devices on your network, using the Lumi LAN protocol. It installs a thread to listen for incomming events, and also allows you to change the device light color.
+      <description>Mijia Smart Home API reference class index: LumiGateway CubeAqgl01 Magnet Motion Plug Switch WeatherV1 mijia API Documentation Class LumiGateway This class is used to access a Lumi Gateway device (provided by Xiaomi / Aqara). It will automatically try to discover devices on your network, using the Lumi LAN protocol. It installs a thread to listen for incomming events, and also allows you to change the device light color.
 illumination [read only property] Stores the Gateway&amp;rsquo;s provided value for its light sensor.</description>
     </item>
     

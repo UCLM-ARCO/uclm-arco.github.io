@@ -423,7 +423,7 @@ user@pc:~/$ sudo miband-grafana -u                      // Try again!</pre>
 </ul>
 <h2 id="appendix-1-configuration-for-local-database">Appendix 1. Configuration for local database</h2>
 <p>If we have installed PostgreSQL locally, either in our RPi4 or in our PC, we must ensure they are in the same network or both hosts have public IP addresses. In these scenarios, either Grafana instance, in our PC, or <code>miband-dc</code>, in our RPI4, will have to access the database, so we must change PostgreSQL configuration to allow remote connections.</p>
-<p>First, we will change the value of <code>listen_addresses</code> to <strong>'*'</strong> in the file <code>postgresql.conf</code>. If we execute <code>SHOW config_file</code> in our PostgreSQL instance we will know its location. For example:</p>
+<p>First, we will change the value of <code>listen_addresses</code> to <strong>&rsquo;*&rsquo;</strong> in the file <code>postgresql.conf</code>. If we execute <code>SHOW config_file</code> in our PostgreSQL instance we will know its location. For example:</p>
 <div class="app-skin shell">
   <div class="filename">console</div>
   
@@ -437,7 +437,7 @@ user@pc:~/$ sudo su postgres -c &#34;psql -c &#39;SHOW config_file&#39;&#34;
 user@pc:~/$ sudo grep -n listen_addresses /etc/postgresql/12/main/postgresql.conf 
 59:#listen_addresses = &#39;localhost&#39;              # what IP address(es) to listen on;</pre>
 </div>
-<p>We will change, in the line 59, &lsquo;localhost&rsquo; for &lsquo;*&rsquo; and uncomment the line.</p>
+<p>We will change, in the line 59, &rsquo;localhost&rsquo; for &lsquo;*&rsquo; and uncomment the line.</p>
 <p>Next we will open the file <code>pg_hba.conf</code>, whose path is specified in <code>postgresql.conf</code> with the <code>hba_file</code> parameter), and add the next line:</p>
 
 

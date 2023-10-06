@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/recipes/creating_vagrant_snapshots/</guid>
       <description>Ingredientes Esta receta está pensada para ser usada con un demostrador o servicio que está virtualizado usando Vagrant. Partiremos asumiendo que el servicio está correctamente desplegado y funcionando.
 Crear el box de vagrant Para crear el box, solo es necesario ejecutar el siguiente comando:
-console $ vagrant package --output my-application.box  Esto generará un fichero con el nombre indicado, que podrá ser usado para crear nuevas instancias de este Vagrant. El fichero contiene el sistema entero tal y como esta en este momento, por lo que quizá ocupe más de 1 GiB (dependiendo del contenido de la VM).</description>
+console $ vagrant package --output my-application.box Esto generará un fichero con el nombre indicado, que podrá ser usado para crear nuevas instancias de este Vagrant. El fichero contiene el sistema entero tal y como esta en este momento, por lo que quizá ocupe más de 1 GiB (dependiendo del contenido de la VM).</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@ console $ vagrant package --output my-application.box  Esto generará un fichero
       <guid>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</guid>
       <description>Overview IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middleware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
 Ingredients In order to follow the next recipe you will need the following requirements:
- The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
+The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
     </item>
     
     <item>
@@ -37,7 +37,7 @@ Ingredients In order to follow the next recipe you will need the following requi
       <guid>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</guid>
       <description>Overview Prego is a library consisting on a set of clases and hamcrest matchers usefull to specify shell command interactions through files, environment variables, network ports.
 The main concept in prego is the Task(). A task is a set of assertions with three different checkers:
- task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command  A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
+task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
     </item>
     
     <item>
@@ -48,7 +48,7 @@ The main concept in prego is the Task(). A task is a set of assertions with thre
       <guid>https://arcogroup.bitbucket.io/recipes/st_getting_started/</guid>
       <description>Overview Smart-Transducer is a platform for building Smart Home solutions the easy way. It uses very simple interfaces, with a push model, to acquire sensor information and also to change the state of actuators. This recipe will analyze those interfaces and how to use them.
 Ingredients In order to follow this recipe, you will need to satisfy the following requirements:
- The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
+The smart-transducer package, available at Pike&amp;rsquo;s repository. Python skills (search in python.</description>
     </item>
     
     <item>

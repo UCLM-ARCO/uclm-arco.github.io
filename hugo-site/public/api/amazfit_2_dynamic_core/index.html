@@ -67,8 +67,8 @@ device. It is a <strong>tuple</strong> with two fields, one for each axis.</p>
 <p>[<em>read-only property</em>] Provides the current <strong>step count</strong> of the device. It
 will retrieve it (synchronously) when used (no caching).</p>
 <h3 id="span-classapi-func__init__span"><!-- raw HTML omitted --><code>__init__</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> __init__(self, address, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, key<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
-</code></pre></div><p><!-- raw HTML omitted -->Smart Chip (a.k.a <strong>Dyanmic Core 2</strong>) constructor. This is the basic
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> __init__(self, address, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, key<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Smart Chip (a.k.a <strong>Dyanmic Core 2</strong>) constructor. This is the basic
 object you need to instantiate. It could be created <strong>directly</strong>
 (providing the device address) or performing a <strong>discovery</strong> with the
 <code>.find()</code> method (explained later).</p>
@@ -82,14 +82,14 @@ later from the device itself.</li>
 the device. If not provided, it will be <strong>generated</strong> randomly.</li>
 </ul>
 <h3 id="span-classapi-funcconnectspan"><!-- raw HTML omitted --><code>connect</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect</span>(self)
-</code></pre></div><p><!-- raw HTML omitted -->Try to connect to the device, using the provided address. Returns when
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">connect</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Try to connect to the device, using the provided address. Returns when
 then connection is <strong>established</strong>. If the device is not present (before
 the <em>timeout</em> expires), it will raise an exception. This method <strong>must</strong>
 be called <strong>before</strong> any other operation.</p>
 <h3 id="span-classapi-funcfindspan"><!-- raw HTML omitted --><code>find</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
-</code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return the
 <strong>first</strong> found.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -97,8 +97,8 @@ be called <strong>before</strong> any other operation.</p>
 answer discovery.</li>
 </ul>
 <h3 id="span-classapi-funcfind_allspan"><!-- raw HTML omitted --><code>find_all</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_all</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
-</code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return <strong>all</strong> the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_all</span>(cls, timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Classmethod</strong> to search compatible devices. It will return <strong>all</strong> the
 devices found.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -106,12 +106,12 @@ devices found.</p>
 answer discovery.</li>
 </ul>
 <h3 id="span-classapi-funcfire_orientation_readspan"><!-- raw HTML omitted --><code>fire_orientation_read</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fire_orientation_read</span>(self)
-</code></pre></div><p><!-- raw HTML omitted -->Forces a <strong>new read</strong> on the orientation characteristic. You should call
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fire_orientation_read</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Forces a <strong>new read</strong> on the orientation characteristic. You should call
 <code>on_orientation()</code> before, in order to setup a notification <strong>callback</strong>.</p>
 <h3 id="span-classapi-funcon_orientationspan"><!-- raw HTML omitted --><code>on_orientation</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_orientation</span>(self, cb)
-</code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>orientation handle</strong>, and configures a
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_orientation</span>(self, cb)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>orientation handle</strong>, and configures a
 callback to be called when a <strong>new</strong> notification arrives.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -122,8 +122,8 @@ as follows: <code>def callback([self,] axis)</code></li>
 notifications when the value has changed. To receive them, you should
 force a new event with the <code>fire_orientation_read()</code> method.</p>
 <h3 id="span-classapi-funcon_stepsspan"><!-- raw HTML omitted --><code>on_steps</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_steps</span>(self, cb)
-</code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>step readings</strong>, and configures a callback to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_steps</span>(self, cb)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Enables notifications on <strong>step readings</strong>, and configures a callback to
 be called when a <strong>new</strong> notification arrives.</p>
 <p><strong>Parameters:</strong></p>
 <ul>
@@ -131,20 +131,20 @@ be called when a <strong>new</strong> notification arrives.</p>
 follows: <code>def callback([self,] steps)</code></li>
 </ul>
 <h3 id="span-classapi-funcpairspan"><!-- raw HTML omitted --><code>pair</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(self)
-</code></pre></div><p><!-- raw HTML omitted -->Bond with this device. It will exchange the private key used to cipher
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Bond with this device. It will exchange the private key used to cipher
 messages with the chip (although it is <strong>not</strong> necessary for every
 operation). This procedure also will <strong>reset the step counter</strong> in the
 device.</p>
 <h3 id="span-classapi-funcread_infospan"><!-- raw HTML omitted --><code>read_info</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_info</span>(self)
-</code></pre></div><p><!-- raw HTML omitted -->Retrieve all the <strong>static information</strong> provided by the device. After
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_info</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted -->Retrieve all the <strong>static information</strong> provided by the device. After
 calling this method, you can access the following attributes:</p>
 <ul>
 <li><code>name</code>: the device <strong>name</strong> (if provided on constructor, it will be
 updated)</li>
 <li><code>appearance</code>: a <strong>number</strong> which identifies the type of this device
-(like &lsquo;<em>Generic Phone</em>&rsquo;, &lsquo;<em>Sports Watch</em>&rsquo; or &lsquo;<em>Heart rate Sensor</em>').</li>
+(like &lsquo;<em>Generic Phone</em>&rsquo;, &lsquo;<em>Sports Watch</em>&rsquo; or &lsquo;<em>Heart rate Sensor</em>&rsquo;).</li>
 <li><code>privacy_flag</code>: indicates if this device has <strong>privacy</strong> enabled or
 disabled.</li>
 <li><code>min_connection_int</code>: Preferred connection parameter, <strong>BLE</strong> minimum
@@ -173,8 +173,8 @@ the Vendor ID Source</li>
 <li><code>product_ver</code>: Manufacturer managed <strong>version</strong> for this product</li>
 </ul>
 <h3 id="span-classapi-funcwait_until_breakspan"><!-- raw HTML omitted --><code>wait_until_break</code><!-- raw HTML omitted --></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wait_until_break</span>(self)
-</code></pre></div><p><!-- raw HTML omitted --><strong>Blocks</strong> the calling thread execution until it receives a
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wait_until_break</span>(self)
+</span></span></code></pre></div><p><!-- raw HTML omitted --><strong>Blocks</strong> the calling thread execution until it receives a
 <code>KeyboardInterrupt</code> (Ctrl+C) Use it (or use instead an <strong>event loop</strong>) to keep
 the application <strong>running</strong> while you wait for incoming events.</p>
 

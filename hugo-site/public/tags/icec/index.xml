@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/recipes/programming_icec_in_x86/</guid>
       <description>Overview IceC is an object oriented communication middleware, written in C/C++, with a low use of the resources. This middleware is thought to small microcontrollers with limited resources, but is compatible with different architectures, in this example you are going to see how to program IceC in the architecture x86.
 Ingredients In order to follow the next recipe you will need the following requirements:
- The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
+The icec and smart-transducer packages available at Pike&amp;rsquo;s repository.</description>
     </item>
     
   </channel>

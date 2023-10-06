@@ -15,7 +15,7 @@
       <guid>https://arcogroup.bitbucket.io/recipes/creating_vagrant_snapshots/</guid>
       <description>Ingredientes Esta receta está pensada para ser usada con un demostrador o servicio que está virtualizado usando Vagrant. Partiremos asumiendo que el servicio está correctamente desplegado y funcionando.
 Crear el box de vagrant Para crear el box, solo es necesario ejecutar el siguiente comando:
-console $ vagrant package --output my-application.box  Esto generará un fichero con el nombre indicado, que podrá ser usado para crear nuevas instancias de este Vagrant. El fichero contiene el sistema entero tal y como esta en este momento, por lo que quizá ocupe más de 1 GiB (dependiendo del contenido de la VM).</description>
+console $ vagrant package --output my-application.box Esto generará un fichero con el nombre indicado, que podrá ser usado para crear nuevas instancias de este Vagrant. El fichero contiene el sistema entero tal y como esta en este momento, por lo que quizá ocupe más de 1 GiB (dependiendo del contenido de la VM).</description>
     </item>
     
   </channel>

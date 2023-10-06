@@ -42,7 +42,7 @@
       <guid>https://arcogroup.bitbucket.io/recipes/make_testing_with_prego/</guid>
       <description>Overview Prego is a library consisting on a set of clases and hamcrest matchers usefull to specify shell command interactions through files, environment variables, network ports.
 The main concept in prego is the Task(). A task is a set of assertions with three different checkers:
- task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command  A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
+task.assert_that, for single shot checking task.wait_that, for polling recurrent checking task.command, to run arbitrary shell command A task also counts with two assertions asociated, runnning() and terminated(), which check if the task is working or has finished respectively.</description>
     </item>
     
     <item>
