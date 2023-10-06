@@ -58,7 +58,7 @@ jobs:
           HUGO_ENV: production
         run: |
           echo hola > ./hugo-site/public/some.html
-          make
+          make clean hugo-sync all
           # hugo \
           #   --minify \
           #   --baseURL "${{ steps.pages.outputs.base_url }}/"
