@@ -4,7 +4,7 @@ title: "Miratar"
 description: "Predictive, personalized, preventive, and participatory (4P) management of frailty and multimorbidity for the digital transition of the care economy"
 icon: "miratar/images/miratar-logo.png"
 ---
-# introducción
+# Introducción
 
 El espejo inteligente es una solución innovadora y efectiva para ayudar a los usuarios en su día a día en sus procesos de rehabilitación, evaluación de su progreso físico y mental, interacción social, etc. Cuando el sistema está apagado es un espejo normal y corriente. Cuando se enciende, el espejo es capaz de interactuar con los usuarios a través de su pantalla táctil y superponiendo información al reflejo, ofreciendo una experiencia personalizada y única que puede ayudar a monitorizar cuadros de rehabilitación, proporcionar soporte básico informativo, guiar en ejercicios para aliviar el estrés y la ansiedad, etc.
 
