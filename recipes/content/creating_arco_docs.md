@@ -40,7 +40,7 @@ $ hugo version
 Para poder trabajar con la documentación de Arco, en primer lugar **descárgate el repositorio**:
 
 {{< shell >}}
-$ git clone git@bitbucket.org:arco_group/doc.git
+$ git clone git@github.com:UCLM-ARCO/uclm-arco.github.io.git
 {{< /shell >}}
 
 En la raíz del repositorio encontrarás diferentes **directorios**, cada uno específico de una **sección** de la documentación. Así, por ejemplo, el directorio `idm` contiene la documentación del proyecto IDM, y será accesible desde la URL `https://site.url/idm/`. Para más información sobre esta estructura, ve a [Como crear una nueva sección](#cómo-crear-una-nueva-sección).
